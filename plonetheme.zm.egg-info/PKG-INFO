@@ -1,0 +1,26 @@
+Metadata-Version: 1.1
+Name: plonetheme.zm
+Version: 0.1
+Summary: An installable theme for Plone 4
+Home-page: http://svn.plone.org/svn/collective/
+Author: Andre Goncalves
+Author-email: andre@intk.com
+License: GPL
+Description: Introduction
+        ============
+        
+        An installable theme for Plone 4
+        
+        Changelog
+        =========
+        
+        
+        0.1dev (unreleased)
+        -------------------
+        
+        - Initial release
+        
+Keywords: web zope plone theme
+Platform: UNKNOWN
+Classifier: Framework :: Plone
+Classifier: Programming Language :: Python

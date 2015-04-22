@@ -1,0 +1,188 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plonelocales">
+<body>
+
+  <div metal:fill-slot="content-core"  tal:define="showall python:True"> 
+    <metal:block define-macro="content-core"
+                 tal:define="kssClassesView context/@@kss_field_decorator_view;
+                             getKssClasses nocall:kssClassesView/getKssClassesInlineEditable;
+                             templateId template/getId;
+                             portal_type context/portal_type">
+
+
+    <div class="navbar navbar-default collection-filters" id="collection-filters" role="navigation">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only"></span>
+            <i class="fa fa-chevron-down"></i>
+          </button>
+          <a class="navbar-brand hidden-lg hidden-md hidden-sm" href="#" tal:content="context/Title"></a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <tal:block replace="structure provider:plonetheme.zm.collectionPortletManager"/>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <div class="tileColumns container-fluid">
+      
+      <div class="row-fluid">
+        <metal:listingmacro define-macro="listing">
+        <tal:results define="
+                 b_start python:request.get('b_start', 0);
+                 sort_on python: getattr(context, 'sort_on', None);
+                 item_count python: getattr(context, 'item_count', 33);
+                 batch python:view.results(b_start=b_start, sort_on=sort_on, pagesize=item_count);
+                 site_properties context/portal_properties/site_properties;
+                 use_view_action site_properties/typesUseViewActionInListings|python:();
+                 isAnon context/@@plone_portal_state/anonymous;
+                 normalizeString nocall: context/plone_utils/normalizeString;
+                 toLocalizedTime nocall: context/@@plone/toLocalizedTime;
+                 collection_id context/UID;
+                 show_about python:not isAnon or site_properties.allowAnonymousViewAbout;
+                 navigation_root_url context/@@plone_portal_state/navigation_root_url;
+                 pas_member context/@@pas_member;">
+        <tal:listing condition="batch">
+
+        <metal:block metal:define-slot="entries">
+            <tal:entry tal:repeat="item batch" metal:define-macro="entries">
+            <tal:block tal:define="item_id item/getId;
+                       item_description item/description;
+                       item_type item/Type;
+                       item_title item/Title;
+                       item_obj item/getObject;
+                       excluded_from_nav python:item_obj.exclude_from_nav;
+                       item_url python: item.getURL();
+                       item_icon item/getIcon;
+                       item_wf_state_class python:'state-' + normalizeString(item.review_state);
+                       number repeat/item/number;
+                       item_img python:view.getImageObject(item);
+                       item_is_buyable python:view.isBuyable(item_obj);
+                       item_link python: (item_type == 'Press Kit' and not view.checkPermission(item, 'Add portal content')) and item_url + '/download_zip' or (item_type in use_view_action and item_url+'/view' or item_url);">
+            
+            <metal:block define-slot="entry">
+            
+            <!-- ITEM -->
+              <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" metal:define-macro="listitem">
+                <div class="thumbnail">
+                  <div class="thumb-wrapper">
+                    <a class="thumb-image" tal:condition="python: (item.hasMedia or item.portal_type == 'Image') and item_img != None" href="" tal:attributes="href python: item_link+'?collection_id='+collection_id+'&b_start='+str(b_start) if portal_type == 'Collection' and item_type == 'Object' else item_link"
+                      >
+
+                      <img tal:define="images item_img/@@images;
+                                         scale python: images.scale('image', scale='mini')"
+                             tal:condition="scale"
+                             tal:replace="structure python: scale.tag(css_class='tileImage', alt=item_title, title=item_title)" />
+                    </a> 
+
+                      <!--<div class="thumb-image" tal:condition="python: (item.hasMedia or item.portal_type == 'Image') and excluded_from_nav and item_img != None"
+                        >
+                      
+                      <img tal:define="images item_img/@@images;
+                                         scale python: images.scale('image', scale='mini')"
+                             tal:condition="scale"
+                             src="" alt=""
+                             tal:replace="structure python: scale.tag(css_class='tileImage', alt=item_title, title=item_title)" />  
+                      </div>-->    
+                          
+                  </div>
+                  <div class="caption">
+                  <h3><a href="#"
+                       tal:attributes="href python: item_link+'?collection_id='+collection_id+'&b_start='+str(b_start) if portal_type == 'Collection' and item_type == 'Object' else item_link; class item_wf_state_class"
+                       tal:content="item/Title"
+                       >
+                    Title
+                    </a>
+                  </h3>
+
+                  <!--<h3 tal:condition="excluded_from_nav" tal:content="item/Title">
+                    Title
+                  </h3>-->
+                  <p tal:condition="python: item_type == 'Event'" class="item-dates">
+                    <tal:differentday tal:condition="python:not item.start.Date() == item.end.Date()" i18n:translate="event_when_differentday">
+                      <abbr i18n:name="startdate">
+                        <span tal:replace="python: toLocalizedTime(item.start.strftime('%d %B %Y'))">Start Date</span>
+                        <tal:word i18n:translate="event_when_differentday_optional_word_between_date_and_time" />
+                      </abbr>
+                      t/m
+                      <span i18n:name="linebreak" />
+                      <abbr i18n:name="enddate">
+                        <span tal:replace="python: toLocalizedTime(item.end.strftime('%d %B %Y'))">End Date</span>
+                        <tal:word i18n:translate="event_when_differentday_optional_word_between_date_and_time" />
+                      </abbr>
+                    </tal:differentday>
+
+                    <tal:sameday tal:condition="python:item.start.Date() == item.end.Date()" i18n:translate="event_when_sameday">
+                      <span tal:replace="python: toLocalizedTime(item.start.strftime('%d %B %Y'))" i18n:name="date">Start Date Time</span>,
+                      <abbr i18n:name="starttime">
+                        <span tal:content="python:toLocalizedTime(item.start, time_only=1)">Start Time</span>
+                      </abbr >
+                      -
+                      <abbr i18n:name="endtime">
+                         <span tal:content="python:toLocalizedTime(item.end, time_only=1)">End Time</span>
+                      </abbr>
+                    </tal:sameday>
+                  </p>
+
+                    <p tal:condition="item_is_buyable">
+                      <tal:buyable-info tal:define="price python:view.getPrice(item_obj)" tal:condition="python: price != None">
+                        <span class="item-prices">€ <span tal:replace="python: '%0.2f' % price"></span></span>
+                      </tal:buyable-info>
+                    </p>
+                    <p tal:condition="not:item_is_buyable">
+                      <span tal:condition="python:item_obj
+.description != '' " tal:replace="python:view.trimText(item_obj
+.description, 200, strip=False)"></span>
+                        
+                    </p>
+                    
+                  </div>
+                  
+                  
+                </div>
+            </div>
+
+            <tal:clearfix condition="python: number % 3 == 0">
+              <div class="clearfix visible-lg visible-md"></div>
+            </tal:clearfix> 
+
+            <tal:clearfixmd condition="python: number % 2 == 0">
+              <div class="clearfix visible-sm"></div>
+            </tal:clearfixmd>
+            
+            </metal:block>
+            </tal:block>
+            </tal:entry>
+
+        </metal:block>
+        
+        <div metal:use-macro="context/batch_macros/macros/navigation" />
+    
+        </tal:listing>
+        <metal:empty metal:define-slot="no_items_in_listing">
+        <p class="discreet"
+           tal:condition="not: batch">
+            There is currently no content in this section.
+        </p>
+        </metal:empty>
+    
+        </tal:results>
+        </metal:listingmacro>
+
+    </div>
+  </div>
+    
+    </metal:block>
+  </div>
+
+</body>
+</html>

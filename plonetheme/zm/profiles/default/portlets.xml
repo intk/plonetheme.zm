@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<portlets xmlns:i18n="http://namespaces.zope.org/i18n"> 
+ <portletmanager 
+   name="plonetheme.zm.footerPortletManager"
+   type="plonetheme.zm.browser.interfaces.IFooterPortlet"
+ />
+ <portletmanager 
+   name="plonetheme.zm.pagePortletManager"
+   type="plonetheme.zm.browser.interfaces.IPagePortlet"
+ />
+
+ <portletmanager 
+   name="plonetheme.zm.collectionPortletManager"
+   type="plonetheme.zm.browser.interfaces.ICollectionPortletManager"
+ />
+
+ <portletmanager 
+   name="plonetheme.zm.searchPortletManager"
+   type="plonetheme.zm.browser.interfaces.ISearchPortletManager"
+ />
+
+ <portlet
+    addview="plonetheme.zm.extendedMailchimp"
+    title="Extended mailchimp portlet"
+    description="A portlet that adds a mailchimp subscriber with description"
+    i18n:attributes="title;description"
+    />
+
+</portlets>

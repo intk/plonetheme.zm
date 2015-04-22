@@ -1,0 +1,44 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+    xmlns:tal="http://xml.zope.org/namespaces/tal"
+    xmlns:metal="http://xml.zope.org/namespaces/metal"
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    lang="en"
+    metal:use-macro="context/main_template/macros/master"
+    i18n:domain="collective.portletpage">
+<body>
+
+<metal:css fill-slot="style_slot">
+  <style type="text/css" media="all"
+      tal:content="string: @import url(${context/++resource++collective.portletpage.css});"></style>
+</metal:css>
+
+<metal:title fill-slot="content-title">
+  <h1 class="documentFirstHeading" i18n:translate="">
+      Manage Portlet Page portlets
+  </h1>
+</metal:title>
+<metal:desc fill-slot="content-description">
+  <p i18n:translate="">
+
+     Use the controls below to change the portlets assigned to the page.
+  </p>
+</metal:desc>
+
+<metal:content-core fill-slot="content-core">
+<metal:block define-macro="content-core">
+  <div id="portletPageColumns">
+    <div id="portletPageTopRow"
+        tal:content="structure provider:collective.portletpage.toprow" />
+    <hr />
+    <div id="portletPageSecondColumn" class="portletPageRightColumn"
+        tal:content="structure provider:collective.portletpage.secondcolumn" />
+    <div id="portletPageFirstColumn" class="portletPageLeftColumn"
+        tal:content="structure provider:collective.portletpage.firstcolumn" />
+    <hr />
+    <div id="portletPageBottomRow"
+        tal:content="structure provider:collective.portletpage.bottomrow" />
+  </div>
+</metal:block>
+</metal:content-core>
+</body>
+</html>

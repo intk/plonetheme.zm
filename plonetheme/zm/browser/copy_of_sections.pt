@@ -1,0 +1,77 @@
+<div class="page-overlay"></div>
+    
+    <div class="menu_wrapper" data-toggle="offcanvas" data-target="#nav_menu" data-canvas="body">
+        <a class="bt-menu-trigger"><span>Menu</span></a>
+    </div>
+
+    <div class="navmenu navmenu-default navmenu-fixed-left offcanvas" role="navigation" id="nav_menu">
+            
+            <div class="menu_wrapper" data-toggle="offcanvas" data-target="#nav_menu" data-canvas="body">
+                <a class="bt-menu-trigger"><span>Menu</span></a>
+            </div>
+
+            <ul class="nav navmenu-nav main-menu">
+                <metal:main define-macro="nav_main">
+
+                <tal:navitem repeat="node children">
+                <li tal:define="children   node/children;
+                                item       node/item;
+                                useView    python:item.portal_type in viewActions;
+                                item_icon  python:plone_view.getIcon(item);
+                                itemUrl    python:test(useView, item.getURL() + '/view', item.getURL());
+                                linkRemote item/getRemoteUrl;
+                                isCurrent  node/currentItem;
+                                liLevel    level;
+                                excluded_from_nav python: getattr(item, 'exclude_from_nav', False);
+                                main_menu  python:liLevel == 1;
+                                show_lower python:children and level < bottomLevel;"
+                    tal:condition="python: bottomLevel &lt;= 0 or level &lt;= bottomLevel and not excluded_from_nav">
+
+                    <tal:level>
+                        <a tal:attributes="href python:test(linkRemote, item.getRemoteUrl, itemUrl);
+                                           title item/Description|nothing;"
+                                           >
+                            <span tal:replace="item/Title">Selected Item Title</span>
+                        </a>
+
+                    <ul tal:define="level python:level+1;"
+                        tal:condition="python:show_lower and children"
+                        class="nav navmenu-nav submenu">
+
+                        <metal:recurse use-macro="context/homepage_sections/macros/nav_main"/>
+
+                    </ul>
+
+                    </tal:level>
+                </li>
+                </tal:navitem>
+                </metal:main>
+            </ul>
+
+             <form class="navbar-form" role="search" tal:attributes="action python: '/'+context.language+'/@@search'">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search" name="SearchableText" id="srch-term" 
+                        i18n:attributes="title title_search_site;
+                        placeholder title_search_site"/>
+                        <i class="fa fa-search"></i>
+                    <input type="submit" value="" id="input-search-menu" class="submit-search"/>
+                        
+                        
+                        <label for="searchbox_currentfolder_only" style="cursor: pointer">
+                        <span
+                            i18n:translate="label_searchbox_currentfolder_only"
+                            tal:omit-tag="">
+                            only in current section
+                        </span>
+                        <input id="searchbox_currentfolder_only"
+                             class="noborder checkbox"
+                             type="checkbox"
+                             name="path"
+                             tal:attributes="value python: '/'.join(context.getPhysicalPath());
+                                             checked request/form/path|nothing"
+                        />
+                        </label>
+
+                    </div>
+        </form>
+    </div>

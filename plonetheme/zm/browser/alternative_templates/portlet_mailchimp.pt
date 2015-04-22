@@ -1,0 +1,22 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      tal:omit-tag="">
+
+  <div tal:attributes="class string:portlet portletMailChimp portletMailChimp-${view/name}"
+    tal:define="email view/fields/email">
+    
+    <div class="portletHeader container-fluid">
+      <h1 tal:content="view/name">Title of the portlet</h1>
+    </div>
+
+    <div class="container-fluid">
+      <div class="portletItem odd" tal:content="structure view/form/render">
+        here comes the subscriber-form
+      </div>
+    </div>
+  </div>
+
+</html>

@@ -1,0 +1,137 @@
+<div class="portlet portletCollection"
+    i18n:domain="plone"
+    tal:define="collection_url view/collection_url;
+                plone_view context/@@plone;
+                collection_item view/collection;
+                collection_id collection_item/UID;
+                toLocalizedTime nocall:plone_view/toLocalizedTime;
+                viewActions here/portal_properties/site_properties/typesUseViewActionInListings|python:();
+                "
+    tal:attributes="class string:portlet portletCollection ${view/css_class}">
+
+
+    <div class="portletHeader container-fluid" tal:condition="not:view/data/show_dates">
+        <a tal:attributes="href collection_url" tal:omit-tag="not:view/data/show_more" ><h1 tal:content="view/data/header">
+        </h1></a>
+        <h2 tal:content="collection_item/Description"></h2>
+    </div>
+
+    <div class="portlet-gap" tal:condition="view/data/show_dates"></div>
+
+    <div class="container-fluid" id="row-items">
+        <tal:collection tal:repeat="item view/results">
+        
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12"
+            tal:define="oddrow repeat/item/odd;
+                        useView python:item.portal_type in viewActions;
+                        item_type item/Type;
+                        item_title item/Title;
+                        item_created item/CreationDate;
+                        item_modified item/ModificationDate;
+                        item_obj item/getObject;
+                        number repeat/item/number;
+                        excluded_from_nav python:item_obj.exclude_from_nav;
+                        item_url python:item_type == 'Media Event' and '%s'%item.getURL() or item.getURL();
+                        use_view_action site_properties/typesUseViewActionInListings|python:();
+                        itemUrl python:useView and item.getURL() + '/view' or item.getURL();
+                        normalizeString nocall:plone_view/normalizeString;
+                        item_is_buyable python:view.isBuyable(item_obj);
+                        item_link python: (item_type == 'Press Kit' and not view.checkPermission(item, 'Add portal content')) and item_url + '/download_zip' or (item_type in use_view_action and item_url+'/view' or item_url);">
+
+            <div class="thumbnail">
+                  <div class="thumb-wrapper">
+                    <!-- IMAGE -->
+                    <a class="thumb-image" tal:condition="python: (item.hasMedia or item.portal_type == 'Image')" href="" tal:attributes="href python: item_link+'?collection_id='+collection_id+'&b_start=0' if collection_item != None and item_type == 'Object' else item_link"
+                      tal:define="item_img python:view.getImageObject(item)">
+                      <img tal:define="images item_img/@@images;
+                                         scale python: images.scale('image', scale='mini')"
+                             tal:condition="scale"
+                             src="" alt=""
+                             tal:replace="structure python: scale.tag(css_class='tileImage', alt=item_title, title=item_title)" /> 
+                      
+                    </a> 
+
+                    <!--<div class="thumb-image" tal:condition="python: (item.hasMedia or item.portal_type == 'Image') and excluded_from_nav"
+                      tal:define="item_img python:view.getImageObject(item)">
+                      <img tal:define="images item_img/@@images;
+                                         scale python: images.scale('image', scale='mini')"
+                             tal:condition="scale"
+                             src="" alt=""
+                             tal:replace="structure python: scale.tag(css_class='tileImage', alt=item_title, title=item_title)" /> 
+                    </div>-->  
+                    
+                  </div>
+                  
+                  <div class="caption">
+                    <h3><a href="#"
+                       tal:attributes="href item_link;"
+                       tal:content="item/Title"
+                       >
+                    Title
+                    </a>
+                    
+                  </h3>
+                  <p tal:condition="python: item_type == 'Event'" class="item-dates">
+                    <tal:differentday tal:condition="python:not item.start.Date() == item.end.Date()" i18n:translate="event_when_differentday">
+                      <abbr i18n:name="startdate">
+                        <span tal:replace="python: toLocalizedTime(item.start.strftime('%d %B %Y'))">Start Date</span>
+                        <tal:word i18n:translate="event_when_differentday_optional_word_between_date_and_time" />
+                      </abbr>
+                      t/m
+                      <span i18n:name="linebreak" />
+                      <abbr i18n:name="enddate">
+                        <span tal:replace="python: toLocalizedTime(item.end.strftime('%d %B %Y'))">End Date</span>
+                        <tal:word i18n:translate="event_when_differentday_optional_word_between_date_and_time" />
+                      </abbr>
+                    </tal:differentday>
+
+                    <tal:sameday tal:condition="python:item.start.Date() == item.end.Date()" i18n:translate="event_when_sameday">
+                      <span tal:replace="python: toLocalizedTime(item.start.strftime('%d %B %Y'))" i18n:name="date">Start Date Time</span>
+                      <span i18n:name="linebreak"></span>
+                      <abbr i18n:name="starttime">
+                        <span tal:content="python:toLocalizedTime(item.start, time_only=1)">Start Time</span>
+                      </abbr >
+                      -
+                      <abbr i18n:name="endtime">
+                         <span tal:content="python:toLocalizedTime(item.end, time_only=1)">End Time</span>
+                      </abbr>
+                    </tal:sameday>
+                  </p>
+                  
+                    <p tal:condition="item_is_buyable">
+                      <tal:buyable-info tal:define="price python:view.getPrice(item_obj)">
+                        <span class="item-prices">€ <span tal:replace="python: '%0.2f' % price"></span></span>
+                      </tal:buyable-info>
+                    </p>
+                    <p tal:condition="not:item_is_buyable">
+
+                      <span tal:condition="python:item.description != ''" tal:replace="python:view.trimText(item.description, 200, strip=False)"></span>
+                      
+                      
+                    </p> 
+
+                  </div>
+                </div>
+        </div>
+            <tal:clearfix condition="python: number % 3 == 0" tal:define="number repeat/item/number">
+              <div class="clearfix visible-lg visible-md"></div>
+            </tal:clearfix> 
+
+            <tal:clearfixmd condition="python: number % 2 == 0" tal:define="number repeat/item/number">
+              <div class="clearfix visible-sm"></div>
+            </tal:clearfixmd>
+        </tal:collection>
+    </div>
+
+    <div class="portletFooter row-fluid"
+            tal:define="showMore view/data/show_more"
+            tal:condition="python:showMore">
+        <span tal:condition="showMore">
+        <a tal:attributes="href collection_url" class="btn btn-inverse btn-large">
+           <span class="hiddenStructure"><span tal:replace="view/data/header" /> - </span>
+           <span i18n:translate="more_url">MORE</span>
+        </a>
+        </span>
+    </div>
+
+</div>

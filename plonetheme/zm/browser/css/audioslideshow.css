@@ -1,0 +1,128 @@
+/* ------------------------------------------------------------------------------
+    A U D I O - S L I D E S H O W
+--------------------------------------------------------------------------------- */
+
+.play-pause-container {
+	padding-left: 0px;
+}
+
+.time-container {
+	padding-right: 0px;
+	text-align: right;
+}
+
+.timeline {
+	padding-left: 0px;
+	padding-right: 0px;
+	height: 20px;
+	background-color: #f8f8f8;
+}
+
+.timeline .playhead {
+	position: absolute;
+	height: 20px;
+	background: #242424;
+	width: 0;
+}
+
+.marker {
+	width: 10px;
+	height: 10px;
+	border-radius: 5px;
+	position: absolute;
+	background: #999999;
+	top: 5px;
+}
+
+.marker span {
+	width: 100px;
+	height: 100px;
+	padding: 5px;
+	position: absolute;
+	bottom: 20px;
+	opacity: 0;
+	left: -50px;
+	z-index: -1;
+	box-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+	background: #f5f6f6;
+	background: -moz-linear-gradient(top, #f5f6f6 0%, #dbdce2 21%, #b8bac6 49%, #dddfe3 80%, #f5f6f6 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f5f6f6), color-stop(21%,#dbdce2), color-stop(49%,#b8bac6), color-stop(80%,#dddfe3), color-stop(100%,#f5f6f6));
+	background: -webkit-linear-gradient(top, #f5f6f6 0%,#dbdce2 21%,#b8bac6 49%,#dddfe3 80%,#f5f6f6 100%);
+	background: -o-linear-gradient(top, #f5f6f6 0%,#dbdce2 21%,#b8bac6 49%,#dddfe3 80%,#f5f6f6 100%);
+	background: -ms-linear-gradient(top, #f5f6f6 0%,#dbdce2 21%,#b8bac6 49%,#dddfe3 80%,#f5f6f6 100%);
+	background: linear-gradient(top, #f5f6f6 0%,#dbdce2 21%,#b8bac6 49%,#dddfe3 80%,#f5f6f6 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f6f6', endColorstr='#f5f6f6',GradientType=0 );
+	-webkit-transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+	-ms-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
+}
+
+.slick-slide img {
+	-webkit-user-drag: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	pointer-events:none;
+}
+
+.marker span img {
+	display: block;
+	max-height: 100%;
+	margin: 0 auto;
+}
+
+.marker:hover span {
+	opacity: 1;
+	z-index: 100;
+}
+
+@media (max-width: 480px) {
+	.audio-control-interface {
+		width: 100%;
+		margin: 0 auto;
+		padding-left: 20px;
+		padding-right: 20px;
+		display: none;
+	}
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+	.audio-control-interface {
+		width: 100%;
+		margin: 0 auto;
+		padding-left: 0px;
+		padding-right: 0px;
+		display: none;
+	}
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+	.audio-control-interface {
+		width: 100%;
+		margin: 0 auto;
+		padding-left: 40px;
+		padding-right: 40px;
+		display: none;
+	}
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+	.audio-control-interface {
+		width: 640px;
+		margin: 0 auto;
+		padding-left: 0px;
+		padding-right: 0px;
+		display: none;
+	}
+}
+
+@media (min-width: 1200px) { 
+	.audio-control-interface {
+		width: 640px;
+		margin: 0 auto;
+		padding-left: 0px;
+		padding-right: 0px;
+		display: none;
+	}
+}

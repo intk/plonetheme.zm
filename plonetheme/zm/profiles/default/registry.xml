@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<registry>
+	<record name="searchfilters.folders">
+	    <field type="plone.registry.field.Tuple">
+	        <title>Search folders</title>
+	        <description>List of folders in search filters</description>
+	        <value_type type="plone.registry.field.TextLine" />
+	    </field>
+	    <value>
+	        <element>UID</element>
+	    </value>
+	</record>
+</registry>

@@ -1,0 +1,445 @@
+Metadata-Version: 1.0
+Name: plonetheme.arnolfini
+Version: 0.96
+Summary: An installable theme for Plone 4
+Home-page: http://svn.plone.org/svn/collective/
+Author: David Jonas
+Author-email: david@intk.com
+License: GPL
+Description: Introduction
+        ============
+        
+        An installable theme for Plone 4
+        
+        Changelog
+        =========
+        0.96 (2014-03-19)
+        ---------------------
+        - Adaptation to the changes on the twitter addthis sharing templates. 
+        
+        0.95 (2013-12-12)
+        ---------------------
+        - Cropping scale now spans through all the views.
+        - Adaptation for the upgrade to fourdigits.portlet.twitter
+        
+        0.94 (2013-08-19)
+        ---------------------
+        - Donation forms changed and ordering the related items on document view.
+        
+        0.93 (2013-07-08)
+        ---------------------
+        - Fix in the merged views that blocked the cropping interface.
+        
+        0.92 (2013-07-05)
+        ---------------------
+        - Merging back because of event work that was unfinished on the repository
+        
+        0.91 (2013-07-05)
+        ---------------------
+        - Added videos to the blog view.
+        
+        0.90 (2013-05-22)
+        ---------------------
+        - Small fixes for Plone 4.3
+        
+        0.89 (2013-04-24)
+        ---------------------
+        - Added support for flags with tags with spaces.
+        
+        0.88 (2013-04-24)
+        ---------------------
+        - fix on image view.
+        
+        0.87 (2013-04-24)
+        ---------------------
+        - New colors for tags
+        
+        0.86 (2013-04-24)
+        ---------------------
+        - Image cropping support.
+        - Scales on generic setup.
+        - Do not allow access to full screen picture view.  
+        
+        0.85 (2013-03-13)
+        ---------------------
+        - Added javascript to track the forms added on the body of pages with GA.
+        
+        0.84 (2013-03-13)
+        ---------------------
+        - Changed "After today" criteria on collections to match the expected behaviour of events view.
+        - Events just become past in the end of the day.
+        - Fixed the event listing view to conform with the above change.
+        
+        0.83 (2013-03-12)
+        ---------------------
+        - CSS fixes, more cross browser testing and aded up link on Link types.
+        
+        0.82 (2013-03-12)
+        ---------------------
+        - More cross browser resposive design tweaking for iPhone and Android devices.
+        - Presskit link on document_view was not testing for the right permissions.
+        
+        0.81 (2013-03-06)
+        ---------------------
+        - Fixed the layout for better accessibility when using the large fonts
+        
+        0.80 (2013-03-06)
+        ---------------------
+        - Adjusted the actions.xml file.
+        
+        0.79 (2013-03-06)
+        ---------------------
+        - Activated mobile zooming without breaking the layout.
+        - Added new permission to control who can mark buyable content.
+        - Automatically add forms on buyable content.
+        
+        0.78 (2013-03-05)
+        ---------------------
+        - Fluid layout fixes for cross-browser compatibility
+        - Reset hour format to default
+        
+        0.77 (2013-02-28)
+        ---------------------
+        - Accessibility issues.
+        
+        0.76 (2013-02-27)
+        ---------------------
+        - Bugfixing round on CSS/JS for mobiles
+        
+        0.75 (2013-02-27)
+        ---------------------
+        - Fix on today events.
+        - Changed fonts.
+        
+        0.74 (2013-02-21)
+        ---------------------
+        - Changed the date formats.
+        
+        0.73 (2013-02-21)
+        ---------------------
+        - Removed the stray images from the people listing
+        
+        0.72 (2013-02-21)
+        ---------------------
+        - Changes to the people view
+        
+        0.71 (2013-02-19)
+        ---------------------
+        - Adaptation to the new version of collective.media
+        
+        0.70 (2013-02-18)
+        ---------------------
+        - Mobile tweaks
+        
+        0.69 (2013-02-18)
+        ---------------------
+        - Revised colors
+        
+        0.68 (2013-02-18)
+        ---------------------
+        - Adding the donation button to free events.
+        
+        0.67 (2013-02-18)
+        ---------------------
+        - Added more colors to the tag flags;
+        - Fix on the front page slideshow;
+        
+        0.66 (2013-02-15)
+        ---------------------
+        - JS and CSS fixes for responsive layout.
+        
+        0.65 (2013-02-14)
+        ---------------------
+        - Adapted collective carousel to the front page view to show featured items.
+        
+        0.64 (2013-02-13)
+        ---------------------
+        - Disabling dependency on unreleased version of Products.mediaPerson
+        
+        0.63 (2013-02-13)
+        ---------------------
+        - Multiple bugfixes and CSS tweaks on alignments
+        - Slideshow improvement
+        - Files and images get a level up link
+        - Tag flags stay on
+        
+        0.62 (2013-02-12)
+        ---------------------
+        - Bug fixing in CSS alignments and slideshow.
+        - Colored Flags.
+        
+        0.61 (2013-01-31)
+        ---------------------
+        - Override collective.mediaShow to add parent descriptions when the images does not have one.
+        
+        0.60 (2013-01-31)
+        ---------------------
+        - Fixed manual portlet override with the new URLs
+        
+        0.59 (2013-01-30)
+        ---------------------
+        - Removing left over debug code from JS
+        
+        0.58 (2013-01-30)
+        ---------------------
+        - Fix on Blog view
+        
+        0.57 (2013-01-30)
+        ---------------------
+        - Javascript tweaks, Booking information.
+        
+        0.56 (2013-01-30)
+        ---------------------
+        - Fix on event_listing custom view. Typo.
+        
+        0.55 (2013-01-30)
+        ---------------------
+        - Make presskits download directly if you cant edit them. 
+        
+        0.54 (2013-01-24)
+        ---------------------
+        - More presskit customizations
+        - Fixed a crash when tiling collections without description.
+        
+        0.53 (2013-01-23)
+        ---------------------
+        - Form CSS.
+        - Design for mailchimp portlet.
+        
+        0.52 (2013-01-23)
+        ---------------------
+        - Share counter with popup.
+        
+        0.51 (2013-01-23)
+        ---------------------
+        - New design for share buttons.
+        
+        0.50 (2013-01-23)
+        ---------------------
+        - PressKit design and adaptations.
+        - AddThis share buttons.
+        
+        0.49 (2013-01-22)
+        ---------------------
+        - Quick fix on CSS of portlet headers.
+        
+        0.48 (2013-01-22)
+        ---------------------
+        - Change on the override of Manual related portlet.
+        - Small bugfix of an extra comma on event dates.
+        
+        0.47 (2013-01-16)
+        ---------------------
+        - Overriding the twitter template to add a link to follow.
+        - Multiple CSS/structure fixes.
+        - Override for the manual related portlet.
+        
+        0.46 (2013-01-15)
+        ---------------------
+        - Added media back to the search results.
+        
+        0.45 (2013-01-15)
+        ---------------------
+        - fix on the collective media usage
+        
+        0.44 (2013-01-15)
+        ---------------------
+        - adjusted line heights.
+        - added CSS for collective.twitter.portlets
+        
+        0.43 (2013-01-14)
+        ---------------------
+        - Fluid layout cross-browser testing.
+        - Bugfixes
+        - First attempt to add leading media to collections
+        
+        0.42 (2013-01-14)
+        ---------------------
+        - Added a three column view option for all folders and collections
+        
+        0.41 (2013-01-11)
+        ---------------------
+        - quick CSS fix on column layout
+        
+        0.40 (2013-01-11)
+        ---------------------
+        - Added a new three column design. Better adaptability
+        - Bugfixing round.
+        
+        0.39 (2013-01-11)
+        ---------------------
+        - Cross-browser testing and design cleanup.
+        
+        0.38 (2013-01-10)
+        ---------------------
+        - Override of site actions portlet and added sponsors instead;
+        
+        0.37 (2013-01-10)
+        ---------------------
+        - Updated to the new slideshow layout with dynamic height calculation.
+        
+        0.36 (2013-01-09)
+        ---------------------
+        - fixed CSS size of the text in the listings.
+        
+        0.35 (2013-01-09)
+        ---------------------
+        - Added the custom weekday messages for today's events
+        
+        0.34 (2013-01-08)
+        ---------------------
+        - Bugfixing round. visual and backend.
+        
+        0.33 (2013-01-03)
+        ---------------------
+        - Very small CSS fix on the calendar portlet.
+        
+        0.32 (2013-01-03)
+        ---------------------
+        - Changed cropping of the images.
+        - Removed document by line from the front page.
+        - Portlet that renders content depending on the day of the week.
+        
+        0.31 (2013-01-03)
+        ---------------------
+        - More CSS and JS on the front-page view. Responsive design on the portlets of the front page portlet managers.
+        
+        0.30 (2013-01-02)
+        ---------------------
+        - Added a front page view with two portlet managers and the main content that comes from a collection namef "/arnolfini/front_page_main" 
+        
+        0.29 (2012-12-19)
+        ---------------------
+        - CSS fixing on alignemt of page wrappers.
+        
+        0.28 (2012-12-19)
+        ---------------------
+        - Added metadata configuration for hasMedia to be visible on collections
+        - Collection portlet override and related items portlet override.
+        
+        0.27 (2012-12-18)
+        ---------------------
+        - Lots of javascript features such as masonry on portlets for small screen sizes.
+        - Number of results appears automatically in portlet list of links of collections.
+        
+        0.26 (2012-12-17)
+        ---------------------
+        - Bugfixing round.
+        
+        0.25 (2012-12-13)
+        ---------------------
+        - Configuring portlet areas to all templates and screen sizes;
+        - Configuring the calendar portlet
+        
+        0.24 (2012-12-12)
+        ---------------------
+        - Slideshow CSS fix.
+        
+        0.23 (2012-12-12)
+        ---------------------
+        - Added and CSS Menu
+        - Blog view
+        
+        0.22 (2012-12-12)
+        ---------------------
+        - Merged archive view with event view.
+        
+        0.21 (2012-12-12)
+        ---------------------
+        - Added event listing view and folder listing view.
+        
+        0.20 (2012-12-10)
+        ---------------------
+        - removing getpaid dependency on ZCML
+        
+        0.19 (2012-12-10)
+        ---------------------
+        - Work on the new document_view that also renders events now.
+        - Archive portlet shows now only if event is past.
+        - Added functions to test if event is past and to format dates.
+        
+        0.18 (2012-12-10)
+        ---------------------
+        - Bugfix on search results throwing an error when "bodyless" items are a result. 
+        
+        0.17 (2012-12-06)
+        ---------------------
+        - Added archive button to the portlet
+        
+        0.16 (2012-12-06)
+        ---------------------
+        - 404 page.
+        
+        0.15 (2012-12-05)
+        ---------------------
+        - changes on the slideshow behaviour.
+        - event to create a slideshow folder automatically on each item of Media types.
+        
+        0.14 (2012-12-04)
+        ---------------------
+        - Search view and people view;
+        
+        0.13 (2012-12-04)
+        ---------------------
+        - CSS tweaks and bugfixing
+        
+        0.12 (2012-11-29)
+        ---------------------
+        - Default to show only documented events
+        - button to show all events
+        - popup leads to all events
+        
+        0.11 (2012-11-29)
+        ---------------------
+        - folder listing view
+        - fixes on the portlets and ordering
+        - CSS
+        
+        0.10 (2012-11-28)
+        ---------------------
+        - Added anothe archive portlet.
+        - CSS fixes
+        - Added popup before opening undocumented years.
+        
+        0.9 (2012-11-27)
+        ---------------------
+        - Optimized archival views using collective.media.
+        
+        0.8 (2012-11-20)
+        ---------------------
+        - Added show all years functionality to archive.
+        
+        0.7 (2012-11-20)
+        ---------------------
+        - Removed dependency on viewportletmanager.
+        
+        0.6 (2012-11-20)
+        ---------------------
+        - Adding the first archive design prototype.
+        
+        0.5 (2012-11-16)
+        ---------------------
+        - Starting the views
+        
+        0.4 (2012-11-13)
+        ---------------------
+        - Footer CSS alignments revised
+        
+        0.3 (2012-11-13)
+        ---------------------
+        - Fixes for safari.
+        
+        0.2 (unreleased)
+        ----------------
+        
+        - Footer work, portlet manager on the footer
+        
+        0.1dev (unreleased)
+        -------------------
+        
+        - Initial release
+        
+Keywords: web zope plone theme
+Platform: UNKNOWN
+Classifier: Framework :: Plone
+Classifier: Programming Language :: Python

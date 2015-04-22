@@ -1,0 +1,53 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="collective.portletpage">
+<body>
+
+<metal:css fill-slot="style_slot">
+  <style type="text/css" media="all"
+      tal:content="string: @import url(${context/++resource++collective.portletpage.css});"></style>
+</metal:css>
+
+<metal:content-core fill-slot="content-core">
+<metal:block define-macro="content-core">
+  <div id="portlet_bodytext" class="container-fluid">
+    <metal:field use-macro="python:here.widget('text', mode='view')">
+                    Body text
+    </metal:field>
+  </div>
+
+  <div id="portletPageColumns"
+      tal:define="bothColumns python:view.hasColumnFirst() and view.hasColumnSecond()">
+
+    <div id="portletPageTopRow" class="portletPageColumn"
+        tal:condition="view/hasColumnTop"
+        tal:content="structure provider:collective.portletpage.toprow"
+        />
+
+    <div id="portletPageFirstColumn" class="portletPageColumn portletPageLeftColumn"
+        tal:condition="view/hasColumnFirst"
+        tal:content="structure provider:collective.portletpage.firstcolumn"
+        tal:attributes="class python:bothColumns and 'portletPageColumn portletPageLeftColumn' or 'portletPageColumn'"
+        />
+
+    <div id="portletPageSecondColumn" class="portletPageColumn portletPageRightColumn"
+        tal:condition="view/hasColumnSecond"
+        tal:content="structure provider:collective.portletpage.secondcolumn"
+        tal:attributes="class python:bothColumns and 'portletPageColumn portletPageRightColumn' or 'portletPageColumn'"
+        />
+
+    <div id="portletPageBottomRow" class="portletPageColumn"
+        tal:condition="view/hasColumnBottom"
+        tal:content="structure provider:collective.portletpage.bottomrow"
+        />
+
+  </div>
+
+</metal:block>
+</metal:content-core>
+</body>
+</html>

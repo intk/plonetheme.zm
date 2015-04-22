@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!-- This file holds the setup configuration for the portal_javascripts tool.
+     -->
+
+<object name="portal_javascripts">
+
+  <javascript
+    id="++resource++plonetheme.zm.js/modernizr.custom.js"
+    cacheable="True" compression="safe" cookable="False"
+    enabled="True" expression=""  inline="False"/>
+
+   <javascript
+    id="++resource++plonetheme.zm.js/vendor/youtube.js"
+    cacheable="True" compression="safe" cookable="False"
+    enabled="True" expression=""  inline="False"/>
+
+  <!--<javascript
+    id="++resource++plonetheme.zm.js/vendor/facebook.js"
+    cacheable="True" compression="safe" cookable="False"
+    enabled="True" expression=""  inline="False"/>-->
+
+  <javascript
+    id="++resource++plonetheme.zm.js/vendor/twitter.js"
+    cacheable="True" compression="safe" cookable="False"
+    enabled="True" expression=""  inline="False"/>
+
+  <javascript
+    id="++resource++plonetheme.zm.js/vendor/pinit_main.js"
+    cacheable="True" compression="safe" cookable="False"
+    enabled="True" expression=""  inline="False"/>
+
+  <javascript
+    id="++resource++plonetheme.zm.js/vendor/jasny-bootstrap.min.js"
+    cacheable="True" compression="safe" cookable="False"
+    enabled="True" expression=""  inline="False"/>
+
+  <javascript
+    id="++resource++plonetheme.zm.js/classie.js"
+    cacheable="True" compression="safe" cookable="False"
+    enabled="True" expression=""  inline="False"/>
+
+  <javascript
+    id="++resource++plonetheme.zm.js/fastclick.js"
+    cacheable="True" compression="safe" cookable="False"
+    enabled="True" expression=""  inline="False"/>
+
+  <javascript
+    id="++resource++plonetheme.zm.js/vendor/slick.js"
+    cacheable="True" compression="safe" cookable="False"
+    enabled="True" expression=""  inline="False"/>
+
+  <javascript
+    id="++resource++plonetheme.zm.js/menu.js"
+    cacheable="True" compression="safe" cookable="False"
+    enabled="True" expression=""  inline="False"/>
+
+  <javascript
+    id="++resource++plonetheme.zm.js/slideshow.js"
+    cacheable="True" compression="safe" cookable="False"
+    enabled="True" expression=""  inline="False"/>
+
+</object>

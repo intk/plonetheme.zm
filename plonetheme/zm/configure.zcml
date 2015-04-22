@@ -1,0 +1,26 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:cmf="http://namespaces.zope.org/cmf"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:profiler="http://namespaces.plone.org/profiler"
+    i18n_domain="plonetheme.zm">
+
+  
+  <five:registerPackage package="." initialize=".initialize" />
+  <include package="plone.event" />
+  <include package="plone.multilingual" />
+  <include package="plone.app.z3cform" />
+  <include package=".browser" />
+  <include file="skins.zcml" />
+  <include file="profiles.zcml" />
+  <i18n:registerTranslations directory="locales" />
+
+  <!-- Events -->
+
+  <subscriber
+        for="plone.dexterity.interfaces.IDexterityContainer
+        zope.app.container.interfaces.IObjectAddedEvent"
+        handler=".events.objectTranslated" />
+
+</configure>

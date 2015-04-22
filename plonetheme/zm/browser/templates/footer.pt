@@ -1,0 +1,16 @@
+<div id="FooterPortlet"
+     i18n:domain="plone" class="container-fluid">
+
+    <div class="row">
+        <tal:block replace="structure provider:plonetheme.zm.footerPortletManager"/>
+    </div>
+
+    <div id="footer-manager-button" class="row"> 
+           <a class="managePortletsFallback"
+                    tal:condition="view/showManageButton"
+                    tal:define="portal context/@@plone_portal_state/portal;"
+                    tal:attributes="href string:${portal/absolute_url}/@@manage-site-footer">
+                    Manage portlets
+            </a>     
+     </div>
+</div>

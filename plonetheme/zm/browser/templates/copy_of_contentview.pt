@@ -1,0 +1,87 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="plone">
+
+<body>
+
+  <tal:facebook-opengraph metal:fill-slot="head_slot">
+          <tal:definitions
+            tal:define="details view/getFBdetails;
+                        fb_image python: details['image'];
+                        fb_title python: details['title'];
+                        fb_type python: details['type'];
+                        fb_site_name python: details['site_name'];
+                        fb_url python: details['url'];
+                        fb_description python: details['description'];">
+            
+            <tal:fb-properties omit-tag="">
+                  <meta property="og:image" tal:attributes="content fb_image"/>
+                  <meta property="og:title" tal:attributes="content fb_title"/>
+                  <meta property="og:site_name" tal:attributes="content fb_site_name"/>
+                  <meta property="og:url" tal:attributes="content fb_url"/>
+                  <meta property="og:type" tal:attributes="content fb_type"/>
+                  <meta property="og:description" tal:attributes="content fb_description"/>
+                  
+            </tal:fb-properties>
+          
+          </tal:definitions>
+
+</tal:facebook-opengraph>
+
+<metal:content-core fill-slot="content-core">
+    
+    <metal:content-core define-macro="content-core">
+          
+          <div id="parent-fieldname-text-dates" tal:condition="python: context.portal_type == 'Event'" 
+            tal:define="toLocalizedTime nocall:plone_view/toLocalizedTime;"
+            >
+
+            <p tal:define='start_date python: context.start_date;
+                           end_date python: context.end_date;
+                           start_date_date python: context.start_date.date();
+                           end_date_date python: context.end_date.date();'>
+
+              <tal:differentday tal:condition="python:not start_date_date == end_date_date" i18n:translate="event_when_differentday">
+                <abbr i18n:name="startdate">
+                  <span tal:replace="python: toLocalizedTime(start_date.strftime('%d %B %Y'))">Start Date</span>
+                  <tal:word i18n:translate="event_when_differentday_optional_word_between_date_and_time" />
+                </abbr>
+                to
+                <span i18n:name="linebreak" />
+                <abbr i18n:name="enddate">
+                  <span tal:replace="python: toLocalizedTime(end_date.strftime('%d %B %Y'))">End Date</span>
+                  <tal:word i18n:translate="event_when_differentday_optional_word_between_date_and_time" />
+                </abbr>
+                
+              </tal:differentday>
+
+              <tal:sameday tal:condition="python: start_date_date == end_date_date" i18n:translate="event_when_sameday">
+                <span tal:replace="python: toLocalizedTime(context.start_date.strftime('%d %B %Y'))" i18n:name="date">Start Date Time</span>
+                <span i18n:name="linebreak" />
+                ,
+                <abbr i18n:name="starttime">
+                  <span tal:content="python: toLocalizedTime(context.start_date, time_only=1)">Start Time</span>
+                </abbr >
+                -
+                <abbr i18n:name="endtime">
+                   <span tal:content="python:toLocalizedTime(context.end_date, time_only=1)">End Time</span>
+                </abbr>
+
+              </tal:sameday>
+            
+            </p>
+
+          </div>
+
+        <div id="parent-fieldname-text"
+             tal:condition="context/text"
+              tal:content="structure python:context.text.output_relative_to(view.context)" />
+    </metal:content-core>
+</metal:content-core>
+
+</body>
+</html>

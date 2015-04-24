@@ -8655,6 +8655,10 @@ body.template-image_view #content div.title-description-wrapper {
     position: initial !important;
 }
 
+.hide-thead thead {
+    display: none;
+}
+
 
 p.slide-description {
     display: none !important;
@@ -8680,5 +8684,5 @@ td.datagridwidget-manipulator.delete-row img {
     padding-top: 22px;
 }
 
-#fieldset-value_insurance #formfield-form-widgets-valuation .datagridwidget-widget-value
+
 

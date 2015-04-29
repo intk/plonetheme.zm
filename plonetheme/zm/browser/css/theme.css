@@ -7895,6 +7895,10 @@ body.template-edit .datagridwidget-table-view th {
     width: 100% !important;
 }
 
+.hide-th th {
+    display: none !important;
+}
+
 body.template-edit .datagridwidget-table-view {
     width: 100% !important;
 }
@@ -8578,6 +8582,16 @@ body.template-collective-object-object .datagridwidget-body select.select-widget
     padding-right: 0px !important;
 }
 
+
+.datagridwidget-cell input[type="text"].form-control {
+    padding: 10px 18px !important;
+    font-family: "Source Sans Pro", Calibri, Candara, Arial, serif !important;
+}
+
+.datagridwidget-block input[type="text"].form-control {
+    padding: 10px 18px !important;
+    font-family: "Source Sans Pro", Calibri, Candara, Arial, serif !important;
+}
 
 .fieldErrorBox {
     width: auto;

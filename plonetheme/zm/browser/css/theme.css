@@ -8166,236 +8166,236 @@ body.template-collective-object-object .datagridwidget-body .datagridwidget-bloc
 
 
 /* Value & Insurance */
-#formfield-form-widgets-insurance div.label label {
+#formfield-form-widgets-valueInsurance_insurance div.label label {
     width: 30% !important;
 }
 
-#formfield-form-widgets-insurance input {
+#formfield-form-widgets-valueInsurance_insurance input {
     width: 69% !important;
 }
 
 
 /* Value and currency */
-#formfield-form-widgets-valuation .datagridwidget-widget-value {
+#formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-value {
     width: 50%;
     float: left;
 }
 
-#formfield-form-widgets-valuation .datagridwidget-widget-curr {
+#formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-curr {
     width: 50%;
     float: left;
 }
 
-#formfield-form-widgets-valuation .datagridwidget-widget-value label,
-#formfield-form-widgets-valuation .datagridwidget-widget-curr label,
-#formfield-form-widgets-valuation .datagridwidget-widget-value div.label,
-#formfield-form-widgets-valuation .datagridwidget-widget-curr div.label {
+#formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-value label,
+#formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-curr label,
+#formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-value div.label,
+#formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-curr div.label {
     width: 50.8%;
     float: left;
     
 }
 
-#formfield-form-widgets-valuation .datagridwidget-widget-curr div.label label {
+#formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-curr div.label label {
     width: 90%;
     text-align: right;
 }
 
-#formfield-form-widgets-valuation .datagridwidget-widget-value div.label,
-#formfield-form-widgets-valuation .datagridwidget-widget-curr div.label {
+#formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-value div.label,
+#formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-curr div.label {
     padding-top: 11px;
     padding-right: 10px;
 }
 
-#formfield-form-widgets-valuation .datagridwidget-widget-valuer {
+#formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-valuer {
     clear: both;
 }
 
-#formfield-form-widgets-valuation .datagridwidget-widget-value input,
-#formfield-form-widgets-valuation .datagridwidget-widget-curr input {
+#formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-value input,
+#formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-curr input {
     width: 49.2% !important;
 }
 
 /* Valuer and date */
-#formfield-form-widgets-valuation .datagridwidget-widget-valuer {
+#formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-valuer {
     width: 50%;
     float: left;
 }
 
-#formfield-form-widgets-valuation .datagridwidget-widget-date {
+#formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-date {
     width: 50%;
     float: left;
 }
 
-#formfield-form-widgets-valuation .datagridwidget-widget-valuer label,
-#formfield-form-widgets-valuation .datagridwidget-widget-date label,
-#formfield-form-widgets-valuation .datagridwidget-widget-valuer div.label,
-#formfield-form-widgets-valuation .datagridwidget-widget-date div.label {
+#formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-valuer label,
+#formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-date label,
+#formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-valuer div.label,
+#formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-date div.label {
     width: 50.8%;
     float: left;
     
 }
 
-#formfield-form-widgets-valuation .datagridwidget-widget-date div.label label {
+#formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-date div.label label {
     width: 90%;
     text-align: right;
 }
 
-#formfield-form-widgets-valuation .datagridwidget-widget-valuer div.label,
-#formfield-form-widgets-valuation .datagridwidget-widget-date div.label {
+#formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-valuer div.label,
+#formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-date div.label {
     padding-top: 11px;
     padding-right: 10px;
 }
 
-#formfield-form-widgets-valuation .datagridwidget-widget-reference {
+#formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-reference {
     clear: both;
 }
 
-#formfield-form-widgets-valuation .datagridwidget-widget-valuer input,
-#formfield-form-widgets-valuation .datagridwidget-widget-date input {
+#formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-valuer input,
+#formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-date input {
     width: 49.2% !important;
 }
 
 /* Valuer and date */
-#formfield-form-widgets-insurance .datagridwidget-widget-valuer {
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-valuer {
     width: 60%;
     float: left;
 }
 
-#formfield-form-widgets-insurance .datagridwidget-widget-date {
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-date {
     width: 40%;
     float: left;
 }
 
-#formfield-form-widgets-insurance .datagridwidget-widget-valuer label,
-#formfield-form-widgets-insurance .datagridwidget-widget-date label,
-#formfield-form-widgets-insurance .datagridwidget-widget-valuer div.label,
-#formfield-form-widgets-insurance .datagridwidget-widget-date div.label {
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-valuer label,
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-date label,
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-valuer div.label,
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-date div.label {
     width: 51%;
     float: left;
     
 }
 
-#formfield-form-widgets-insurance .datagridwidget-widget-date div.label label {
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-date div.label label {
     width: 90% !important;
     text-align: right;
 }
 
-#formfield-form-widgets-insurance .datagridwidget-widget-valuer div.label,
-#formfield-form-widgets-insurance .datagridwidget-widget-date div.label {
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-valuer div.label,
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-date div.label {
     padding-top: 11px;
     padding-right: 10px;
 }
 
-#formfield-form-widgets-insurance .datagridwidget-widget-date div.label {
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-date div.label {
     width: 30% !important;
 }
 
-#formfield-form-widgets-insurance .datagridwidget-widget-policy_number {
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-policy_number {
     clear: both;
 }
 
-#formfield-form-widgets-insurance .datagridwidget-widget-valuer input,
-#formfield-form-widgets-insurance .datagridwidget-widget-date input {
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-valuer input,
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-date input {
     width: 37.2% !important;
 }
 
-#formfield-form-widgets-insurance .datagridwidget-widget-date input {
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-date input {
     width: 69.5% !important;
 }
 
 /* Confirmation date and renewal_date */
-#formfield-form-widgets-insurance .datagridwidget-widget-confirmation_date {
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-confirmation_date {
     width: 60%;
     float: left;
 }
 
-#formfield-form-widgets-insurance .datagridwidget-widget-renewal_date {
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-renewal_date {
     width: 40%;
     float: left;
 }
 
-#formfield-form-widgets-insurance .datagridwidget-widget-confirmation_date label,
-#formfield-form-widgets-insurance .datagridwidget-widget-renewal_date label,
-#formfield-form-widgets-insurance .datagridwidget-widget-confirmation_date div.label,
-#formfield-form-widgets-insurance .datagridwidget-widget-renewal_date div.label {
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-confirmation_date label,
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-renewal_date label,
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-confirmation_date div.label,
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-renewal_date div.label {
     width: 51%;
     float: left;
     
 }
 
-#formfield-form-widgets-insurance .datagridwidget-widget-renewal_date div.label label {
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-renewal_date div.label label {
     width: 90% !important;
     text-align: right;
 }
 
-#formfield-form-widgets-insurance .datagridwidget-widget-confirmation_date div.label,
-#formfield-form-widgets-insurance .datagridwidget-widget-renewal_date div.label {
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-confirmation_date div.label,
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-renewal_date div.label {
     padding-top: 11px;
     padding-right: 10px;
 }
 
-#formfield-form-widgets-insurance .datagridwidget-widget-renewal_date div.label {
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-renewal_date div.label {
     width: 30% !important;
 }
 
-#formfield-form-widgets-insurance .datagridwidget-widget-reference {
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-reference {
     clear: both;
 }
 
-#formfield-form-widgets-insurance .datagridwidget-widget-confirmation_date input,
-#formfield-form-widgets-insurance .datagridwidget-widget-renewal_date input {
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-confirmation_date input,
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-renewal_date input {
     width: 37.2% !important;
 }
 
-#formfield-form-widgets-insurance .datagridwidget-widget-renewal_date input {
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-renewal_date input {
     width: 70% !important;
 }
 
 
-#formfield-form-widgets-insurance .datagridwidget-widget-confirmation_date {
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-confirmation_date {
     width: 60%;
     float: left;
 }
 
-#formfield-form-widgets-insurance .datagridwidget-widget-renewal_date {
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-renewal_date {
     width: 40%;
     float: left;
 }
 
-#formfield-form-widgets-insurance .datagridwidget-widget-confirmation_date label,
-#formfield-form-widgets-insurance .datagridwidget-widget-renewal_date label,
-#formfield-form-widgets-insurance .datagridwidget-widget-confirmation_date div.label,
-#formfield-form-widgets-insurance .datagridwidget-widget-renewal_date div.label {
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-confirmation_date label,
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-renewal_date label,
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-confirmation_date div.label,
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-renewal_date div.label {
     width: 51%;
     float: left;
     
 }
 
-#formfield-form-widgets-insurance .datagridwidget-widget-renewal_date div.label label {
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-renewal_date div.label label {
     width: 90% !important;
     text-align: right;
 }
 
-#formfield-form-widgets-insurance .datagridwidget-widget-confirmation_date div.label,
-#formfield-form-widgets-insurance .datagridwidget-widget-renewal_date div.label {
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-confirmation_date div.label,
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-renewal_date div.label {
     padding-top: 11px;
     padding-right: 10px;
 }
 
-#formfield-form-widgets-insurance .datagridwidget-widget-renewal_date div.label {
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-renewal_date div.label {
     width: 50% !important;
 }
 
-#formfield-form-widgets-insurance .datagridwidget-widget-policy_number {
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-policy_number {
     clear: both;
 }
 
-#formfield-form-widgets-insurance .datagridwidget-widget-confirmation_date input,
-#formfield-form-widgets-insurance .datagridwidget-widget-renewal_date input {
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-confirmation_date input,
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-renewal_date input {
     width: 37.2% !important;
 }
 
-#formfield-form-widgets-insurance .datagridwidget-widget-renewal_date input {
+#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-renewal_date input {
     width: 49.5% !important;
 }
 
@@ -8403,55 +8403,55 @@ body.template-collective-object-object .datagridwidget-body .datagridwidget-bloc
 
 
 /* Inscriptions & Markings */
-#formfield-form-widgets-inscriptions .datagridwidget-widget-creator {
+#formfield-form-widgets-inscriptionsMarkings_inscriptions .datagridwidget-widget-creator {
     width: 70%;
     float: left;
 }
 
-#formfield-form-widgets-inscriptions .datagridwidget-widget-creator_role {
+#formfield-form-widgets-inscriptionsMarkings_inscriptions .datagridwidget-widget-creator_role {
     width: 30%;
     float: left;
 }
 
-#formfield-form-widgets-inscriptions .datagridwidget-widget-creator {
+#formfield-form-widgets-inscriptionsMarkings_inscriptions .datagridwidget-widget-creator {
     padding-right: 20px;
 }
 
 
-#formfield-form-widgets-inscriptions .datagridwidget-widget-creator label,
-#formfield-form-widgets-inscriptions .datagridwidget-widget-creator_role label,
-#formfield-form-widgets-inscriptions .datagridwidget-widget-creator div.label,
-#formfield-form-widgets-inscriptions .datagridwidget-widget-creator_role div.label {
+#formfield-form-widgets-inscriptionsMarkings_inscriptions .datagridwidget-widget-creator label,
+#formfield-form-widgets-inscriptionsMarkings_inscriptions .datagridwidget-widget-creator_role label,
+#formfield-form-widgets-inscriptionsMarkings_inscriptions .datagridwidget-widget-creator div.label,
+#formfield-form-widgets-inscriptionsMarkings_inscriptions .datagridwidget-widget-creator_role div.label {
     width: 38.7%;
     float: left;
 }
 
 
-#formfield-form-widgets-inscriptions .datagridwidget-widget-creator input {
+#formfield-form-widgets-inscriptionsMarkings_inscriptions .datagridwidget-widget-creator input {
     width: 60% !important;
     float: left;
 }
 
-#formfield-form-widgets-inscriptions .datagridwidget-widget-creator_role label,
-#formfield-form-widgets-inscriptions .datagridwidget-widget-creator_role div.label {
+#formfield-form-widgets-inscriptionsMarkings_inscriptions .datagridwidget-widget-creator_role label,
+#formfield-form-widgets-inscriptionsMarkings_inscriptions .datagridwidget-widget-creator_role div.label {
     width: 25%;
     float: left;
     text-align: right;
 }
 
 
-#formfield-form-widgets-inscriptions .datagridwidget-widget-creator div.label,
-#formfield-form-widgets-inscriptions .datagridwidget-widget-creator_role div.label  {
+#formfield-form-widgets-inscriptionsMarkings_inscriptions .datagridwidget-widget-creator div.label,
+#formfield-form-widgets-inscriptionsMarkings_inscriptions .datagridwidget-widget-creator_role div.label  {
     padding-top: 11px;
     padding-right: 10px;
 }
 
-#formfield-form-widgets-inscriptions .datagridwidget-widget-creator_role input {
+#formfield-form-widgets-inscriptionsMarkings_inscriptions .datagridwidget-widget-creator_role input {
     width: 74.5% !important;
     float: left;
 }
 
-#formfield-form-widgets-inscriptions .datagridwidget-widget-content {
+#formfield-form-widgets-inscriptionsMarkings_inscriptions .datagridwidget-widget-content {
     clear: both;
 }
 
@@ -8461,74 +8461,74 @@ body.template-collective-object-object .datagridwidget-body select.select-widget
     vertical-align: middle !important;
 }
 
-#formfield-form-widgets-insurance select.select-widget.choice-field {
+#formfield-form-widgets-valueInsurance_insurance select.select-widget.choice-field {
     width: 69% !important;
     vertical-align: middle !important;
 }
 
 
 @media (max-width: 767px) {
-    #formfield-form-widgets-insurance .datagridwidget-widget-renewal_date input,
-    #formfield-form-widgets-insurance .datagridwidget-widget-confirmation_date input,
-    #formfield-form-widgets-insurance .datagridwidget-widget-confirmation_date div.label,
-    #formfield-form-widgets-insurance .datagridwidget-widget-confirmation_date div.label label,
-    #formfield-form-widgets-insurance .datagridwidget-widget-renewal_date div.label,
-    #formfield-form-widgets-insurance .datagridwidget-widget-renewal_date div.label label {
+    #formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-renewal_date input,
+    #formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-confirmation_date input,
+    #formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-confirmation_date div.label,
+    #formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-confirmation_date div.label label,
+    #formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-renewal_date div.label,
+    #formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-renewal_date div.label label {
          width: 100% !important;
          float: none;
          text-align: left;
     }
 
-    #formfield-form-widgets-insurance .datagridwidget-widget-valuer input,
-    #formfield-form-widgets-insurance .datagridwidget-widget-date input,
-    #formfield-form-widgets-insurance .datagridwidget-widget-date div.label,
-    #formfield-form-widgets-insurance .datagridwidget-widget-date div.label label,
-    #formfield-form-widgets-insurance .datagridwidget-widget-valuer div.label,
-    #formfield-form-widgets-insurance .datagridwidget-widget-valuer div.label label {
+    #formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-valuer input,
+    #formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-date input,
+    #formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-date div.label,
+    #formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-date div.label label,
+    #formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-valuer div.label,
+    #formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-valuer div.label label {
          width: 100% !important;
          float: none;
          text-align: left;
     }
 
-    #formfield-form-widgets-valuation .datagridwidget-widget-value input,
-    #formfield-form-widgets-valuation .datagridwidget-widget-curr input,
-    #formfield-form-widgets-valuation .datagridwidget-widget-curr div.label,
-    #formfield-form-widgets-valuation .datagridwidget-widget-curr div.label label,
-    #formfield-form-widgets-valuation .datagridwidget-widget-value div.label,
-    #formfield-form-widgets-valuation .datagridwidget-widget-value div.label label {
+    #formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-value input,
+    #formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-curr input,
+    #formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-curr div.label,
+    #formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-curr div.label label,
+    #formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-value div.label,
+    #formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-value div.label label {
          width: 100% !important;
          float: none;
          text-align: left;
     }
 
-    #formfield-form-widgets-valuation .datagridwidget-widget-valuer input,
-    #formfield-form-widgets-valuation .datagridwidget-widget-date input,
-    #formfield-form-widgets-valuation .datagridwidget-widget-date div.label,
-    #formfield-form-widgets-valuation .datagridwidget-widget-date div.label label,
-    #formfield-form-widgets-valuation .datagridwidget-widget-valuer div.label,
-    #formfield-form-widgets-valuation .datagridwidget-widget-valuer div.label label {
+    #formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-valuer input,
+    #formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-date input,
+    #formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-date div.label,
+    #formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-date div.label label,
+    #formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-valuer div.label,
+    #formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-valuer div.label label {
          width: 100% !important;
          float: none;
          text-align: left;
     }
 
-    #formfield-form-widgets-insurance div.label label {
+    #formfield-form-widgets-valueInsurance_insurance div.label label {
         width: 100% !important;
     }
 
-    #formfield-form-widgets-insurance input,
-    #formfield-form-widgets-insurance select {
+    #formfield-form-widgets-valueInsurance_insurance input,
+    #formfield-form-widgets-valueInsurance_insurance select {
         width: 100% !important;
     }
 
-    #formfield-form-widgets-insurance .datagridwidget-widget-confirmation_date,
-    #formfield-form-widgets-insurance .datagridwidget-widget-renewal_date,
-    #formfield-form-widgets-insurance .datagridwidget-widget-valuer,
-    #formfield-form-widgets-insurance .datagridwidget-widget-date,
-    #formfield-form-widgets-valuation .datagridwidget-widget-value,
-    #formfield-form-widgets-valuation .datagridwidget-widget-curr,
-    #formfield-form-widgets-valuation .datagridwidget-widget-valuer,
-    #formfield-form-widgets-valuation .datagridwidget-widget-date {
+    #formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-confirmation_date,
+    #formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-renewal_date,
+    #formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-valuer,
+    #formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-date,
+    #formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-value,
+    #formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-curr,
+    #formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-valuer,
+    #formfield-form-widgets-valueInsurance_valuation .datagridwidget-widget-date {
         width: 100% !important;
         float: none;
     }
@@ -8658,7 +8658,6 @@ body.template-image_view #content div.title-description-wrapper {
 .hide-thead thead {
     display: none;
 }
-
 
 p.slide-description {
     display: none !important;

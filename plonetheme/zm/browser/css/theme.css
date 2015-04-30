@@ -8459,6 +8459,115 @@ body.template-collective-object-object .datagridwidget-body .datagridwidget-bloc
     clear: both;
 }
 
+
+/* Associations */
+#formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-nameType {
+    width: 60%;
+    float: left;
+}
+
+#formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-name {
+    width: 40%;
+    float: left;
+}
+
+#formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-nameType {
+    padding-right: 20px;
+}
+
+#formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-nameType label,
+#formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-name label,
+#formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-nameType div.label,
+#formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-name div.label {
+    width: 45.5% !important;
+    float: left;
+}
+
+
+#formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-nameType input {
+    width: 54% !important;
+    float: left;
+}
+
+#formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-name label,
+#formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-name div.label {
+    width: 25% !important;
+    float: left;
+    text-align: right;
+}
+
+
+#formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-nameType div.label,
+#formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-name div.label  {
+    padding-top: 11px;
+    padding-right: 10px;
+}
+
+#formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-name input {
+    width: 74.5% !important;
+    float: left;
+}
+
+#formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-startDate {
+    clear: both;
+}
+
+/* Associations - startDate - endDate */
+#formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-startDate {
+    width: 50%;
+    float: left;
+}
+
+#formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-endDate {
+    width: 50%;
+    float: left;
+}
+
+#formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-startDate {
+    padding-right: 20px;
+}
+
+#formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-startDate label,
+#formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-endDate label,
+#formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-startDate div.label,
+#formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-endDate div.label {
+    width: 55.5% !important;
+    float: left;
+}
+
+
+#formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-startDate input {
+    width: 44% !important;
+    float: left;
+}
+
+#formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-endDate label,
+#formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-endDate div.label {
+    width: 30% !important;
+    float: left;
+    text-align: right;
+}
+
+
+#formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-startDate div.label,
+#formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-endDate div.label  {
+    padding-top: 11px;
+    padding-right: 10px;
+}
+
+#formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-endDate input {
+    width: 69.5% !important;
+    float: left;
+}
+
+#formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-notes {
+    clear: both;
+}
+
+
+
+
+
 body.template-edit .datagridwidget-body select.select-widget.choice-field,
 body.template-collective-object-object .datagridwidget-body select.select-widget.choice-field, {
     width: 74% !important;
@@ -8576,6 +8685,61 @@ body.template-collective-object-object .datagridwidget-body select.select-widget
     #fieldset-inscriptions_markings .datagridwidget-widget-creator {
         padding-right: 0px;
     }
+
+    /* Associations */
+    #formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-nameType {
+        width: 100%;
+    }
+    #formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-name {
+        width: 100%;
+    }
+
+    #formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-nameType label,
+    #formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-name label,
+    #formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-nameType div.label,
+    #formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-name div.label {
+        width: 100%;
+        float: none;
+        text-align: left;
+    }
+
+    #formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-nameType input,
+    #formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-name input {
+        width: 100% !important;
+        float: none;
+    }
+
+    #formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-nameType {
+        padding-right: 0px;
+    }
+
+    /* Associations - startDate - endDate */
+    #formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-startDate {
+        width: 100%;
+    }
+    #formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-endDate {
+        width: 100%;
+    }
+
+    #formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-startDate label,
+    #formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-endDate label,
+    #formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-startDate div.label,
+    #formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-endDate div.label {
+        width: 100%;
+        float: none;
+        text-align: left;
+    }
+
+    #formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-startDate input,
+    #formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-endDate input {
+        width: 100% !important;
+        float: none;
+    }
+
+    #formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-startDate {
+        padding-right: 0px;
+    }
+
 }
 
 #content-core .datagridwidget-block-edit-cell .datagridwidget-table-view td {

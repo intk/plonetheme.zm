@@ -8755,7 +8755,8 @@ body.template-collective-object-object .datagridwidget-body select.select-widget
     padding-right: 0px !important;
 }
 
-#fieldset-documentation .field input[type="text"][name$=".title"] {
+#fieldset-documentation .field input[type="text"][name$=".title"],
+#fieldset-documentation_free_archive .field input[type="text"][name$=".title"] {
     font-family: "Source Sans Pro", Calibri, Candara, Arial, serif !important;
     color: #333333 !important;
     letter-spacing: inherit !important;

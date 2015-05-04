@@ -7165,7 +7165,8 @@ body.template-edit #content-core {
     margin: 0 auto;
 }
 
-body.template-collective-object-object #content-core .form:first-child {
+body.template-collective-object-object #content-core .form:first-child,
+body.template-collective-exhibition-exhibition #content-core .form:first-child {
     padding-top: 50px;
     width: 650px;
     margin: 0 auto;
@@ -7200,7 +7201,8 @@ body.template-sharing  #content .documentDescription {
 
 body.template-edit textarea.form-control,
 body.template-sharing textarea.form-control,
-body.template-collective-object-object textarea.form-control  {
+body.template-collective-object-object textarea.form-control,
+body.template-collective-exhibition-exhibition textarea.form-control {
     height: 75px !important;
 }
 
@@ -7303,7 +7305,8 @@ body.template-edit.portaltype-object #portal-logo img {
     content: url('++resource++plonetheme.zm.css/logo-preto.png');
 }
 
-body.template-collective-object-object #portal-logo img {
+body.template-collective-object-object #portal-logo img,
+body.template-collective-exhibition-exhibition #portal-logo img {
     content: url('++resource++plonetheme.zm.css/logo-preto.png');
 }
 
@@ -7806,7 +7809,8 @@ body.template-edit .field input[type="text"] {
     width: 100% !important;
 }
 
-body.template-collective-object-object .field input[type="text"] {
+body.template-collective-object-object .field input[type="text"],
+body.template-collective-exhibition-exhibition .field input[type="text"]  {
     width: 100% !important;
 }
 
@@ -7820,6 +7824,7 @@ body.template-collective-object-object .field input[type="text"] {
 }
 
 body.template-collective-object-object .tooltip-inner,
+body.template-collective-exhibition-exhibition .tooltip-inner,
 body.template-edit .tooltip-inner {
     padding: 15px;
     text-align: left;
@@ -7872,7 +7877,8 @@ body.template-edit .tooltip-inner {
     padding-right: 10px;
 }
 
-body.template-collective-object-object .datagridwidget-table-view th {
+body.template-collective-object-object .datagridwidget-table-view th,
+body.template-collective-exhibition-exhibition .datagridwidget-table-view th {
     display: table-cell;
     background: #ffffff !important;
     font-size: 0.850em !important; 
@@ -7903,7 +7909,8 @@ body.template-edit .datagridwidget-table-view {
     width: 100% !important;
 }
 
-body.template-collective-object-object .datagridwidget-table-view {
+body.template-collective-object-object .datagridwidget-table-view,
+body.template-collective-exhibition-exhibition .datagridwidget-table-view {
     width: 100% !important;
 }
 
@@ -7912,12 +7919,14 @@ body.template-collective-object-object .datagridwidget-table-view {
 }
 
 body.template-edit #fieldset-default,
-body.template-collective-object-object #fieldset-default {
+body.template-collective-object-object #fieldset-default,
+body.template-collective-exhibition-exhibition #fieldset-default {
     padding-top: 40px;
 }
 
 body.template-edit #content .form ul.nav,
-body.template-collective-object-object #content .form ul.nav {
+body.template-collective-object-object #content .form ul.nav,
+body.template-collective-exhibition-exhibition #content .form ul.nav {
     margin-left: 0px;
 }
 
@@ -7925,6 +7934,7 @@ body.template-collective-object-object #content .form ul.nav {
 
 @media (max-width: 480px) {
     body.template-collective-object-object #content-core .form:first-child,
+    body.template-collective-exhibition-exhibition #content-core .form:first-child,
     body.template-edit #content-core {
         padding-left: 20px;
         padding-right: 20px;
@@ -7990,7 +8000,9 @@ body.template-edit.portaltype-object header {
 body.template-edit div.formControls,
 body.template-edit.portaltype-object div.formControls,
 body.template-collective-object-object div.formControls,
-body.template-collective-object-object.portaltype-object div.formControls {
+body.template-collective-object-object.portaltype-object div.formControls,
+body.template-collective-exhibition-exhibition div.formControls,
+body.template-collective-exhibition-exhibition.portaltype-exhibition div.formControls {
     margin: 0;
     margin-bottom: 50px;
     margin-top: 20px;
@@ -7999,6 +8011,7 @@ body.template-collective-object-object.portaltype-object div.formControls {
 
 @media (min-width: 481px) and (max-width: 767px) {
     body.template-collective-object-object #content-core .form:first-child,
+    body.template-collective-exhibition-exhibition #content-core .form:first-child,
     body.template-edit #content-core {
         padding-left: 40px;
         padding-right: 40px;
@@ -8058,6 +8071,7 @@ body.template-collective-object-object.portaltype-object div.formControls {
 
 @media (min-width: 768px) and (max-width: 991px) {
     body.template-collective-object-object #content-core .form:first-child,
+    body.template-collective-exhibition-exhibition #content-core .form:first-child,
     body.template-edit #content-core {
         padding-left: 40px;
         padding-right: 40px;
@@ -8137,12 +8151,14 @@ body.template-collective-object-object.portaltype-object div.formControls {
 
 /* BlockDataGrid */
 body.template-edit .datagridwidget-block-edit-cell,
-body.template-collective-object-object .datagridwidget-block-edit-cell {
+body.template-collective-object-object .datagridwidget-block-edit-cell,
+body.template-collective-exhibition-exhibition .datagridwidget-block-edit-cell {
     padding-left: 0px;
 }
 
 body.template-edit .datagridwidget-block-edit-cell .datagridwidget-block,
-body.template-collective-object-object .datagridwidget-block-edit-cell .datagridwidget-block {
+body.template-collective-object-object .datagridwidget-block-edit-cell .datagridwidget-block,
+body.template-collective-exhibition-exhibition .datagridwidget-block-edit-cell .datagridwidget-block {
     padding: 0px;
     padding-bottom: 0.5em;
     padding-top: 0.5em;
@@ -8151,20 +8167,25 @@ body.template-collective-object-object .datagridwidget-block-edit-cell .datagrid
 body.template-edit .datagridwidget-body .datagridwidget-block-edit-cell div.label,
 body.template-edit .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
 body.template-collective-object-object .datagridwidget-body .datagridwidget-block-edit-cell div.label,
-body.template-collective-object-object .datagridwidget-body .datagridwidget-block-edit-cell div.label label {
+body.template-collective-object-object .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
+body.template-collective-exhibition-exhibition .datagridwidget-body .datagridwidget-block-edit-cell div.label,
+body.template-collective-exhibition-exhibition .datagridwidget-body .datagridwidget-block-edit-cell div.label label {
+
     width: 25%;
     text-align: left;
     font-size: 1.00em;
 }
 
 body.template-edit .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
-body.template-collective-object-object .datagridwidget-body .datagridwidget-block-edit-cell div.label label {
+body.template-collective-object-object .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
+body.template-collective-exhibition-exhibition .datagridwidget-body .datagridwidget-block-edit-cell div.label label {
     font-size: 1.00em;
     font-family: "Source Sans Pro", Calibri, Candara, Arial, serif !important;
 }
 
 body.template-edit .datagridwidget-body .datagridwidget-block-edit-cell input,
-body.template-collective-object-object .datagridwidget-body .datagridwidget-block-edit-cell input {
+body.template-collective-object-object .datagridwidget-body .datagridwidget-block-edit-cell input,
+body.template-collective-exhibition-exhibition .datagridwidget-body .datagridwidget-block-edit-cell input {
     width: 74% !important;
 }
 
@@ -8569,7 +8590,8 @@ body.template-collective-object-object .datagridwidget-body .datagridwidget-bloc
 
 
 body.template-edit .datagridwidget-body select.select-widget.choice-field,
-body.template-collective-object-object .datagridwidget-body select.select-widget.choice-field, {
+body.template-collective-object-object .datagridwidget-body select.select-widget.choice-field,
+body.template-collective-exhibition-exhibition .datagridwidget-body select.select-widget.choice-field {
     width: 74% !important;
     vertical-align: middle !important;
 }
@@ -8650,12 +8672,15 @@ body.template-collective-object-object .datagridwidget-body select.select-widget
     body.template-edit .datagridwidget-body .datagridwidget-block-edit-cell div.label,
     body.template-edit .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
     body.template-collective-object-object .datagridwidget-body .datagridwidget-block-edit-cell div.label,
-    body.template-collective-object-object .datagridwidget-body .datagridwidget-block-edit-cell div.label label, {
+    body.template-collective-object-object .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
+    body.template-collective-exhibition-exhibition .datagridwidget-body .datagridwidget-block-edit-cell div.label,
+    body.template-collective-exhibition-exhibition .datagridwidget-body .datagridwidget-block-edit-cell div.label label {
         width: 100% !important;
     }
 
     body.template-edit .datagridwidget-body .datagridwidget-block-edit-cell input,
-    body.template-collective-object-object .datagridwidget-body .datagridwidget-block-edit-cell input {
+    body.template-collective-object-object .datagridwidget-body .datagridwidget-block-edit-cell input,
+    body.template-collective-exhibition-exhibition .datagridwidget-body .datagridwidget-block-edit-cell input {
         width: 100% !important;
     }
 
@@ -8755,8 +8780,14 @@ body.template-collective-object-object .datagridwidget-body select.select-widget
     padding-right: 0px !important;
 }
 
+/* FORMS TITLE ISSUE */
 #fieldset-documentation .field input[type="text"][name$=".title"],
-#fieldset-documentation_free_archive .field input[type="text"][name$=".title"] {
+#fieldset-documentation_free_archive .field input[type="text"][name$=".title"],
+#fieldset-linked_objects .field input[type="text"][name$=".title"],
+#fieldset-exhibitions_details .field input[type="text"][name$=".title"],
+#formfield-form-widgets-linkedObjects_linkedObjects input[type="text"][name$=".title"],
+#formfield-form-widgets-exhibitionsDetails_exhibition_title input[type="text"][name$=".title"],
+#formfield-form-widgets-exhibitionsDetails_exhibition_altTitle input[type="text"][name$=".title"] {
     font-family: "Source Sans Pro", Calibri, Candara, Arial, serif !important;
     color: #333333 !important;
     letter-spacing: inherit !important;
@@ -8785,12 +8816,14 @@ body.template-collective-object-object .datagridwidget-body select.select-widget
 }
 
 body.portaltype-object.template-edit #content-core #editing-bar,
-body.template-collective-object-object #content-core #editing-bar {
+body.template-collective-object-object #content-core #editing-bar,
+body.template-collective-exhibition-exhibition #content-core #editing-bar {
     display: block !important;
 }
 
 body.portaltype-object.template-edit #content-core #editing-bar,
-body.template-collective-object-object #content-core #editing-bar {
+body.template-collective-object-object #content-core #editing-bar,
+body.template-collective-exhibition-exhibition #content-core #editing-bar {
     padding-top: 0px;
     padding-bottom: 40px;
     width: 650px;
@@ -8799,7 +8832,8 @@ body.template-collective-object-object #content-core #editing-bar {
 
 @media (max-width: 991px) {
     body.portaltype-object.template-edit #content-core #editing-bar,
-    body.portaltype-object.template-collective-object-object #content-core #editing-bar {
+    body.portaltype-object.template-collective-object-object #content-core #editing-bar,
+    body.portaltype-object.template-collective-exhibition-exhibition #content-core #editing-bar {
         padding-top: 0px;
         padding-left: 0px;
         padding-right: 0px;
@@ -8809,13 +8843,15 @@ body.template-collective-object-object #content-core #editing-bar {
 }
 
 body.portaltype-object.template-edit #content-core,
-body.portaltype-object.template-collective-object-object {
+body.portaltype-object.template-collective-object-object,
+body.portaltype-object.template-collective-exhibition-exhibition {
     padding-top: 40px !important;
 }
 
 
 body.portaltype-object.template-edit #content-core #editing-bar ul#edit-content-views,
-body.template-collective-object-object #content-core #editing-bar ul#edit-content-views {
+body.template-collective-object-object #content-core #editing-bar ul#edit-content-views,
+body.template-collective-exhibition-exhibition #content-core #editing-bar ul#edit-content-views {
     padding-top: 0px;
     width: 100% !important;
     margin-left: 0px !important;
@@ -8825,7 +8861,9 @@ body.template-collective-object-object #content-core #editing-bar ul#edit-conten
 body.template-edit.portaltype-object #portal-header,
 body.template-edit.portaltype-object header,
 body.template-collective-object-object #portal-header,
-body.template-collective-object-object header {
+body.template-collective-object-object header,
+body.template-collective-exhibition-exhibition #portal-header,
+body.template-collective-exhibition-exhibition header {
     background-color: #f5f5f5 !important;
 }
 
@@ -8833,7 +8871,8 @@ body.template-edit.portaltype-object .documentFirstHeading {
     display: block;
 }
 
-body.template-collective-object-object .documentFirstHeading {
+body.template-collective-object-object .documentFirstHeading,
+body.template-collective-exhibition-exhibition .documentFirstHeading {
     padding-bottom: 300px !important;
     margin-bottom: 0px !important;
 }
@@ -8879,5 +8918,14 @@ td.datagridwidget-manipulator.delete-row img {
     padding-top: 22px;
 }
 
+
+/* EXHIBITIONS */
+#formfield-form-widgets-start_date input {
+    width: auto !important;
+}
+
+#formfield-form-widgets-end_date input {
+    width: auto !important;
+}
 
 

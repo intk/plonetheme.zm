@@ -47,41 +47,45 @@
 <metal:content-core fill-slot="content-core">
     
     <metal:content-core define-macro="content-core">
-          <div id="parent-fieldname-text-dates" tal:condition="python: context.portal_type == 'Event'" tal:define="toLocalizedTime nocall:plone_view/toLocalizedTime;">
+          <div id="parent-fieldname-text-dates" tal:condition="python: context.portal_type == 'Event' or context.portal_type == 'Exhibition'" tal:define="toLocalizedTime nocall:plone_view/toLocalizedTime;">
 
             
-            <p>
             
-            <tal:differentday tal:condition="python:not context.start_date.date() == context.end_date.date()" i18n:translate="event_when_differentday">
-              <abbr i18n:name="startdate">
-                <span tal:replace="python: toLocalizedTime(context.start_date.strftime('%d %B %Y'))">Start Date</span>
-                <tal:word i18n:translate="event_when_differentday_optional_word_between_date_and_time" />
-              </abbr>
-              to
-              <span i18n:name="linebreak" />
-              <abbr i18n:name="enddate">
-                <span tal:replace="python: toLocalizedTime(context.end_date.strftime('%d %B %Y'))">End Date</span>
-                <tal:word i18n:translate="event_when_differentday_optional_word_between_date_and_time" />
-              </abbr>
-              
-            </tal:differentday>
+            <tal:checkdates tal:condition="python: context.start_date != None and context.end_date != None">
+              <p>
+              <tal:differentday tal:condition="python:not context.start_date.date() == context.end_date.date()" i18n:translate="event_when_differentday">
+                <abbr i18n:name="startdate">
+                  <span tal:replace="python: toLocalizedTime(context.start_date.strftime('%d %B %Y'))">Start Date</span>
+                  <tal:word i18n:translate="event_when_differentday_optional_word_between_date_and_time" />
+                </abbr>
+                to
+                <span i18n:name="linebreak" />
+                <abbr i18n:name="enddate">
+                  <span tal:replace="python: toLocalizedTime(context.end_date.strftime('%d %B %Y'))">End Date</span>
+                  <tal:word i18n:translate="event_when_differentday_optional_word_between_date_and_time" />
+                </abbr>
+                
+              </tal:differentday>
 
-            <tal:sameday tal:condition="python:context.start_date.date() == context.end_date.date()" i18n:translate="event_when_sameday">
-              <span tal:replace="python: toLocalizedTime(context.start_date.strftime('%d %B %Y'))" i18n:name="date">Start Date Time</span>
-              <span i18n:name="linebreak" />
-              ,
-              <abbr i18n:name="starttime">
-                <span tal:content="python: toLocalizedTime(context.start_date, time_only=1)">Start Time</span>
-              </abbr >
-              -
-              <abbr i18n:name="endtime">
-                 <span tal:content="python:toLocalizedTime(context.end_date, time_only=1)">End Time</span>
-              </abbr>
+              <tal:sameday tal:condition="python:context.start_date.date() == context.end_date.date()" i18n:translate="event_when_sameday">
+                <span tal:replace="python: toLocalizedTime(context.start_date.strftime('%d %B %Y'))" i18n:name="date">Start Date Time</span>
+                <span i18n:name="linebreak" />
+                ,
+                <abbr i18n:name="starttime">
+                  <span tal:content="python: toLocalizedTime(context.start_date, time_only=1)">Start Time</span>
+                </abbr >
+                -
+                <abbr i18n:name="endtime">
+                   <span tal:content="python:toLocalizedTime(context.end_date, time_only=1)">End Time</span>
+                </abbr>
 
-            </tal:sameday>
-            </p>
+              </tal:sameday>
+              </p>
 
+            </tal:checkdates>
+          
           </div>
+          <p><br><br></p>
 
         <div id="parent-fieldname-text-details" tal:condition="python: context.portal_type == 'product'">
           <h2 tal:content="context/Title"></h2>

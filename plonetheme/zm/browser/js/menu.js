@@ -38,9 +38,9 @@ $(document).ready(function() {
   $("#portal-languageselector").show(100);
   
   /* FASTCLICK */
-  $(function() {
+  /*$(function() {
     FastClick.attach(document.body);
-  });
+  });*/
 
   $(".fieldset-input").tooltip({
     'placement': function(tt, trigger) {

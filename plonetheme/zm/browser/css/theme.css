@@ -9022,4 +9022,43 @@ td.datagridwidget-manipulator.delete-row img {
     font-size: 1.000em !important;
 }
 
+#content .form-horizontal .pattern-pickadate-date-wrapper {
+    width: 49% !important;
+}
 
+#content .form-horizontal .pattern-pickadate-date-wrapper input {
+    width: 100% !important;
+}
+
+#content .form-horizontal .pattern-pickadate-time-wrapper {
+    width: 47.9% !important;
+}
+
+#content .form-horizontal .pattern-pickadate-time-wrapper input {
+    width: 100% !important;
+}
+
+
+@media (max-width: 767px) {
+    #content .form-horizontal .pattern-pickadate-date-wrapper {
+        width: 100% !important;
+    }
+
+    #content .form-horizontal .pattern-pickadate-date-wrapper input {
+        width: 100% !important;
+    }
+
+    #content .form-horizontal .pattern-pickadate-time-wrapper {
+        width: 100% !important;
+    }
+
+    #content .form-horizontal .pattern-pickadate-time-wrapper input {
+        width: 100% !important;
+    }
+
+}
+
+
+div.discreet.suppressVisualEditor {
+    padding-top: 50px !important;
+}

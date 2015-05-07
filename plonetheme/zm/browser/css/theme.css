@@ -8634,7 +8634,7 @@ body.template-collective-object-object .datagridwidget-body select.select-widget
 body.template-collective-exhibition-exhibition .datagridwidget-body select.select-widget.choice-field,
 body.template-collective-personorinstitution-personorinstitution .datagridwidget-body select.select-widget.choice-field,
 body.template-collective-treatment-treatment .datagridwidget-body select.select-widget.choice-field {
-    width: 74% !important;
+    width: 70% !important;
     vertical-align: middle !important;
 }
 

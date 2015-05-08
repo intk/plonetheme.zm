@@ -7742,6 +7742,7 @@ body.portaltype-portlet-page {
     width: 100%;
     height: auto;
     z-index: 1;
+    pointer-events: none;
 }
 
 label[for="form-widgets-dimension"] {

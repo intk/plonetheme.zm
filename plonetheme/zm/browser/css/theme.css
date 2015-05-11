@@ -9072,3 +9072,12 @@ div.discreet.suppressVisualEditor {
     width: auto !important;
 }
 
+#formfield-form-widgets-exhibitionsDetails_exhibition_startDate input,
+#formfield-form-widgets-exhibitionsDetails_exhibition_endDate input {
+    width: auto !important;
+}
+
+#formfield-form-widgets-exhibitionsDetails_exhibition_startDate select,
+#formfield-form-widgets-exhibitionsDetails_exhibition_endDate select {
+    width: 34% !important;
+}

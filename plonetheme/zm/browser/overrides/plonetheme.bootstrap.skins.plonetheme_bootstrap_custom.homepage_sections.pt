@@ -26,9 +26,10 @@
                 <a class="bt-menu-trigger"><span>Menu</span></a>
             </div>
 
+
+
             <ul class="nav navmenu-nav main-menu">
                 <metal:main define-macro="nav_main">
-
                 <tal:navitem repeat="node children">
                 <li tal:define="children   node/children;
                                 item       node/item;
@@ -49,7 +50,7 @@
                                 css_class_submenu python:not main_menu and css_class_submenu or css_class_dropdown;
                                 css_class_to_show python:(css_class_active + css_class_submenu).strip() or None"
                     tal:attributes="class css_class_to_show"
-                    tal:condition="python: bottomLevel &lt;= 0 or level &lt; bottomLevel-1 and not excluded_from_nav and portal_type == 'Folder'">
+                    tal:condition="python: bottomLevel &lt;= 0 or level &lt; bottomLevel-1 and not excluded_from_nav">
 
                     <tal:level define="item_wf_state_class python: 'state-' + normalizeString(item.review_state);
                                     ">

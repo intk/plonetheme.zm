@@ -6080,10 +6080,11 @@ body.template-search #search-page-header .documentFirstHeading, body.template-se
 
 #search-page-header {
     position: relative;
-    background-image: url('++resource++plonetheme.zm.css/bibliotheek_large.jpg');
+    /*background-image: url('++resource++plonetheme.zm.css/bibliotheek_large.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center;
+    background-position: center;*/
+    background: none;
 }
 
 #search-page-header:before {

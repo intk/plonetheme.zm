@@ -278,7 +278,7 @@ dl.portlet a:hover {
     width: 160px;
     height: 35px;
     margin-top: 0px;
-    margin-left: 0px;
+    margin-left: 55px;
     margin-bottom: 0px;
 }
 
@@ -286,7 +286,7 @@ dl.portlet a:hover {
     width: 222px;
     height: 23px;
     margin-top: 0px;
-    margin-left: 0px;
+    margin-left: 55px;
     margin-bottom: 0px;
 }
 
@@ -4245,7 +4245,7 @@ body.portaltype-portlet-page .slick-prev:hover, body.portaltype-portlet-page .sl
     position: absolute;
     width: 80px;
     height: 80px;
-    background-color: #D75745;
+    background-color: #000000;
     z-index: 10;
 }
 

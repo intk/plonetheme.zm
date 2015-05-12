@@ -286,7 +286,7 @@ dl.portlet a:hover {
     width: 222px;
     height: 23px;
     margin-top: 0px;
-    margin-left: 0px;
+    margin-left: 55px;
     margin-bottom: 0px;
 }
 
@@ -2133,7 +2133,7 @@ body.portaltype-media-person .social-viewlet {
     }
 
     #portal-logo img {
-        margin-top: 25px;
+        margin-top: 29px;
     }
 }
 

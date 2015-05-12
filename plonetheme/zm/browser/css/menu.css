@@ -189,14 +189,14 @@
 	text-transform: uppercase;
 	font-family: 'Raleway', sans-serif;
 	font-weight: 700;
-	color: #d75745;
+	color: #0095da;
 }
 
 #nav_menu ul.nav:not(.submenu) > li > a {
 	font-family: 'Raleway', sans-serif;
 	font-weight: 700;
 	font-size: 1.125em;
-	color: #d75745;
+	color: #0095da;
 	letter-spacing: 0.05em;
 }
 
@@ -339,7 +339,7 @@ body.canvas-slid  .bt-menu-trigger span:after {
     	top: 0;
     	width: 60px;
     	height: 60px;
-    	background-color: #D75745;
+    	background-color: #0095da;
     	z-index: 10;
 	}
 

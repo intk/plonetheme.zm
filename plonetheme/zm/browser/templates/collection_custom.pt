@@ -164,7 +164,7 @@
             </tal:entry>
 
         </metal:block>
-        
+
         <div metal:use-macro="context/batch_macros/macros/navigation" />
     
         </tal:listing>

@@ -110,10 +110,7 @@
       zcml:condition="installed bda.plone.shop"
     />
 
-    
-
     <!-- Pages -->
-
     <browser:page
         name="collection_view"
         menu="plone_displayviews"

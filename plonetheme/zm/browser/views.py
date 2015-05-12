@@ -470,9 +470,7 @@ class FolderListing(CommonBrowserView):
     Override of folder_listing view
     """
     def results(self, batch=True, b_start = 0, pagesize=33, sort_on='sortable_title', only_documented=False):
-        print "get results"
         results = []
-        print self.context.portal_type
 
         if self.context.portal_type  == 'Collection':
             print self.context.results(batch=batch, b_size=pagesize, sort_on=sort_on, b_start=b_start)

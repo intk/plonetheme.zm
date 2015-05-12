@@ -9082,3 +9082,7 @@ div.discreet.suppressVisualEditor {
 #formfield-form-widgets-exhibitionsDetails_exhibition_endDate select {
     width: 33% !important;
 }
+
+div.select2-container.pat-relateditems {
+    height: 100%;
+}

@@ -4046,6 +4046,7 @@ body.portaltype-portlet-page .slick-prev:hover, body.portaltype-portlet-page .sl
 .object-container .object-label {
     padding-left: 0px;
     color:#000000;
+    clear: both;
 }
 
 .object-container .object-value {
@@ -5015,7 +5016,8 @@ body.template-instruments_view #slideshow-controls .btn.pause-btn, {
 .portaltype-object #slideshow-controls .btn.expand-btn,
 body.portaltype-portlet-page #slideshow-controls .btn.expand-btn,
 body.template-content_view #slideshow-controls .btn.expand-btn,
-body.template-content_view #slideshow-controls .btn.share-btn {
+body.template-content_view #slideshow-controls .btn.share-btn 
+.portaltype-object #slideshow-controls .btn.info-btn {
     display: block;
 }
 
@@ -8964,11 +8966,11 @@ body.template-image_view #content div.title-description-wrapper {
     display: none;
 }
 
-p.slide-description {
+/*p.slide-description {
     display: none !important;
-}
+}*/
 
-.info-btn, .shop-btn, .share-btn, .play-btn, .zoom-btn {
+.shop-btn, .share-btn, .play-btn, .zoom-btn {
     display: none !important
 }
 
@@ -9086,3 +9088,38 @@ div.discreet.suppressVisualEditor {
 div.select2-container.pat-relateditems {
     height: 100%;
 }
+
+body.no-img-slideshow #parent-fieldname-text {
+    display: block !important;
+}
+
+body.no-img-slideshow .container.object-container {
+    display: block !important;
+}
+
+body.no-img-slideshow .object-fields {
+    display: block !important;
+}
+
+body.no-img-slideshow #slickslideshow {
+    display: none !important;
+}
+
+body.no-img-slideshow #portal-logo img {
+    content: url('++resource++plonetheme.zm.css/logo-preto.png') !important;
+}
+
+body.no-img-slideshow #edit-content-views {
+    padding-top: 150px;
+}
+
+body.no-img-slideshow:not(.userrole-authenticated) #parent-fieldname-text {
+    padding-top: 150px;
+}
+
+body.no-img-slideshow {
+    background-color: #ffffff !important;
+}
+
+
+

@@ -64,9 +64,11 @@ class get_nav_objects(BrowserView):
             collection_obj = collection_object.getObject()
         if is_folder:
             folder_path = '/'.join(collection_obj.getPhysicalPath())
-            results = catalog(path={'query': folder_path, 'depth': 1, 'portal_type':'Object'})
+            results = catalog(path={'query': folder_path, 'depth': 1})
         else:
             results = collection_obj.queryCatalog(batch=False)
+
+        #print results
         return results
 
     def get_batch(self, collection_object, start, pagesize=33):
@@ -263,15 +265,19 @@ class get_nav_objects(BrowserView):
         return _value
 
     def get_all_fields_object(self, object):
+
         object_schema = []
         schema = getUtility(IDexterityFTI, name='Object').lookupSchema()
 
-        if object.portal_type == 'Object':
+        if object.portal_type in ["Object"]:
             for name, field in getFieldsInOrder(schema):
-                if name not in ["text", "object_tags", "book_title", "dimension"]:
+                if name not in ["text"] and name in ['title', 'identification_objectName_objectName', 'identification_objectName_objectCategory',
+                                                        'identification_objectName_otherName', 'identification_identification_collection',
+                                                        'productionDating_dating_period', 'physicalCharacteristics_techniques',
+                                                        'identification_identification_objectNumber']:
                     value = getattr(object, name, '')
                     if value != None and value != '':
-                        if name in ['technique', 'artist', 'material', 'object_type', 'object_category', 'publisher', 'author']:
+                        if name in ['technique', 'artist', 'material', 'object_type', 'object_category', 'publisher', 'author', 'identification_identification_objectNumber']:
                             if (name == 'artist') or (name == 'author'):
                                 _value = self.create_author_name(value)
                                 value = _value
@@ -285,9 +291,27 @@ class get_nav_objects(BrowserView):
                         _title = MessageFactory(field.title)
                         new_attr = {"title": self.context.translate(_title), "value": value, "name": name}
                         
-                        if name in ['artist', 'author']:
-                            object_schema.insert(0, new_attr)
+                        if type(new_attr['value']) != list:
+                            if name in ['artist', 'author']:
+                                object_schema.insert(0, new_attr)
+                            else:
+                                object_schema.append(new_attr)
                         else:
+                            new_val = []
+                            for val in new_attr['value']:
+                                dict_val = []
+                                for key in val:
+                                    if val[key] != "" and val[key] != None:
+                                        dict_val.append("<a href='/%s/%s%s'>%s</a>" %(str(self.context.language),"/search?SearchableText=",val[key],val[key]))
+                                
+                                dict_val_str = ", ".join(dict_val)
+                                new_val.append(dict_val_str)
+
+                            new_val_str = '<p>'.join(new_val)
+                            if len(new_val) > 0:
+                                new_attr['value'] = new_val_str
+                            else:
+                                new_attr['value'] = ""
                             object_schema.append(new_attr)
             
             object_title = getattr(object, 'title', '')
@@ -346,7 +370,11 @@ class get_nav_objects(BrowserView):
                     if not items['has_list_images']:
                         items['list'].append({'schema':schema, 'url':obj.getURL(),'image_url': obj_media.absolute_url()+'/@@images/image/large', 'object_id': obj.getId, 'title':obj.Title, 'description': obj.Description, 'body': self.get_object_body(obj.getObject())})
                     else:
-                        items['list'].append({'schema':schema, 'images':self.get_multiple_images(obj.getObject(), view_type), 'url':obj.getURL(),'image_url': obj_media.absolute_url()+'/@@images/image/large', 'object_id': obj.getId, 'title':obj.Title, 'description': obj.Description, 'body': self.get_object_body(obj.getObject())})              
+                        items['list'].append({'schema':schema, 'images':self.get_multiple_images(obj.getObject(), view_type), 'url':obj.getURL(),'image_url': obj_media.absolute_url()+'/@@images/image/large', 'object_id': obj.getId, 'title':obj.Title, 'description': obj.Description, 'body': self.get_object_body(obj.getObject())})    
+                else:
+                    schema = self.get_all_fields_object(obj.getObject())
+                    items['list'].append({'schema':schema, 'url':obj.getURL(),'image_url': '', 'object_id': obj.getId, 'title':obj.Title, 'description': obj.Description, 'body': self.get_object_body(obj.getObject())})
+
         else:
             for obj in list_items:
                 obj_media = ICanContainMedia(obj.getObject()).getLeadMedia()
@@ -355,7 +383,11 @@ class get_nav_objects(BrowserView):
                     if not items['has_list_images']:
                         items['list'].append({'schema':schema, 'url':obj.getURL(),'image_url': obj_media.absolute_url()+'/@@images/image/large', 'object_id': obj.getId(), 'title':obj.Title(), 'description': obj.Description(), 'body': self.get_object_body(obj)})
                     else:
-                        items['list'].append({'schema':schema, 'images':self.get_multiple_images(obj.getObject(), view_type), 'url':obj.getURL(),'image_url': obj_media.absolute_url()+'/@@images/image/large', 'object_id': obj.getId(), 'title':obj.Title(), 'description': obj.Description(), 'body': self.get_object_body(obj)})                
+                        items['list'].append({'schema':schema, 'images':self.get_multiple_images(obj.getObject(), view_type), 'url':obj.getURL(),'image_url': obj_media.absolute_url()+'/@@images/image/large', 'object_id': obj.getId(), 'title':obj.Title(), 'description': obj.Description(), 'body': self.get_object_body(obj)})        
+
+                else:
+                    items['list'].append({'schema':schema, 'url':obj.getURL(),'image_url': '', 'object_id': obj.getId(), 'title':obj.Title(), 'description': obj.Description(), 'body': self.get_object_body(obj)})
+                         
         return items
 
     """
@@ -629,12 +661,15 @@ class get_fields(BrowserView):
         object_schema = []
         schema = getUtility(IDexterityFTI, name='Object').lookupSchema()
 
-        if object.portal_type == 'Object':
+        if object.portal_type in ["Object"]:
             for name, field in getFieldsInOrder(schema):
-                if name not in ["text", "object_tags", "book_title", "dimension"]:
+                if name not in ["text"] and name in ['title', 'identification_objectName_objectName', 'identification_objectName_objectCategory',
+                                                        'identification_objectName_otherName', 'identification_identification_collection',
+                                                        'productionDating_dating_period', 'physicalCharacteristics_techniques',
+                                                        'identification_identification_objectNumber']:
                     value = getattr(object, name, '')
                     if value != None and value != '':
-                        if name in ['technique', 'artist', 'material', 'object_type', 'object_category', 'publisher', 'author']:
+                        if name in ['technique', 'artist', 'material', 'object_type', 'object_category', 'publisher', 'author', 'identification_identification_objectNumber']:
                             if (name == 'artist') or (name == 'author'):
                                 _value = self.create_author_name(value)
                                 value = _value
@@ -648,10 +683,29 @@ class get_fields(BrowserView):
                         _title = MessageFactory(field.title)
                         new_attr = {"title": self.context.translate(_title), "value": value, "name": name}
                         
-                        if name in ['artist', 'author']:
-                            object_schema.insert(0, new_attr)
+                        if type(new_attr['value']) != list:
+                            if name in ['artist', 'author']:
+                                object_schema.insert(0, new_attr)
+                            else:
+                                object_schema.append(new_attr)
                         else:
+                            new_val = []
+                            for val in new_attr['value']:
+                                dict_val = []
+                                for key in val:
+                                    if val[key] != "" and val[key] != None:
+                                        dict_val.append("<a href='/%s/%s%s'>%s</a>" %(str(self.context.language),"/search?SearchableText=",val[key],val[key]))
+                                
+                                dict_val_str = ", ".join(dict_val)
+                                new_val.append(dict_val_str)
+
+                            new_val_str = '<p>'.join(new_val)
+                            if len(new_val) > 0:
+                                new_attr['value'] = new_val_str
+                            else:
+                                new_attr['value'] = ""
                             object_schema.append(new_attr)
+
             
             object_title = getattr(object, 'title', '')
             new_attr = {'title': self.context.translate('Title'), "value": object_title}

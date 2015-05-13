@@ -484,6 +484,7 @@ slickSlideshow.toggle_play = function(playBtn, slide) {
 };
 
 slickSlideshow.addNavigationSlides = function() {
+
 	slides = slickSlideshow.slides;
 
 	var init_slide = 0;
@@ -505,7 +506,11 @@ slickSlideshow.addNavigationSlides = function() {
 
 	for (var i = init_slide; i < slides.length; i++) {
 		if (slickSlideshow.double_view == false) {
-			slickSlideshow.$obj.slickAdd("<div data-title='"+slides[i].title+"' data-id='"+slides[i].object_id+"' data-description='"+slides[i].description+"' data-url='"+slides[i].obj_url+"' data-body='"+slides[i].body+"'><div class='inner-bg'><img data-lazy='"+slides[i].url+"'/></div></div>");
+			if (slides[i].url != "") {
+				slickSlideshow.$obj.slickAdd("<div data-title='"+slides[i].title+"' data-id='"+slides[i].object_id+"' data-description='"+slides[i].description+"' data-url='"+slides[i].obj_url+"' data-body='"+slides[i].body+"'><div class='inner-bg'><img data-lazy='"+slides[i].url+"'/></div></div>");
+			} else {
+				slickSlideshow.$obj.slickAdd("<div data-title='"+slides[i].title+"' data-id='"+slides[i].object_id+"' data-description='"+slides[i].description+"' data-url='"+slides[i].obj_url+"' data-body='"+slides[i].body+"' class='no-image-slide'><div class='title-description-wrapper'><h1 class='documentFirstHeading no-image'>"+slides[i].title+"</h1><div class='documentDescription description no-image'>"+slides[i].description+"</div></div></div>");
+			}
 		} else if (slickSlideshow.view_type == "double_view") {
 			slickSlideshow.$obj.addClass('double-view');
 			slide_w_images = "<div data-title='"+slides[i].title+"' data-id='"+slides[i].object_id+"' data-description='"+slides[i].description+"' data-url='"+slides[i].obj_url+"' data-body='"+slides[i].body+"'>";
@@ -1417,9 +1422,8 @@ slickSlideshow.updateDOMTitle = function(body, title) {
 
 	document.title = document_title.join('—');
 	
-
 	// Change title
-	$("#content h1.documentFirstHeading").html(title);
+	$("#content h1.documentFirstHeading:not(.no-image)").html(title);
 };
 
 slickSlideshow.updateSlideDescriptionBar = function(title, description) {
@@ -1457,7 +1461,7 @@ slickSlideshow.updateSlideDescriptionBar = function(title, description) {
 slickSlideshow.updateSlideDetails = function(curr, currentSlide, title, description) {
 	var $currentSlideObj = currentSlide;
 
-	$("#content div.documentDescription.description").html(description);
+	$("#content div.documentDescription.description:not(.no-image)").html(description);
 
 	// Set length of description
 	if (title == undefined) {
@@ -1656,6 +1660,8 @@ slickSlideshow.afterChange = function(event) {
 	/* ******************* */
 	/* Regular slideshow   * 
 	/* ******************* */
+
+
 	if (slickSlideshow.regular || $("body").hasClass('template-book_view') || $("body").hasClass('template-instrument_view') ) {
 		var slide = slickSlideshow.slides[currentSlide];
 		var description = slide.description;
@@ -1675,6 +1681,16 @@ slickSlideshow.afterChange = function(event) {
 
 		// --- Update object details
 		$currentSlideObj = $($slides[currentSlide]);
+
+		if ($currentSlideObj.hasClass('no-image-slide')) {
+			if (!$("body").hasClass('no-image-slide')) {
+				$("body").addClass("no-image-slide");
+			}
+		} else {
+			if ($("body").hasClass('no-image-slide')) {
+				$("body").removeClass("no-image-slide");
+			}
+		}
 
 		if ($currentSlideObj.hasClass('video-slide')) {
 			$(".actions-div").hide();

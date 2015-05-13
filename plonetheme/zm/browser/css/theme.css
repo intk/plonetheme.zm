@@ -9122,4 +9122,89 @@ body.no-img-slideshow {
 }
 
 
+div.no-image-slide div.title-description-wrapper {
+    position: relative !important;
+    height: 11% !important;
+    top: 40% !important;
+}
+
+#content div.no-image-slide div.title-description-wrapper h1.documentFirstHeading {
+    display: block !important;
+    color: #ffffff !important;
+    margin-top: 0px !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+    padding-bottom: 0px !important;
+    padding-top: 0px !important;
+
+}
+
+#content div.no-image-slide div.title-description-wrapper div.documentDescription {
+    display: block !important;
+    color: #ffffff !important;
+    position: absolute !important;
+    margin-top: 0px !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+    padding-bottom: 0px !important;
+    padding-top: 0px !important;
+}
+
+body.no-image-slide #slide-description {
+    display: none !important;
+}
+
+body.no-image-slide .expand-btn {
+    display: none !important;
+}
+
+#content div.no-image-slide:not(.slick-active) div.title-description-wrapper {
+    display: none !important;
+}
+
+#content div.no-image-slide:not(.slick-active) div.title-description-wrapper div.documentDescription,
+#content div.no-image-slide:not(.slick-active) div.title-description-wrapper h1.documentFirstHeading {
+    display: none !important;
+}
+
+@media (max-width: 480px) {
+    #content div.no-image-slide div.title-description-wrapper div.documentDescription {
+        padding-left: 80px !important;
+        padding-right: 80px !important;
+    }
+
+    #content div.no-image-slide div.title-description-wrapper h1.documentFirstHeading {
+        padding-left: 80px !important;
+        padding-right: 80px !important;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+    #content div.no-image-slide div.title-description-wrapper div.documentDescription {
+        padding-left: 120px !important;
+        padding-right: 120px !important;
+    }
+
+    #content div.no-image-slide div.title-description-wrapper h1.documentFirstHeading {
+        padding-left: 120px !important;
+        padding-right: 120px !important;
+    }
+}
+
+@media (max-width: 991px) and (min-width: 768px) {
+    #content div.no-image-slide div.title-description-wrapper div.documentDescription {
+        padding-left: 120px !important;
+        padding-right: 120px !important;
+    }
+
+    #content div.no-image-slide div.title-description-wrapper h1.documentFirstHeading {
+        padding-left: 120px !important;
+        padding-right: 120px !important;
+    }
+}
+
+
+
+
+
 

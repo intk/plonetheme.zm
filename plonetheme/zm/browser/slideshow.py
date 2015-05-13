@@ -272,9 +272,9 @@ class get_nav_objects(BrowserView):
         if object.portal_type in ["Object"]:
             for name, field in getFieldsInOrder(schema):
                 if name not in ["text"] and name in ['title', 'identification_objectName_objectName', 'identification_objectName_objectCategory',
-                                                        'identification_objectName_otherName', 'identification_identification_collection',
-                                                        'productionDating_dating_period', 'physicalCharacteristics_techniques',
-                                                        'identification_identification_objectNumber']:
+                                                        'identification_identification_collection',
+                                                        'productionDating_dating_period', 'physicalCharacteristics_materials',
+                                                        'identification_identification_objectNumber', 'physicalCharacteristics_dimensions']:
                     value = getattr(object, name, '')
                     if value != None and value != '':
                         if name in ['technique', 'artist', 'material', 'object_type', 'object_category', 'publisher', 'author', 'identification_identification_objectNumber']:
@@ -297,22 +297,55 @@ class get_nav_objects(BrowserView):
                             else:
                                 object_schema.append(new_attr)
                         else:
-                            new_val = []
-                            for val in new_attr['value']:
-                                dict_val = []
-                                for key in val:
-                                    if val[key] != "" and val[key] != None:
-                                        dict_val.append("<a href='/%s/%s%s'>%s</a>" %(str(self.context.language),"/search?SearchableText=",val[key],val[key]))
-                                
-                                dict_val_str = ", ".join(dict_val)
-                                new_val.append(dict_val_str)
+                            if name in ['productionDating_dating_period']:
+                                new_val = []
 
-                            new_val_str = '<p>'.join(new_val)
-                            if len(new_val) > 0:
-                                new_attr['value'] = new_val_str
+                                for val in new_attr['value']:
+                                    if val['date_early'] != val['date_late']:
+                                        if val['date_early_precision'] != None and val['date_early_precision'] != "":
+                                            new_val.append("%s %s - %s" % (val['date_early_precision'], val['date_early'], val['date_late']))
+                                        else:
+                                            new_val.append("%s - %s" % (val['date_early'], val['date_late']))
+                                    else:
+                                        if val['date_early_precision'] != None and val['date_early_precision'] != "":
+                                            new_val.append("%s %s" % (val['date_early_precision'], val['date_early']))
+                                        else:
+                                            new_val.append("%s" % (val['date_early']))
+
+                                new_val_str = '<p>'.join(new_val)
+                                if len(new_val) > 0:
+                                    new_attr['value'] = new_val_str
+                                object_schema.append(new_attr)
+
+                            elif name in ['physicalCharacteristics_dimensions']:
+                                new_val = []
+                                for val in new_attr['value']:
+                                    new_val.append("%s: %s %s" % (val['dimension'], val['value'], val['unit']))
+
+                                new_val_str = '<p>'.join(new_val)
+                                if len(new_val) > 0:
+                                    new_attr['value'] = new_val_str
+                                object_schema.append(new_attr)
                             else:
-                                new_attr['value'] = ""
-                            object_schema.append(new_attr)
+                                new_val = []
+                                for val in new_attr['value']:
+                                    dict_val = []
+                                    for key in val:
+                                        if val[key] != "" and val[key] != None:
+                                            dict_val.append("<a href='/%s/%s%s'>%s</a>" %(str(self.context.language),"search?SearchableText=",val[key],val[key]))
+                                    
+                                    dict_val_str = ", ".join(dict_val)
+                                    new_val.append(dict_val_str)
+
+                                if name in ['physicalCharacteristics_materials']:
+                                    new_val_str = ', '.join(new_val)
+                                else:
+                                    new_val_str = '<p>'.join(new_val)
+                                if len(new_val) > 0:
+                                    new_attr['value'] = new_val_str
+                                else:
+                                    new_attr['value'] = ""
+                                object_schema.append(new_attr)
             
             object_title = getattr(object, 'title', '')
             new_attr = {'title': self.context.translate('Title'), "value": object_title}
@@ -664,8 +697,8 @@ class get_fields(BrowserView):
         if object.portal_type in ["Object"]:
             for name, field in getFieldsInOrder(schema):
                 if name not in ["text"] and name in ['title', 'identification_objectName_objectName', 'identification_objectName_objectCategory',
-                                                        'identification_objectName_otherName', 'identification_identification_collection',
-                                                        'productionDating_dating_period', 'physicalCharacteristics_techniques',
+                                                        'identification_identification_collection',
+                                                        'productionDating_dating_period', 'physicalCharacteristics_materials', 'physicalCharacteristics_dimensions',
                                                         'identification_identification_objectNumber']:
                     value = getattr(object, name, '')
                     if value != None and value != '':
@@ -689,22 +722,55 @@ class get_fields(BrowserView):
                             else:
                                 object_schema.append(new_attr)
                         else:
-                            new_val = []
-                            for val in new_attr['value']:
-                                dict_val = []
-                                for key in val:
-                                    if val[key] != "" and val[key] != None:
-                                        dict_val.append("<a href='/%s/%s%s'>%s</a>" %(str(self.context.language),"/search?SearchableText=",val[key],val[key]))
-                                
-                                dict_val_str = ", ".join(dict_val)
-                                new_val.append(dict_val_str)
+                            if name in ['productionDating_dating_period']:
+                                new_val = []
 
-                            new_val_str = '<p>'.join(new_val)
-                            if len(new_val) > 0:
-                                new_attr['value'] = new_val_str
+                                for val in new_attr['value']:
+                                    if val['date_early'] != val['date_late']:
+                                        if val['date_early_precision'] != None and val['date_early_precision'] != "":
+                                            new_val.append("%s %s - %s" % (val['date_early_precision'], val['date_early'], val['date_late']))
+                                        else:
+                                            new_val.append("%s - %s" % (val['date_early'], val['date_late']))
+                                    else:
+                                        if val['date_early_precision'] != None and val['date_early_precision'] != "":
+                                            new_val.append("%s %s" % (val['date_early_precision'], val['date_early']))
+                                        else:
+                                            new_val.append("%s" % (val['date_early']))
+
+                                new_val_str = '<p>'.join(new_val)
+                                if len(new_val) > 0:
+                                    new_attr['value'] = new_val_str
+                                object_schema.append(new_attr)
+
+                            elif name in ['physicalCharacteristics_dimensions']:
+                                new_val = []
+                                for val in new_attr['value']:
+                                    new_val.append("%s: %s %s" % (val['dimension'], val['value'], val['unit']))
+
+                                new_val_str = '<p>'.join(new_val)
+                                if len(new_val) > 0:
+                                    new_attr['value'] = new_val_str
+                                object_schema.append(new_attr)
                             else:
-                                new_attr['value'] = ""
-                            object_schema.append(new_attr)
+                                new_val = []
+                                for val in new_attr['value']:
+                                    dict_val = []
+                                    for key in val:
+                                        if val[key] != "" and val[key] != None:
+                                            dict_val.append("<a href='/%s/%s%s'>%s</a>" %(str(self.context.language),"search?SearchableText=",val[key],val[key]))
+                                    
+                                    dict_val_str = ", ".join(dict_val)
+                                    new_val.append(dict_val_str)
+
+                                if name in ['physicalCharacteristics_materials']:
+                                    new_val_str = ', '.join(new_val)
+                                else:
+                                    new_val_str = '<p>'.join(new_val)
+                                if len(new_val) > 0:
+                                    new_attr['value'] = new_val_str
+                                else:
+                                    new_attr['value'] = ""
+                                object_schema.append(new_attr)
 
             
             object_title = getattr(object, 'title', '')

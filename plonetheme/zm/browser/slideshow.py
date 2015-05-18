@@ -303,9 +303,15 @@ class get_nav_objects(BrowserView):
                                 for val in new_attr['value']:
                                     if val['date_early'] != val['date_late']:
                                         if val['date_early_precision'] != None and val['date_early_precision'] != "":
-                                            new_val.append("%s %s - %s" % (val['date_early_precision'], val['date_early'], val['date_late']))
+                                            if val['date_late'] != "":
+                                                new_val.append("%s %s - %s" % (val['date_early_precision'], val['date_early'], val['date_late']))
+                                            else:
+                                                new_val.append("%s %s" % (val['date_early_precision'], val['date_early']))
                                         else:
-                                            new_val.append("%s - %s" % (val['date_early'], val['date_late']))
+                                            if val['date_late'] != "":
+                                                new_val.append("%s - %s" % (val['date_early'], val['date_late']))
+                                            else:
+                                                new_val.append("%s" % (val['date_early']))
                                     else:
                                         if val['date_early_precision'] != None and val['date_early_precision'] != "":
                                             new_val.append("%s %s" % (val['date_early_precision'], val['date_early']))
@@ -733,9 +739,15 @@ class get_fields(BrowserView):
                                 for val in new_attr['value']:
                                     if val['date_early'] != val['date_late']:
                                         if val['date_early_precision'] != None and val['date_early_precision'] != "":
-                                            new_val.append("%s %s - %s" % (val['date_early_precision'], val['date_early'], val['date_late']))
+                                            if val['date_late'] != "":
+                                                new_val.append("%s %s - %s" % (val['date_early_precision'], val['date_early'], val['date_late']))
+                                            else:
+                                                new_val.append("%s %s" % (val['date_early_precision'], val['date_early']))
                                         else:
-                                            new_val.append("%s - %s" % (val['date_early'], val['date_late']))
+                                            if val['date_late'] != "":
+                                                new_val.append("%s - %s" % (val['date_early'], val['date_late']))
+                                            else:
+                                                new_val.append("%s" % (val['date_early']))
                                     else:
                                         if val['date_early_precision'] != None and val['date_early_precision'] != "":
                                             new_val.append("%s %s" % (val['date_early_precision'], val['date_early']))

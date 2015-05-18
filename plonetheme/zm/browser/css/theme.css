@@ -9361,6 +9361,32 @@ body.template-default_error_message #portal-logo img {
     content: url('++resource++plonetheme.zm.css/logo-preto.png') !important;
 }
 
+.btn-info {
+  color: #ffffff;
+  background-color: #0095da;
+  border-color: #0095da;
+}
+
+.btn-info:hover {
+    background-color: #0095da;
+    border-color: #0095da;
+}
+
+.btn-info:active {
+    background-color: #0095da;
+    border-color: #0095da;
+}
+
+.btn-primary {
+    color: #ffffff;
+    background-color: #0095da;
+    border-color: #0095da;
+}
+
+.open > .dropdown-toggle.btn-info {
+    background-color: #0095da;
+    border-color: #0095da;
+}
 
 
 

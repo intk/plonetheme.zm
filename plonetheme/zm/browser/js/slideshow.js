@@ -1433,6 +1433,8 @@ slickSlideshow.updateSlideDescriptionBar = function(title, description) {
 		title = "";
 	}
 
+	var original_title = title;
+
 	if  (description == undefined) {
 		description = "";
 	}
@@ -1455,9 +1457,9 @@ slickSlideshow.updateSlideDescriptionBar = function(title, description) {
 
 	if (description != "") {
 		//$("#slideshow-controls #slide-description").html(title + ", " + description);
-		$("#slideshow-controls #slide-description").html(title);
+		$("#slideshow-controls #slide-description").html(original_title);
 	} else {
-		$("#slideshow-controls #slide-description").html(title);
+		$("#slideshow-controls #slide-description").html(original_title);
 	}
 };
 
@@ -1470,6 +1472,8 @@ slickSlideshow.updateSlideDetails = function(curr, currentSlide, title, descript
 	if (title == undefined) {
 		title = "";
 	}
+
+	var original_title = title;
 
 	if  (description == undefined) {
 		description = "";
@@ -1496,13 +1500,13 @@ slickSlideshow.updateSlideDetails = function(curr, currentSlide, title, descript
 		if ($currentSlideObj.hasClass("video-slide")) {
 			$("#slideshow-controls #slide-description").html(description);
 		} else {
-			$("#slideshow-controls #slide-description").html(title + ", " + description);
+			$("#slideshow-controls #slide-description").html(original_title);
 		}
 	} else {
 		if ($currentSlideObj.hasClass("video-slide")) {
 			$("#slideshow-controls #slide-description").html('');
 		} else {
-			$("#slideshow-controls #slide-description").html(title);
+			$("#slideshow-controls #slide-description").html(original_title);
 		}
 	}
 

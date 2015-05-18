@@ -9203,6 +9203,167 @@ body.no-image-slide .expand-btn {
     }
 }
 
+/* LOGIN TEMPLATE */
+
+body.template-login_form {
+    background-color: #ffffff !important;
+}
+
+body.template-login_form #portal-logo img,
+body.template-logged_out #portal-logo img {
+    content: url('++resource++plonetheme.zm.css/logo-preto.png') !important;
+}   
+
+body.template-login_form #portal-header,
+body.template-logged_out #portal-header {
+    background-color: #ffffff !important;
+}
+
+body.template-login_form #content-core,
+body.template-logged_out #content-core {
+  padding-top: 100px !important;
+  padding-bottom: 100px !important;
+}
+
+body.template-login_form #login-form input,
+body.template-logged_out #login-form input {
+    width: 20% !important;
+}
+
+body.template-login_form #login-form span,
+body.template-login_form #login-form label,
+body.template-login_form #login-form strong,
+body.template-logged_out #login-form span,
+body.template-logged_out #login-form label,
+body.template-logged_out #login-form strong {
+  font-family: 'Merriweather', serif;
+  font-weight: 400;
+  line-height: 33px;
+  color: #333333;
+  font-size: 1.00em !important;
+}
+
+body.template-login_form strong,
+body.template-logged_out strong {
+    font-family: 'Merriweather', serif;
+    font-weight: 400;
+    line-height: 33px;
+    color: #333333;
+    font-size: 1.00em !important;
+    font-weight: 700;
+}
+
+body.template-login_form #login-form .form-control,
+body.template-logged_out #login-form .form-control {
+    padding: 10px 18px !important;
+    border: 1px solid #AAA;
+    cursor: text;
+    background-color: #FFF;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop(1%, #eee), color-stop(15%, #fff));
+    background-image: -webkit-linear-gradient(top, #eee 1%, #fff 15%);
+    background-image: -moz-linear-gradient(top, #eee 1%, #fff 15%);
+    background-image: -o-linear-gradient(top, #eee 1%, #fff 15%);
+    background-image: -ms-linear-gradient(top, #eee 1%, #fff 15%);
+    background-image: linear-gradient(top, #eee 1%, #fff 15%);
+    font-size: 1.000em !important;
+}
+
+@media (max-width: 768px) {
+    body.template-login_form #login-form input {
+        width: 90% !important;
+    }
+
+    body.template-logged_out #login-form input {
+        width: 90% !important;
+    }
+}
+
+body.template-login_form #content-core a,
+body.template-logged_out #content-core a {
+    text-decoration: underline;
+}
+
+body.template-login_success #portal-logo img {
+    content: url('++resource++plonetheme.zm.css/logo-preto.png') !important;
+}
+
+
+body.template-logged_out #portal-logo img {
+    content: url('++resource++plonetheme.zm.css/logo-preto.png') !important;
+}
+
+body.template-login_success #content-core > p {
+    width: 650px;
+    margin: 0 auto;
+}
+
+body.template-login_success #content-core > div {
+    width: 650px;
+    margin: 0 auto;
+}
+
+body.template-login_success #content-core {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+body.template-login_success #content-core a {
+    text-decoration: underline;
+}
+
+body.template-logged_out #content-core > p {
+    width: 650px;
+    margin: 0 auto;
+}
+
+body.template-logged_out #content-core > div {
+    width: 650px;
+    margin: 0 auto;
+}
+
+body.template-logged_out #content-core {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+body.template-logged_out #portal-header {
+    background-color: #f5f5f5 !important;
+}
+
+@media (max-width: 768px) {
+    body.template-login_success #content-core > p {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    body.template-login_success #content-core > div {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    body.template-logged_out #content-core > p {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    body.template-logged_out #content-core > div {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+}
+
+#content-core .thumbnail p {
+    display: none !important;
+}
+
+body.template-default_error_message #portal-logo img {
+    content: url('++resource++plonetheme.zm.css/logo-preto.png') !important;
+}
+
+
+
+
 
 
 

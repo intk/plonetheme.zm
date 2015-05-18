@@ -632,7 +632,8 @@ slickSlideshow.getNavigationContent = function(query, object_id, init) {
 			$currentSlideObj = $($slides[currentSlide]);
 			var description = $currentSlideObj.attr('data-description');
 			var title = $currentSlideObj.attr('data-title');
-			
+			var original_title =  $currentSlideObj.attr('data-title');
+
 			if (title == undefined) {
 				title = "";
 			} 
@@ -658,7 +659,8 @@ slickSlideshow.getNavigationContent = function(query, object_id, init) {
 			
 
 			if ((title != "") && (description != "")) {
-				$("#slideshow-controls #slide-description").html(title + ", " + description);
+				// TEMP $("#slideshow-controls #slide-description").html(title + ", " + description);
+				$("#slideshow-controls #slide-description").html(original_title);
 			}
 
 			if (!init) {
@@ -1452,7 +1454,8 @@ slickSlideshow.updateSlideDescriptionBar = function(title, description) {
 	/* **** */
 
 	if (description != "") {
-		$("#slideshow-controls #slide-description").html(title + ", " + description);
+		//$("#slideshow-controls #slide-description").html(title + ", " + description);
+		$("#slideshow-controls #slide-description").html(title);
 	} else {
 		$("#slideshow-controls #slide-description").html(title);
 	}

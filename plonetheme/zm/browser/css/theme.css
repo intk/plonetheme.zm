@@ -9372,6 +9372,11 @@ body.template-default_error_message #portal-logo img {
     border-color: #0095da;
 }
 
+.btn-info:focus {
+    background-color: #0095da;
+    border-color: #0095da;
+}
+
 .btn-info:active {
     background-color: #0095da;
     border-color: #0095da;

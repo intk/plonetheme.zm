@@ -314,7 +314,8 @@ class get_nav_objects(BrowserView):
 
                                 new_val_str = '<p>'.join(new_val)
                                 if len(new_val) > 0:
-                                    new_attr['value'] = new_val_str
+                                    if new_val_str != "":
+                                        new_attr['value'] = new_val_str
                                 object_schema.append(new_attr)
 
                             elif name in ['physicalCharacteristics_dimensions']:
@@ -324,7 +325,9 @@ class get_nav_objects(BrowserView):
 
                                 new_val_str = '<p>'.join(new_val)
                                 if len(new_val) > 0:
-                                    new_attr['value'] = new_val_str
+                                    if new_val_str != "":
+                                        new_attr['value'] = new_val_str
+                                    
                                 object_schema.append(new_attr)
                             else:
                                 new_val = []
@@ -342,7 +345,8 @@ class get_nav_objects(BrowserView):
                                 else:
                                     new_val_str = '<p>'.join(new_val)
                                 if len(new_val) > 0:
-                                    new_attr['value'] = new_val_str
+                                    if new_val_str != "":
+                                        new_attr['value'] = new_val_str
                                 else:
                                     new_attr['value'] = ""
                                 object_schema.append(new_attr)
@@ -739,7 +743,8 @@ class get_fields(BrowserView):
 
                                 new_val_str = '<p>'.join(new_val)
                                 if len(new_val) > 0:
-                                    new_attr['value'] = new_val_str
+                                    if new_val_str != "":
+                                        new_attr['value'] = new_val_str
                                 object_schema.append(new_attr)
 
                             elif name in ['physicalCharacteristics_dimensions']:
@@ -749,7 +754,9 @@ class get_fields(BrowserView):
 
                                 new_val_str = '<p>'.join(new_val)
                                 if len(new_val) > 0:
-                                    new_attr['value'] = new_val_str
+                                    if new_val_str != "":
+                                        new_attr['value'] = new_val_str
+                                    
                                 object_schema.append(new_attr)
                             else:
                                 new_val = []
@@ -767,7 +774,8 @@ class get_fields(BrowserView):
                                 else:
                                     new_val_str = '<p>'.join(new_val)
                                 if len(new_val) > 0:
-                                    new_attr['value'] = new_val_str
+                                    if new_val_str != "":
+                                        new_attr['value'] = new_val_str
                                 else:
                                     new_attr['value'] = ""
                                 object_schema.append(new_attr)

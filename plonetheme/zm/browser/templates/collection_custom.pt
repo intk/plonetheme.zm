@@ -72,7 +72,7 @@
             <metal:block define-slot="entry">
             
             <!-- ITEM -->
-              <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" metal:define-macro="listitem">
+              <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" metal:define-macro="listitem" tal:condition="not:excluded_from_nav">
                 <div class="thumbnail">
                   <div class="thumb-wrapper">
                     <a class="thumb-image" tal:condition="python: (item.hasMedia or item.portal_type == 'Image') and item_img != None" href="" tal:attributes="href python: item_link+'?collection_id='+collection_id+'&b_start='+str(b_start) if portal_type == 'Collection' and item_type == 'Object' else item_link"

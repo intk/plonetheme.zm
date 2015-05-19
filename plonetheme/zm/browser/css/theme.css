@@ -7164,7 +7164,7 @@ body.portaltype-portlet-page.userrole-authenticated #portal-logo img {
 
 body.template-edit #content-core {
     padding-top: 50px;
-    width: 650px;
+    width: 880px;
     margin: 0 auto;
 }
 
@@ -7853,7 +7853,7 @@ body.template-edit .tooltip-inner {
 }
 
 .div-50 .control-label {
-    width: 53.5% !important;
+    width: 52.5% !important;
 }
 
 .div-50-triple .control-label {
@@ -8825,7 +8825,7 @@ body.template-collective-treatment-treatment .datagridwidget-body select.select-
 
 #fieldset-numbers_relationships .datagridwidget-body .datagridwidget-block-edit-cell div.label,
 #fieldset-numbers_relationships .datagridwidget-body .datagridwidget-block-edit-cell div.label label {
-    width: 28.4% !important;
+    width: 27.3% !important;
 }
 
 #fieldset-numbers_relationships .datagridwidget-body .datagridwidget-block-edit-cell input {
@@ -8886,7 +8886,7 @@ body.template-collective-personorinstitution-personorinstitution #content-core #
 body.template-collective-treatment-treatment #content-core #editing-bar {
     padding-top: 0px;
     padding-bottom: 40px;
-    width: 650px;
+    width: 880px;
     margin: 0 auto;
 }
 
@@ -9393,9 +9393,124 @@ body.template-default_error_message #portal-logo img {
     border-color: #0095da;
 }
 
+/* Exhibition styles */
 
 
 
+#formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-telephone {
+    width: 60%;
+    float: left;
+}
+
+#formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-fax {
+    width: 40%;
+    float: left;
+}
+
+#formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-telephone {
+    padding-right: 20px;
+}
+
+
+#formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-telephone label,
+#formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-fax label,
+#formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-telephone div.label,
+#formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-fax div.label {
+    width: 50.2%;
+    float: left;
+}
+
+
+#formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-telephone input {
+    width: 48% !important;
+    float: left;
+}
+
+#formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-fax label,
+#formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-fax div.label {
+    width: 25%;
+    float: left;
+    text-align: right;
+}
+
+#formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-fax label {
+    width: 80% !important;
+}
+
+
+#formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-telephone div.label,
+#formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-fax div.label  {
+    padding-top: 11px;
+    padding-right: 10px;
+}
+
+#formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-fax input {
+    width: 72.4% !important;
+    float: left;
+}
+
+#formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-name {
+    clear: both;
+}
+
+
+@media (max-width: 767px) {
+    #formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-telephone {
+        width: 100%;
+        float: left;
+    }
+
+    #formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-fax {
+        width: 100%;
+        float: left;
+    }
+
+    #formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-telephone {
+        padding-right: 0px;
+    }
+
+
+    #formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-telephone label,
+    #formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-fax label,
+    #formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-telephone div.label,
+    #formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-fax div.label {
+        width: 100%;
+        float: left;
+    }
+
+
+    #formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-telephone input {
+        width: 100% !important;
+        float: left;
+    }
+
+    #formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-fax label,
+    #formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-fax div.label {
+        width: 100%;
+        float: left;
+        text-align: left;
+    }
+
+    #formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-fax label {
+        width: 100% !important;
+    }
+
+
+    #formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-telephone div.label,
+    #formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-fax div.label  {
+        padding-top: 11px;
+        padding-right: 10px;
+    }
+
+    #formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-fax input {
+        width: 100% !important;
+        float: left;
+    }
+
+    #formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-name {
+        clear: both;
+    }
+}
 
 
 

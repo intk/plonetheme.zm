@@ -33,6 +33,7 @@ plonetheme/zm/browser/__init__.py
 plonetheme/zm/browser/configure.zcml
 plonetheme/zm/browser/copy_of_sections.pt
 plonetheme/zm/browser/extendedMailchimp.py
+plonetheme/zm/browser/images-not_found-v2.txt
 plonetheme/zm/browser/interfaces.py
 plonetheme/zm/browser/jasny-bootstrap-3.1.3-dist.zip
 plonetheme/zm/browser/slideshow.py

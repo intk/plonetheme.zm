@@ -9512,6 +9512,10 @@ body.template-default_error_message #portal-logo img {
     }
 }
 
+body.template-edit #portal-logo img {
+    content: url('++resource++plonetheme.zm.css/logo-preto.png') !important;
+}
+
 
 
 

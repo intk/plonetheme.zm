@@ -47,7 +47,7 @@
 <metal:content-core fill-slot="content-core">
     
     <metal:content-core define-macro="content-core">
-          <div id="parent-fieldname-text-dates" tal:condition="python: context.portal_type == 'Event' or context.portal_type == 'Exhibition'" tal:define="toLocalizedTime nocall:plone_view/toLocalizedTime;">
+          <div id="parent-fieldname-text-dates" tal:condition="python: context.portal_type == 'Event' or context.portal_type == 'Exhibition'" tal:define="toLocalizedTime nocall:plone_view/toLocalizedTime;" style="padding-bottom: 20px;">
 
             
             
@@ -85,7 +85,7 @@
             </tal:checkdates>
           
           </div>
-          <p><br><br></p>
+          
 
         <div id="parent-fieldname-text-details" tal:condition="python: context.portal_type == 'product'">
           <h2 tal:content="context/Title"></h2>

@@ -9516,6 +9516,11 @@ body.template-edit #portal-logo img {
     content: url('++resource++plonetheme.zm.css/logo-preto.png') !important;
 }
 
+body.template-content_view .info-btn {
+    display: none !important;
+}
+
+
 
 
 

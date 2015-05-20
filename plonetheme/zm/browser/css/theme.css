@@ -9641,4 +9641,29 @@ body.template-content_view .info-btn {
     }
 }
 
+#form-widgets-linkedObjects_relatedItems-widgets-query {
+    width: 80% !important;
+}
+
+#formfield-form-widgets-linkedObjects_relatedItems-widgets-query .searchButton {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 10px 18px;
+    font-size: 15px;
+    line-height: 1.42857143;
+    border-radius: 0;
+    -webkit-user-select: none;
+    color: #ffffff;
+    background-color: #222222;
+    border-color: #222222;
+    margin-top: -2px;
+}
+
 

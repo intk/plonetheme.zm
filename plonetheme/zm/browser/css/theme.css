@@ -9524,5 +9524,121 @@ body.template-content_view .info-btn {
     display: none !important;
 }
 
+/* postal code and place */
+
+#formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-postalCode {
+    width: 60%;
+    float: left;
+}
+
+#formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-place {
+    width: 40%;
+    float: left;
+}
+
+#formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-postalCode {
+    padding-right: 20px;
+}
+
+
+#formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-postalCode label,
+#formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-place label,
+#formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-postalCode div.label,
+#formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-place div.label {
+    width: 50.2%;
+    float: left;
+}
+
+
+#formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-postalCode input {
+    width: 48% !important;
+    float: left;
+}
+
+#formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-place label,
+#formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-place div.label {
+    width: 25%;
+    float: left;
+    text-align: right;
+}
+
+#formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-place label {
+    width: 80% !important;
+}
+
+
+#formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-postalCode div.label,
+#formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-place div.label  {
+    padding-top: 11px;
+    padding-right: 10px;
+}
+
+#formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-place input {
+    width: 72.4% !important;
+    float: left;
+}
+
+#formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-country {
+    clear: both;
+}
+
+
+@media (max-width: 767px) {
+    #formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-postalCode {
+        width: 100%;
+        float: left;
+    }
+
+    #formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-place {
+        width: 100%;
+        float: left;
+    }
+
+    #formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-postalCode {
+        padding-right: 0px;
+    }
+
+
+    #formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-postalCode label,
+    #formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-place label,
+    #formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-postalCode div.label,
+    #formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-place div.label {
+        width: 100%;
+        float: left;
+    }
+
+
+    #formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-postalCode input {
+        width: 100% !important;
+        float: left;
+    }
+
+    #formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-place label,
+    #formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-place div.label {
+        width: 100%;
+        float: left;
+        text-align: left;
+    }
+
+    #formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-place label {
+        width: 100% !important;
+    }
+
+
+    #formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-postalCode div.label,
+    #formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-place div.label  {
+        padding-top: 11px;
+        padding-right: 10px;
+    }
+
+    #formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-place input {
+        width: 100% !important;
+        float: left;
+    }
+
+    #formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-country {
+        clear: both;
+    }
+}
 
 

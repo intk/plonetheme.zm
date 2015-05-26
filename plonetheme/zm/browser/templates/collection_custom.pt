@@ -72,7 +72,7 @@
             <metal:block define-slot="entry">
             
             <!-- ITEM -->
-              <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" metal:define-macro="listitem" tal:condition="not:excluded_from_nav">
+              <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" metal:define-macro="listitem">
                 <div class="thumbnail">
                   <div class="thumb-wrapper">
                     <a class="thumb-image" tal:condition="python: (item.hasMedia or item.portal_type == 'Image') and item_img != None" href="" tal:attributes="href python: item_link+'?collection_id='+collection_id+'&b_start='+str(b_start) if portal_type == 'Collection' and item_type == 'Object' else item_link"
@@ -97,6 +97,7 @@
                   </div>
                   <div class="caption">
 
+                    <tal:isfolder condition="python: portal_type == 'Folder'">
                     <tal:object condition="python: item_type == 'Object'"
                       tal:define="final_title python: item.Title if item.Title != '' else getattr(item_obj, 'identification_identification_objectNumber', '')">
                       <h3><a href="#"
@@ -118,6 +119,32 @@
                         </a>
                       </h3>
                     </tal:notobject>
+                  </tal:isfolder>
+
+                  <tal:iscol condition="python: portal_type == 'Collection'">
+                    <tal:object condition="python: item_type == 'Object'"
+                      tal:define="final_title python: item.Title() if item.Title() != '' else getattr(item_obj, 'identification_identification_objectNumber', '')">
+                      <h3><a href="#"
+                       tal:attributes="href python: item_link+'?collection_id='+collection_id+'&b_start='+str(b_start) if portal_type == 'Collection' and item_type == 'Object' else item_link; class item_wf_state_class"
+                       tal:content="final_title"
+                       >
+                          Title
+                        </a>
+                      </h3>
+
+                    </tal:object>
+
+                    <tal:notobject condition="python: item_type != 'Object'">
+                      <h3><a href="#"
+                       tal:attributes="href python: item_link+'?collection_id='+collection_id+'&b_start='+str(b_start) if portal_type == 'Collection' and item_type == 'Object' else item_link; class item_wf_state_class"
+                       tal:content="item/Title"
+                       >
+                          Title
+                        </a>
+                      </h3>
+                    </tal:notobject>
+                  </tal:iscol>
+
 
                   <!--<h3 tal:condition="excluded_from_nav" tal:content="item/Title">
                     Title

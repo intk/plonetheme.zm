@@ -1672,6 +1672,11 @@ slickSlideshow.afterChange = function(event) {
 	if (slickSlideshow.regular || $("body").hasClass('template-book_view') || $("body").hasClass('template-instrument_view') ) {
 		var slide = slickSlideshow.slides[currentSlide];
 		var description = slide.description;
+
+		if (slide.is_object) {
+			description = "<a href='"+slide.relative_path+"'>"+slide.description+"</a>";
+		}
+
 		$("#slideshow-controls #slide-count").html((slickSlideshow.slideCount) + "/" + slickSlideshow.total_items);
 		
 		if (!$("body").hasClass('template-book_view') && !$("body").hasClass('template-instrument_view')) {
@@ -1915,6 +1920,7 @@ slickSlideshow.getSlideDetails = function(item, last, slickInited) {
 		'url': item.url,
 		'UID': item.UID,
 		'relative_path': item.relative_path,
+		'is_object': item.is_object
 	}
 
 	slickSlideshow.slides.push(slide_item);

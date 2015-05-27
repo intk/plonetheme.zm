@@ -512,6 +512,28 @@ class FolderListing(CommonBrowserView):
         else:
             return False 
 
+
+    def getItemTitle(self, item):
+        if item.title != "" and item.title != None:
+            return item.title
+
+        if hasattr(item, 'identification_taxonomy'):
+            if len(item.identification_taxonomy) > 0:
+                taxonomy = item.identification_taxonomy[0]
+                common_name = taxonomy['common_name']
+                if common_name != "" and common_name != None:
+                    return common_name
+
+                scientific_name = taxonomy['scientific_name']
+
+                if scientific_name != "" and scientific_name != None:
+                    return scientific_name
+
+        if hasattr(item, 'identification_identification_objectNumber'):
+            return item.identification_identification_objectNumber
+ 
+        return ""
+
     def getImageObject(self, item):
         if item.portal_type == "Image":
             return item.getObject()

@@ -66,6 +66,7 @@
                        item_wf_state_class python:'state-' + normalizeString(item.review_state);
                        number repeat/item/number;
                        item_img python:view.getImageObject(item);
+                       item_real_title python:view.getItemTitle(item_obj);
                        item_is_buyable python:view.isBuyable(item_obj);
                        item_link python: (item_type == 'Press Kit' and not view.checkPermission(item, 'Add portal content')) and item_url + '/download_zip' or (item_type in use_view_action and item_url+'/view' or item_url);">
             
@@ -97,53 +98,14 @@
                   </div>
                   <div class="caption">
 
-                    <tal:isfolder condition="python: portal_type == 'Folder'">
-                    <tal:object condition="python: item_type == 'Object'"
-                      tal:define="final_title python: item.Title if item.Title != '' else getattr(item_obj, 'identification_identification_objectNumber', '')">
+
                       <h3><a href="#"
                        tal:attributes="href python: item_link+'?collection_id='+collection_id+'&b_start='+str(b_start) if portal_type == 'Collection' and item_type == 'Object' else item_link; class item_wf_state_class"
-                       tal:content="final_title"
+                       tal:content="item_real_title"
                        >
                           Title
                         </a>
                       </h3>
-
-                    </tal:object>
-
-                    <tal:notobject condition="python: item_type != 'Object'">
-                      <h3><a href="#"
-                       tal:attributes="href python: item_link+'?collection_id='+collection_id+'&b_start='+str(b_start) if portal_type == 'Collection' and item_type == 'Object' else item_link; class item_wf_state_class"
-                       tal:content="item/Title"
-                       >
-                          Title
-                        </a>
-                      </h3>
-                    </tal:notobject>
-                  </tal:isfolder>
-
-                  <tal:iscol condition="python: portal_type == 'Collection'">
-                    <tal:object condition="python: item_type == 'Object'"
-                      tal:define="final_title python: item.Title() if item.Title() != '' else getattr(item_obj, 'identification_identification_objectNumber', '')">
-                      <h3><a href="#"
-                       tal:attributes="href python: item_link+'?collection_id='+collection_id+'&b_start='+str(b_start) if portal_type == 'Collection' and item_type == 'Object' else item_link; class item_wf_state_class"
-                       tal:content="final_title"
-                       >
-                          Title
-                        </a>
-                      </h3>
-
-                    </tal:object>
-
-                    <tal:notobject condition="python: item_type != 'Object'">
-                      <h3><a href="#"
-                       tal:attributes="href python: item_link+'?collection_id='+collection_id+'&b_start='+str(b_start) if portal_type == 'Collection' and item_type == 'Object' else item_link; class item_wf_state_class"
-                       tal:content="item/Title"
-                       >
-                          Title
-                        </a>
-                      </h3>
-                    </tal:notobject>
-                  </tal:iscol>
 
 
                   <!--<h3 tal:condition="excluded_from_nav" tal:content="item/Title">

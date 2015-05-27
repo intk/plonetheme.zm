@@ -9675,6 +9675,10 @@ body.template-edit form fieldset {
     padding-top: 40px !important;
 }
 
+body.template-edit form fieldset .page-header:first-child {
+    margin-top: 0px;
+}
+
 #slideshow-controls #slide-description a {
     color: #ffffff !important;
 }

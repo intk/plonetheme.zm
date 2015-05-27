@@ -3,7 +3,7 @@
 
 from Products.Five import BrowserView
 import json
-from zope.component import getMultiAdapter
+from zope.component import getMultiAdapter, getUtility
 from Products.CMFCore.utils import getToolByName
 from collective.leadmedia.interfaces import ICanContainMedia
 from zope.schema import getFieldsInOrder
@@ -11,6 +11,8 @@ from plone.dexterity.interfaces import IDexterityFTI
 from zope.component import getUtility
 from Products.CMFCore.utils import getToolByName
 from zope.i18nmessageid import MessageFactory
+from zope.intid.interfaces import IIntIds
+from zc.relation.interfaces import ICatalog
 
 MessageFactory = MessageFactory('collective.object')
 
@@ -378,6 +380,22 @@ class get_nav_objects(BrowserView):
 
             obj_body = self.get_object_body(object)
             object_schema.append({"title": "body", "value":obj_body})
+
+            intids = getUtility(IIntIds)
+            catalog = getUtility(ICatalog)
+
+            relations = sorted(catalog.findRelations({'to_id': intids.getId(object)}))
+            related_exhibitions = []
+            for rel in relations:
+                rel_obj = rel.from_object
+                rel_url = rel_obj.absolute_url()
+                rel_title = rel_obj.title
+                related_exhibitions.append("<a href='%s'>%s</a>"%(rel_url, rel_title))
+            
+            if len(related_exhibitions) > 0:
+                related_exhibitions_value = '<p>'.join(related_exhibitions)
+                object_schema.append({'title': self.context.translate('Tentoonstellingen'), 'value': related_exhibitions_value})
+
         else:
             object_schema = []
 
@@ -815,6 +833,22 @@ class get_fields(BrowserView):
 
             obj_body = self.get_object_body(object)
             object_schema.append({"title": "body", "value":obj_body})
+
+            intids = getUtility(IIntIds)
+            catalog = getUtility(ICatalog)
+
+            relations = sorted(catalog.findRelations({'to_id': intids.getId(object)}))
+            related_exhibitions = []
+            for rel in relations:
+                rel_obj = rel.from_object
+                rel_url = rel_obj.absolute_url()
+                rel_title = rel_obj.title
+                related_exhibitions.append("<a href='%s'>%s</a>"%(rel_url, rel_title))
+            
+            if len(related_exhibitions) > 0:
+                related_exhibitions_value = '<p>'.join(related_exhibitions)
+                object_schema.append({'title': self.context.translate('Tentoonstellingen'), 'value': related_exhibitions_value})
+
         else:
             object_schema = []
 

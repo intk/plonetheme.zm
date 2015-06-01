@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 #Slideshow theme specific
 
@@ -266,7 +268,7 @@ class get_nav_objects(BrowserView):
 
         return _value
 
-    def get_all_fields_object(self, object):
+    """def get_all_fields_object(self, object):
 
         object_schema = []
         schema = getUtility(IDexterityFTI, name='Object').lookupSchema()
@@ -399,7 +401,366 @@ class get_nav_objects(BrowserView):
         else:
             object_schema = []
 
+        return object_schema"""
+
+
+    ## NEW FIELDS
+
+    def get_field_from_object(self, field, object):
+        
+        empty_field = ""
+        
+        value = getattr(object, field, "")
+        if value != "" and value != None:
+            return value
+        
+        return empty_field
+
+    def get_field_from_schema(self, fieldname, schema):
+        for name, field in schema:
+            if name == fieldname:
+                return field
+
+        return None
+
+    def transform_schema_field(self, name, field_value, choice=None, restriction=None):
+
+        if type(field_value) is list:
+            new_val = []
+            if choice == None:
+                for val in field_value:
+                    for key, value in val.iteritems():
+                        if value != "" and value != None:
+                            if restriction != None:
+                                if value != restriction:
+                                    new_val.append(value)
+                            else:
+                                new_val.append(value)
+            else:
+                for val in field_value:
+                    if val[choice] != "" and val[choice] != None:
+                        if restriction != None:
+                            if val[choice] != restriction:
+                                new_val.append(val[choice])
+                        else:
+                            new_val.append(val[choice])
+
+            if len(new_val) > 0:
+                if name in ["exhibitions_exhibition"]:
+                    return '<p>'.join(new_val)
+                else:
+                    return ', '.join(new_val)
+            else:
+                return ""
+        else:
+            return field_value
+
+
+    def generate_identification_tab(self, identification_tab, object_schema, fields, object):
+        for field in identification_tab:
+            # Title field
+            if field in ['title']:
+                value = getattr(object, field, "")
+                if value != "" and value != None:
+                    object_schema.append({"title": self.context.translate(MessageFactory('Title')), "value": value})
+            
+            # Regular fields
+            elif field not in ['identification_taxonomy']:
+                fieldvalue = self.get_field_from_schema(field, fields)
+                if fieldvalue != None:
+                    title = fieldvalue.title
+                    value = self.get_field_from_object(field, object)
+
+                    schema_value = self.transform_schema_field(field, value)
+
+                    if schema_value != "":
+                        object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
+
+            # Taxonomy special case
+            else:
+                taxonomy = self.get_field_from_object(field, object)
+                if len(taxonomy) > 0:
+                    taxonomy_elem = taxonomy[0]
+                    scientific_name = taxonomy_elem['scientific_name']
+                    common_name = taxonomy_elem['common_name']
+
+                    if scientific_name != "":
+                        object_schema.append({"title": self.context.translate(MessageFactory('Scient. name')), "value": scientific_name})
+                    if common_name != "":
+                        object_schema.append({"title": self.context.translate(MessageFactory('Common name')), "value": common_name})
+
+
+    def create_maker(self, name):
+        maker = []
+        name_split = name.split(",")
+
+        if len(name_split) > 0:
+            if len(name_split) > 1:
+                maker.append(name_split[-1])
+                maker.append(name_split[0])
+            else:
+                maker.append(name_split[0])
+
+        new_maker = ' '.join(maker)
+        return new_maker
+
+    def create_production_field(self, field):
+        production = ""
+
+        maker = field['maker']
+        qualifier = field['qualifier']
+        role = field['role']
+        place = field['place']
+
+        production = self.create_maker(maker)
+
+        if qualifier != "" and qualifier != None:
+            production = "%s %s" %(qualifier, production)
+
+        if role != "" and role != None:
+            production = "(%s) %s" %(role, production)
+
+        return production
+
+    def create_period_field(self, field):
+        period = field['period']
+        start_date = field['date_early']
+        start_date_precision = field['date_early_precision']
+        end_date = field['date_late']
+        end_date_precision = field['date_late_precision']
+
+        result = ""
+
+        if start_date != "" and end_date != "":
+            result = "%s - %s" %(start_date, end_date)
+        elif start_date != "":
+            if start_date_precision != "":
+                result = "%s %s" %(start_date_precision, start_date)
+            else:
+                result = "%s" %(start_date)
+
+        return result
+
+    def generate_production_dating_tab(self, production_dating_tab, object_schema, fields, object):
+
+        ## Generate Author
+        production_field = self.get_field_from_object('productionDating_production', object)
+        production = []
+        for field in production_field:
+            result = self.create_production_field(field)
+            if result != "" and result != None:
+                production.append(result)
+
+        if len(production) > 0:
+            production_value = ', '.join(production)
+            object_schema.append({"title": self.context.translate(MessageFactory('Maker')), "value": production_value})
+
+        ## Generate Period
+        period_field = self.get_field_from_object('productionDating_dating_period', object)
+
+        period = []
+        for field in period_field:
+            result = self.create_period_field(field)
+            if result != "" and result != None:
+                period.append(result)
+
+        if len(period) > 0:
+            period_value = ', '.join(period)
+            object_schema.append({"title": self.context.translate(MessageFactory('Period')), "value": period_value})
+
+    def create_dimension_field(self, field):
+        new_dimension_val = []
+        dimension_result = ""
+
+        for val in field:
+            dimension = ""
+            if val['value'] != "":
+                dimension = "%s" %(val['value'])
+            if val['unit'] != "":
+                dimension = "%s %s" %(dimension, val['unit'])
+            if val['dimension'] != "":
+                dimension = "%s: %s" %(val['dimension'], dimension)
+
+            new_dimension_val.append(dimension)
+
+        dimension_result = '<p>'.join(new_dimension_val)
+        
+        return dimension_result
+
+    def generate_physical_characteristics_tab(self, physical_characteristics_tab, object_schema, fields, object):
+        
+        for field, choice, restriction in physical_characteristics_tab:
+            if field == 'physicalCharacteristics_dimensions':
+                dimension_field = getattr(object, 'physicalCharacteristics_dimensions', None)
+                if dimension_field != None:
+                    dimension = self.create_dimension_field(dimension_field)
+                    ## add to schema
+                    if dimension != "" and dimension != None:
+                        object_schema.append({"title": self.context.translate(MessageFactory('Dimensions')), "value": dimension})
+            else:
+                fieldvalue = self.get_field_from_schema(field, fields)
+                if fieldvalue != None:
+                    title = fieldvalue.title
+                    value = self.get_field_from_object(field, object)
+
+                    schema_value = self.transform_schema_field(field, value, choice)
+
+                    if schema_value != "":
+                        object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
+
+
+    def generate_associations_tab(self, associations_tab, object_schema, fields, object):
+        for field, choice, restriction in associations_tab:
+            fieldvalue = self.get_field_from_schema(field, fields)
+            if fieldvalue != None:
+                title = fieldvalue.title
+                value = self.get_field_from_object(field, object)
+
+                schema_value = self.transform_schema_field(field, value, choice)
+
+                if schema_value != "":
+                    object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
+    
+    def generate_reproductions_tab(self, reproductions_tab, object_schema, fields, object):
+        for field, choice, restriction in reproductions_tab:
+            fieldvalue = self.get_field_from_schema(field, fields)
+            if fieldvalue != None:
+                title = fieldvalue.title
+                value = self.get_field_from_object(field, object)
+
+                schema_value = self.transform_schema_field(field, value, choice)
+
+                if schema_value != "":
+                    object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})    
+
+    def generate_recommendations_tab(self, recommendations_tab, object_schema, fields, object):
+        for field, choice, restriction in recommendations_tab:
+            fieldvalue = self.get_field_from_schema(field, fields)
+            if fieldvalue != None:
+                title = fieldvalue.title
+                value = self.get_field_from_object(field, object)
+
+                schema_value = self.transform_schema_field(field, value, choice)
+
+                if schema_value != "":
+                    object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})     
+
+    def generate_location_tab(self, location_tab, object_schema, fields, object):
+        for field, choice, restriction in location_tab:
+            fieldvalue = self.get_field_from_schema(field, fields)
+            if fieldvalue != None:
+                title = fieldvalue.title
+                value = self.get_field_from_object(field, object)
+
+                schema_value = self.transform_schema_field(field, value, choice)
+
+                if schema_value != "":
+                    object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
+
+
+    def generate_fieldcollection_tab(self, fieldcollection_tab, object_schema, fields, object):
+        for field, choice, restriction in fieldcollection_tab:
+            fieldvalue = self.get_field_from_schema(field, fields)
+            if fieldvalue != None:
+                title = fieldvalue.title
+                value = self.get_field_from_object(field, object)
+
+                schema_value = self.transform_schema_field(field, value, choice)
+
+                if schema_value != "":
+                    if field == 'fieldCollection_habitatStratigraphy_stratigraphy':
+                        object_schema.append({"title": self.context.translate(MessageFactory('Geologisch tijdvak')), "value": schema_value})
+                    else:
+                        object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
+
+
+    def generate_exhibitions_tab(self, exhibitions_tab, object_schema, fields, object):
+        for field, choice, restriction in exhibitions_tab:
+            fieldvalue = self.get_field_from_schema(field, fields)
+            if fieldvalue != None:
+                title = fieldvalue.title
+                value = self.get_field_from_object(field, object)
+
+                schema_value = self.transform_schema_field(field, value, choice, restriction)
+
+                if schema_value != "":
+                    object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
+
+    def generate_labels_tab(self, labels_tab, object_schema, fields, object):
+        for field, choice, restriction in labels_tab:
+            fieldvalue = self.get_field_from_schema(field, fields)
+            if fieldvalue != None:
+                title = fieldvalue.title
+                value = self.get_field_from_object(field, object)
+
+                schema_value = self.transform_schema_field(field, value, choice, restriction)
+
+                if schema_value != "":
+                    object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
+
+    def get_all_fields_object(self, object):
+
+        object_schema = []
+        schema = getUtility(IDexterityFTI, name='Object').lookupSchema()
+        fields = getFieldsInOrder(schema)
+
+        identification_tab = ['identification_identification_collection', 'identification_identification_objectNumber',
+                                'identification_objectName_objectCategory', 'identification_objectName_objectName',
+                                'title', 'identification_taxonomy']
+
+        production_dating_tab = ['productionDating_production', 'productionDating_dating_period']
+
+        physical_characteristics_tab = [('physicalCharacteristics_techniques', 'technique', None), ('physicalCharacteristics_materials', 'material', None),
+                                        ('physicalCharacteristics_dimensions', None, None)]
+
+        associations_tab = [('associations_associatedPersonInstitution', 'name', None), ('associations_associatedSubject', 'subject', None)]
+
+        reproductions_tab = [('reproductions_reproduction', 'reference', None)]
+
+        recommendations_tab = [('recommendationsRequirements_creditLine_creditLine', None, None)]
+
+        location_tab = [('location_current_location', 'location_type', None)]
+
+        fieldcollection_tab = [('fieldCollection_fieldCollection_place', None, None), ('fieldCollection_habitatStratigraphy_stratigraphy', 'unit', None)]
+
+        exhibitions_tab = [('exhibitions_exhibition', None, 'Zeeuws Museum')]
+
+        labels_tab = [('labels', 'text', None)]
+
+        ## Identification tab
+        self.generate_identification_tab(identification_tab, object_schema, fields, object)
+
+        ## Vervaardiging & Datering tab
+        self.generate_production_dating_tab(production_dating_tab, object_schema, fields, object)
+
+        ## Physical Characteristics
+        self.generate_physical_characteristics_tab(physical_characteristics_tab, object_schema, fields, object)
+
+        ## Associations
+        self.generate_associations_tab(associations_tab, object_schema, fields, object)
+
+        ## Reproductions
+        self.generate_reproductions_tab(reproductions_tab, object_schema, fields, object)
+
+        ## Recommendations
+        self.generate_recommendations_tab(recommendations_tab, object_schema, fields, object)
+
+        ## Location
+        self.generate_location_tab(location_tab, object_schema, fields, object)
+
+        ## Field collection
+        self.generate_fieldcollection_tab(fieldcollection_tab, object_schema, fields, object)
+
+        ## Exhibtions
+        self.generate_exhibitions_tab(exhibitions_tab, object_schema, fields, object)
+
+        ## Labels
+        self.generate_labels_tab(labels_tab, object_schema, fields, object)
+
         return object_schema
+
+
+
 
     def build_json_with_list(self, list_items, object_idx, total, is_folder, total_items):
         items = {
@@ -719,7 +1080,7 @@ class get_fields(BrowserView):
 
         return _value
 
-    def get_all_fields_object(self, object):
+    """def get_all_fields_object(self, object):
         object_schema = []
         schema = getUtility(IDexterityFTI, name='Object').lookupSchema()
 
@@ -853,6 +1214,7 @@ class get_fields(BrowserView):
             object_schema = []
 
         return object_schema
+        """
 
     def getJSON(self):
         schema = []
@@ -861,6 +1223,363 @@ class get_fields(BrowserView):
             schema = self.get_all_fields_object(obj)
 
         return json.dumps({'schema':schema})
+
+
+    ## NEW FIELDS
+
+    def get_field_from_object(self, field, object):
+        
+        empty_field = ""
+        
+        value = getattr(object, field, "")
+        if value != "" and value != None:
+            return value
+        
+        return empty_field
+
+    def get_field_from_schema(self, fieldname, schema):
+        for name, field in schema:
+            if name == fieldname:
+                return field
+
+        return None
+
+    def transform_schema_field(self, name, field_value, choice=None, restriction=None):
+
+        if type(field_value) is list:
+            new_val = []
+            if choice == None:
+                for val in field_value:
+                    for key, value in val.iteritems():
+                        if value != "" and value != None:
+                            if restriction != None:
+                                if value != restriction:
+                                    new_val.append(value)
+                            else:
+                                new_val.append(value)
+            else:
+                for val in field_value:
+                    if val[choice] != "" and val[choice] != None:
+                        if restriction != None:
+                            if val[choice] != restriction:
+                                new_val.append(val[choice])
+                        else:
+                            new_val.append(val[choice])
+
+            if len(new_val) > 0:
+                if name in ["exhibitions_exhibition"]:
+                    return '<p>'.join(new_val)
+                else:
+                    return ', '.join(new_val)
+            else:
+                return ""
+        else:
+            return field_value
+
+
+    def generate_identification_tab(self, identification_tab, object_schema, fields, object):
+        for field in identification_tab:
+            # Title field
+            if field in ['title']:
+                value = getattr(object, field, "")
+                if value != "" and value != None:
+                    object_schema.append({"title": self.context.translate(MessageFactory('Title')), "value": value})
+            
+            # Regular fields
+            elif field not in ['identification_taxonomy']:
+                fieldvalue = self.get_field_from_schema(field, fields)
+                if fieldvalue != None:
+                    title = fieldvalue.title
+                    value = self.get_field_from_object(field, object)
+
+                    schema_value = self.transform_schema_field(field, value)
+
+                    if schema_value != "":
+                        object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
+
+            # Taxonomy special case
+            else:
+                taxonomy = self.get_field_from_object(field, object)
+                if len(taxonomy) > 0:
+                    taxonomy_elem = taxonomy[0]
+                    scientific_name = taxonomy_elem['scientific_name']
+                    common_name = taxonomy_elem['common_name']
+
+                    if scientific_name != "":
+                        object_schema.append({"title": self.context.translate(MessageFactory('Scient. name')), "value": scientific_name})
+                    if common_name != "":
+                        object_schema.append({"title": self.context.translate(MessageFactory('Common name')), "value": common_name})
+
+
+    def create_maker(self, name):
+        maker = []
+        name_split = name.split(",")
+
+        if len(name_split) > 0:
+            if len(name_split) > 1:
+                maker.append(name_split[-1])
+                maker.append(name_split[0])
+            else:
+                maker.append(name_split[0])
+
+        new_maker = ' '.join(maker)
+        return new_maker
+
+    def create_production_field(self, field):
+        production = ""
+
+        maker = field['maker']
+        qualifier = field['qualifier']
+        role = field['role']
+        place = field['place']
+
+        production = self.create_maker(maker)
+
+        if qualifier != "" and qualifier != None:
+            production = "%s %s" %(qualifier, production)
+
+        if role != "" and role != None:
+            production = "(%s) %s" %(role, production)
+
+        return production
+
+    def create_period_field(self, field):
+        period = field['period']
+        start_date = field['date_early']
+        start_date_precision = field['date_early_precision']
+        end_date = field['date_late']
+        end_date_precision = field['date_late_precision']
+
+        result = ""
+
+        if start_date != "" and end_date != "":
+            result = "%s - %s" %(start_date, end_date)
+        elif start_date != "":
+            if start_date_precision != "":
+                result = "%s %s" %(start_date_precision, start_date)
+            else:
+                result = "%s" %(start_date)
+
+        return result
+
+    def generate_production_dating_tab(self, production_dating_tab, object_schema, fields, object):
+
+        ## Generate Author
+        production_field = self.get_field_from_object('productionDating_production', object)
+        production = []
+        for field in production_field:
+            result = self.create_production_field(field)
+            if result != "" and result != None:
+                production.append(result)
+
+        if len(production) > 0:
+            production_value = ', '.join(production)
+            object_schema.append({"title": self.context.translate(MessageFactory('Maker')), "value": production_value})
+
+        ## Generate Period
+        period_field = self.get_field_from_object('productionDating_dating_period', object)
+
+        period = []
+        for field in period_field:
+            result = self.create_period_field(field)
+            if result != "" and result != None:
+                period.append(result)
+
+        if len(period) > 0:
+            period_value = ', '.join(period)
+            object_schema.append({"title": self.context.translate(MessageFactory('Period')), "value": period_value})
+
+    def create_dimension_field(self, field):
+        new_dimension_val = []
+        dimension_result = ""
+
+        for val in field:
+            dimension = ""
+            if val['value'] != "":
+                dimension = "%s" %(val['value'])
+            if val['unit'] != "":
+                dimension = "%s %s" %(dimension, val['unit'])
+            if val['dimension'] != "":
+                dimension = "%s: %s" %(val['dimension'], dimension)
+
+            new_dimension_val.append(dimension)
+
+        dimension_result = '<p>'.join(new_dimension_val)
+        
+        return dimension_result
+
+    def generate_physical_characteristics_tab(self, physical_characteristics_tab, object_schema, fields, object):
+        
+        for field, choice, restriction in physical_characteristics_tab:
+            if field == 'physicalCharacteristics_dimensions':
+                dimension_field = getattr(object, 'physicalCharacteristics_dimensions', None)
+                if dimension_field != None:
+                    dimension = self.create_dimension_field(dimension_field)
+                    ## add to schema
+                    if dimension != "" and dimension != None:
+                        object_schema.append({"title": self.context.translate(MessageFactory('Dimensions')), "value": dimension})
+            else:
+                fieldvalue = self.get_field_from_schema(field, fields)
+                if fieldvalue != None:
+                    title = fieldvalue.title
+                    value = self.get_field_from_object(field, object)
+
+                    schema_value = self.transform_schema_field(field, value, choice)
+
+                    if schema_value != "":
+                        object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
+
+
+    def generate_associations_tab(self, associations_tab, object_schema, fields, object):
+        for field, choice, restriction in associations_tab:
+            fieldvalue = self.get_field_from_schema(field, fields)
+            if fieldvalue != None:
+                title = fieldvalue.title
+                value = self.get_field_from_object(field, object)
+
+                schema_value = self.transform_schema_field(field, value, choice)
+
+                if schema_value != "":
+                    object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
+    
+    def generate_reproductions_tab(self, reproductions_tab, object_schema, fields, object):
+        for field, choice, restriction in reproductions_tab:
+            fieldvalue = self.get_field_from_schema(field, fields)
+            if fieldvalue != None:
+                title = fieldvalue.title
+                value = self.get_field_from_object(field, object)
+
+                schema_value = self.transform_schema_field(field, value, choice)
+
+                if schema_value != "":
+                    object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})    
+
+    def generate_recommendations_tab(self, recommendations_tab, object_schema, fields, object):
+        for field, choice, restriction in recommendations_tab:
+            fieldvalue = self.get_field_from_schema(field, fields)
+            if fieldvalue != None:
+                title = fieldvalue.title
+                value = self.get_field_from_object(field, object)
+
+                schema_value = self.transform_schema_field(field, value, choice)
+
+                if schema_value != "":
+                    object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})     
+
+    def generate_location_tab(self, location_tab, object_schema, fields, object):
+        for field, choice, restriction in location_tab:
+            fieldvalue = self.get_field_from_schema(field, fields)
+            if fieldvalue != None:
+                title = fieldvalue.title
+                value = self.get_field_from_object(field, object)
+
+                schema_value = self.transform_schema_field(field, value, choice)
+
+                if schema_value != "":
+                    object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
+
+
+    def generate_fieldcollection_tab(self, fieldcollection_tab, object_schema, fields, object):
+        for field, choice, restriction in fieldcollection_tab:
+            fieldvalue = self.get_field_from_schema(field, fields)
+            if fieldvalue != None:
+                title = fieldvalue.title
+                value = self.get_field_from_object(field, object)
+
+                schema_value = self.transform_schema_field(field, value, choice)
+
+                if schema_value != "":
+                    if field == 'fieldCollection_habitatStratigraphy_stratigraphy':
+                        object_schema.append({"title": self.context.translate(MessageFactory('Geologisch tijdvak')), "value": schema_value})
+                    else:
+                        object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
+
+
+    def generate_exhibitions_tab(self, exhibitions_tab, object_schema, fields, object):
+        for field, choice, restriction in exhibitions_tab:
+            fieldvalue = self.get_field_from_schema(field, fields)
+            if fieldvalue != None:
+                title = fieldvalue.title
+                value = self.get_field_from_object(field, object)
+
+                schema_value = self.transform_schema_field(field, value, choice, restriction)
+
+                if schema_value != "":
+                    object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
+
+    def generate_labels_tab(self, labels_tab, object_schema, fields, object):
+        for field, choice, restriction in labels_tab:
+            fieldvalue = self.get_field_from_schema(field, fields)
+            if fieldvalue != None:
+                title = fieldvalue.title
+                value = self.get_field_from_object(field, object)
+
+                schema_value = self.transform_schema_field(field, value, choice, restriction)
+
+                if schema_value != "":
+                    object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
+
+    def get_all_fields_object(self, object):
+
+        object_schema = []
+        schema = getUtility(IDexterityFTI, name='Object').lookupSchema()
+        fields = getFieldsInOrder(schema)
+
+        identification_tab = ['identification_identification_collection', 'identification_identification_objectNumber',
+                                'identification_objectName_objectCategory', 'identification_objectName_objectName',
+                                'title', 'identification_taxonomy']
+
+        production_dating_tab = ['productionDating_production', 'productionDating_dating_period']
+
+        physical_characteristics_tab = [('physicalCharacteristics_techniques', 'technique', None), ('physicalCharacteristics_materials', 'material', None),
+                                        ('physicalCharacteristics_dimensions', None, None)]
+
+        associations_tab = [('associations_associatedPersonInstitution', 'name', None), ('associations_associatedSubject', 'subject', None)]
+
+        reproductions_tab = [('reproductions_reproduction', 'reference', None)]
+
+        recommendations_tab = [('recommendationsRequirements_creditLine_creditLine', None, None)]
+
+        location_tab = [('location_current_location', 'location_type', None)]
+
+        fieldcollection_tab = [('fieldCollection_fieldCollection_place', None, None), ('fieldCollection_habitatStratigraphy_stratigraphy', 'unit', None)]
+
+        exhibitions_tab = [('exhibitions_exhibition', None, 'Zeeuws Museum')]
+
+        labels_tab = [('labels', 'text', None)]
+
+        ## Identification tab
+        self.generate_identification_tab(identification_tab, object_schema, fields, object)
+
+        ## Vervaardiging & Datering tab
+        self.generate_production_dating_tab(production_dating_tab, object_schema, fields, object)
+
+        ## Physical Characteristics
+        self.generate_physical_characteristics_tab(physical_characteristics_tab, object_schema, fields, object)
+
+        ## Associations
+        self.generate_associations_tab(associations_tab, object_schema, fields, object)
+
+        ## Reproductions
+        self.generate_reproductions_tab(reproductions_tab, object_schema, fields, object)
+
+        ## Recommendations
+        self.generate_recommendations_tab(recommendations_tab, object_schema, fields, object)
+
+        ## Location
+        self.generate_location_tab(location_tab, object_schema, fields, object)
+
+        ## Field collection
+        self.generate_fieldcollection_tab(fieldcollection_tab, object_schema, fields, object)
+
+        ## Exhibtions
+        self.generate_exhibitions_tab(exhibitions_tab, object_schema, fields, object)
+
+        ## Labels
+        self.generate_labels_tab(labels_tab, object_schema, fields, object)
+
+        return object_schema
+
 
 
 class CollectionSlideshow(BrowserView):

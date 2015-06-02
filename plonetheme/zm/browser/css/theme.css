@@ -9411,6 +9411,10 @@ body.template-default_error_message #portal-logo img {
     padding-right: 20px;
 }
 
+#formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-linkref {
+    clear: both;
+}
+
 
 #formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-telephone label,
 #formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-fax label,

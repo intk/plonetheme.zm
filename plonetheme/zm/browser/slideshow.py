@@ -433,22 +433,35 @@ class get_nav_objects(BrowserView):
                         if value != "" and value != None:
                             if restriction != None:
                                 if value != restriction:
+                                    if key == "name":
+                                        value = self.create_maker(value)
                                     new_val.append(value)
                             else:
+                                if key == "name":
+                                    value = self.create_maker(value)
                                 new_val.append(value)
             else:
                 for val in field_value:
                     if val[choice] != "" and val[choice] != None:
                         if restriction != None:
                             if val[choice] != restriction:
-                                new_val.append(val[choice])
+                                if choice == "name":
+                                    new_val.append(self.create_maker(val[choice]))
+                                else:
+                                    new_val.append(val[choice])
                         else:
-                            new_val.append(val[choice])
+                            if choice == "name":
+                                new_val.append(self.create_maker(val[choice]))
+                            else:
+                                new_val.append(val[choice])
 
             if len(new_val) > 0:
-                if name in ["exhibitions_exhibition"]:
+                if name in ["exhibitions_exhibition", "productionDating_production"]:
                     return '<p>'.join(new_val)
                 else:
+                    for index, single_value in enumerate(new_val):
+                        single_value = "<a href='/%s/search?SearchableText=%s'>%s</a>" %(self.context.language, single_value, single_value)
+                        new_val[index] = single_value
                     return ', '.join(new_val)
             else:
                 return ""
@@ -457,7 +470,7 @@ class get_nav_objects(BrowserView):
 
 
     def generate_identification_tab(self, identification_tab, object_schema, fields, object):
-        for field in identification_tab:
+        for field, choice in identification_tab:
             # Title field
             if field in ['title']:
                 value = getattr(object, field, "")
@@ -471,7 +484,7 @@ class get_nav_objects(BrowserView):
                     title = fieldvalue.title
                     value = self.get_field_from_object(field, object)
 
-                    schema_value = self.transform_schema_field(field, value)
+                    schema_value = self.transform_schema_field(field, value, choice)
 
                     if schema_value != "":
                         object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
@@ -520,6 +533,9 @@ class get_nav_objects(BrowserView):
         if role != "" and role != None:
             production = "(%s) %s" %(role, production)
 
+        if place != "" and place != None:
+            production = "%s, %s" %(production, place)
+
         return production
 
     def create_period_field(self, field):
@@ -532,12 +548,18 @@ class get_nav_objects(BrowserView):
         result = ""
 
         if start_date != "" and end_date != "":
-            result = "%s - %s" %(start_date, end_date)
+            if start_date != end_date:
+                result = "%s - %s" %(start_date, end_date)
+            else:
+                result = "%s" %(start_date)
         elif start_date != "":
             if start_date_precision != "":
                 result = "%s %s" %(start_date_precision, start_date)
             else:
                 result = "%s" %(start_date)
+
+        if period != "" and period != None:
+            result = "%s %s" %(period, result)
 
         return result
 
@@ -552,7 +574,7 @@ class get_nav_objects(BrowserView):
                 production.append(result)
 
         if len(production) > 0:
-            production_value = ', '.join(production)
+            production_value = '<p>'.join(production)
             object_schema.append({"title": self.context.translate(MessageFactory('Maker')), "value": production_value})
 
         ## Generate Period
@@ -631,7 +653,9 @@ class get_nav_objects(BrowserView):
                 schema_value = self.transform_schema_field(field, value, choice)
 
                 if schema_value != "":
-                    object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})    
+                    if field == "reproductions_reproduction":
+                        title = "Reference"
+                    object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value}) 
 
     def generate_recommendations_tab(self, recommendations_tab, object_schema, fields, object):
         for field, choice, restriction in recommendations_tab:
@@ -704,9 +728,9 @@ class get_nav_objects(BrowserView):
         schema = getUtility(IDexterityFTI, name='Object').lookupSchema()
         fields = getFieldsInOrder(schema)
 
-        identification_tab = ['identification_identification_collection', 'identification_identification_objectNumber',
-                                'identification_objectName_objectCategory', 'identification_objectName_objectName',
-                                'title', 'identification_taxonomy']
+        identification_tab = [('identification_identification_collection', None), ('identification_identification_objectNumber', None),
+                                ('identification_objectName_objectCategory', None), ('identification_objectName_objectName', 'name'),
+                                ('title', None), ('identification_taxonomy', None)]
 
         production_dating_tab = ['productionDating_production', 'productionDating_dating_period']
 
@@ -1254,22 +1278,35 @@ class get_fields(BrowserView):
                         if value != "" and value != None:
                             if restriction != None:
                                 if value != restriction:
+                                    if key == "name":
+                                        value = self.create_maker(value)
                                     new_val.append(value)
                             else:
+                                if key == "name":
+                                    value = self.create_maker(value)
                                 new_val.append(value)
             else:
                 for val in field_value:
                     if val[choice] != "" and val[choice] != None:
                         if restriction != None:
                             if val[choice] != restriction:
-                                new_val.append(val[choice])
+                                if choice == "name":
+                                    new_val.append(self.create_maker(val[choice]))
+                                else:
+                                    new_val.append(val[choice])
                         else:
-                            new_val.append(val[choice])
+                            if choice == "name":
+                                new_val.append(self.create_maker(val[choice]))
+                            else:
+                                new_val.append(val[choice])
 
             if len(new_val) > 0:
-                if name in ["exhibitions_exhibition"]:
+                if name in ["exhibitions_exhibition", "productionDating_production"]:
                     return '<p>'.join(new_val)
                 else:
+                    for index, single_value in enumerate(new_val):
+                        single_value = "<a href='/%s/search?SearchableText=%s'>%s</a>" %(self.context.language, single_value, single_value)
+                        new_val[index] = single_value
                     return ', '.join(new_val)
             else:
                 return ""
@@ -1278,7 +1315,7 @@ class get_fields(BrowserView):
 
 
     def generate_identification_tab(self, identification_tab, object_schema, fields, object):
-        for field in identification_tab:
+        for field, choice in identification_tab:
             # Title field
             if field in ['title']:
                 value = getattr(object, field, "")
@@ -1292,7 +1329,7 @@ class get_fields(BrowserView):
                     title = fieldvalue.title
                     value = self.get_field_from_object(field, object)
 
-                    schema_value = self.transform_schema_field(field, value)
+                    schema_value = self.transform_schema_field(field, value, choice)
 
                     if schema_value != "":
                         object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
@@ -1341,6 +1378,9 @@ class get_fields(BrowserView):
         if role != "" and role != None:
             production = "(%s) %s" %(role, production)
 
+        if place != "" and place != None:
+            production = "%s, %s" %(production, place)
+
         return production
 
     def create_period_field(self, field):
@@ -1353,12 +1393,18 @@ class get_fields(BrowserView):
         result = ""
 
         if start_date != "" and end_date != "":
-            result = "%s - %s" %(start_date, end_date)
+            if start_date != end_date:
+                result = "%s - %s" %(start_date, end_date)
+            else:
+                result = "%s" %(start_date)
         elif start_date != "":
             if start_date_precision != "":
                 result = "%s %s" %(start_date_precision, start_date)
             else:
                 result = "%s" %(start_date)
+
+        if period != "" and period != None:
+            result = "%s %s" %(period, result)
 
         return result
 
@@ -1373,7 +1419,7 @@ class get_fields(BrowserView):
                 production.append(result)
 
         if len(production) > 0:
-            production_value = ', '.join(production)
+            production_value = '<p>'.join(production)
             object_schema.append({"title": self.context.translate(MessageFactory('Maker')), "value": production_value})
 
         ## Generate Period
@@ -1452,6 +1498,8 @@ class get_fields(BrowserView):
                 schema_value = self.transform_schema_field(field, value, choice)
 
                 if schema_value != "":
+                    if field == "reproductions_reproduction":
+                        title = "Reference"
                     object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})    
 
     def generate_recommendations_tab(self, recommendations_tab, object_schema, fields, object):
@@ -1525,9 +1573,9 @@ class get_fields(BrowserView):
         schema = getUtility(IDexterityFTI, name='Object').lookupSchema()
         fields = getFieldsInOrder(schema)
 
-        identification_tab = ['identification_identification_collection', 'identification_identification_objectNumber',
-                                'identification_objectName_objectCategory', 'identification_objectName_objectName',
-                                'title', 'identification_taxonomy']
+        identification_tab = [('identification_identification_collection', None), ('identification_identification_objectNumber', None),
+                                ('identification_objectName_objectCategory', None), ('identification_objectName_objectName', 'name'),
+                                ('title', None), ('identification_taxonomy', None)]
 
         production_dating_tab = ['productionDating_production', 'productionDating_dating_period']
 

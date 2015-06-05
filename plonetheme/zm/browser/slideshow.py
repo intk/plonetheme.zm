@@ -424,7 +424,6 @@ class get_nav_objects(BrowserView):
         return None
 
     def transform_schema_field(self, name, field_value, choice=None, restriction=None):
-
         if type(field_value) is list:
             new_val = []
             if choice == None:
@@ -433,11 +432,11 @@ class get_nav_objects(BrowserView):
                         if value != "" and value != None:
                             if restriction != None:
                                 if value != restriction:
-                                    if key == "name":
+                                    if key == "name" and name != 'exhibitions_exhibition':
                                         value = self.create_maker(value)
                                     new_val.append(value)
                             else:
-                                if key == "name":
+                                if key == "name" and name != 'exhibitions_exhibition':
                                     value = self.create_maker(value)
                                 new_val.append(value)
             else:
@@ -445,12 +444,12 @@ class get_nav_objects(BrowserView):
                     if val[choice] != "" and val[choice] != None:
                         if restriction != None:
                             if val[choice] != restriction:
-                                if choice == "name":
+                                if choice == "name" and name != 'exhibitions_exhibition':
                                     new_val.append(self.create_maker(val[choice]))
                                 else:
                                     new_val.append(val[choice])
                         else:
-                            if choice == "name":
+                            if choice == "name" and name != 'exhibitions_exhibition':
                                 new_val.append(self.create_maker(val[choice]))
                             else:
                                 new_val.append(val[choice])
@@ -1333,7 +1332,6 @@ class get_fields(BrowserView):
         return None
 
     def transform_schema_field(self, name, field_value, choice=None, restriction=None):
-
         if type(field_value) is list:
             new_val = []
             if choice == None:
@@ -1342,11 +1340,11 @@ class get_fields(BrowserView):
                         if value != "" and value != None:
                             if restriction != None:
                                 if value != restriction:
-                                    if key == "name":
+                                    if key == "name" and name != 'exhibitions_exhibition':
                                         value = self.create_maker(value)
                                     new_val.append(value)
                             else:
-                                if key == "name":
+                                if key == "name" and name != 'exhibitions_exhibition':
                                     value = self.create_maker(value)
                                 new_val.append(value)
             else:
@@ -1354,12 +1352,12 @@ class get_fields(BrowserView):
                     if val[choice] != "" and val[choice] != None:
                         if restriction != None:
                             if val[choice] != restriction:
-                                if choice == "name":
+                                if choice == "name" and name != 'exhibitions_exhibition':
                                     new_val.append(self.create_maker(val[choice]))
                                 else:
                                     new_val.append(val[choice])
                         else:
-                            if choice == "name":
+                            if choice == "name" and name != 'exhibitions_exhibition':
                                 new_val.append(self.create_maker(val[choice]))
                             else:
                                 new_val.append(val[choice])
@@ -1376,7 +1374,6 @@ class get_fields(BrowserView):
                 return ""
         else:
             return field_value
-
 
     def generate_identification_tab(self, identification_tab, object_schema, fields, object, field_schema):
         for field, choice in identification_tab:

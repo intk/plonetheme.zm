@@ -1301,10 +1301,15 @@ slickSlideshow.updateSchema = function(schema) {
 	var body = "";
 
 	for (var i = 0; i < schema.length; i++) {
-		if (schema[i].title != "body") {
-			html += "<div class='col-lg-5 col-md-5 col-sm-5 col-xs-12 object-label' style='padding-left:0px;'><span>"+schema[i].title+"</span></div><div class='col-lg-7 col-md-7 col-sm-7 col-xs-12 object-value'><p>"+schema[i].value+"</p></div>";
-		} else {
-			body = schema[i].value;
+		if (schema[i].fields.length > 0) {
+			html += "<h3 class='fieldset-header'>"+schema[i].name+"</h3>";
+			for (var j = 0; j < schema[i].fields.length; j++) {
+				if (schema[i].fields[j].title != "body") {
+					html += "<div class='col-lg-5 col-md-5 col-sm-5 col-xs-12 object-label' style='padding-left:0px;'><span>"+schema[i].fields[j].title+"</span></div><div class='col-lg-7 col-md-7 col-sm-7 col-xs-12 object-value'><p>"+schema[i].fields[j].value+"</p></div>";
+				} else {
+					body = schema[i].fields[j].value;
+				}
+			}
 		}
 	}
 	
@@ -1326,14 +1331,18 @@ slickSlideshow.updateSchemaSlide = function(schema) {
 	var body = "";
 
 	for (var i = 0; i < schema.length; i++) {
-		if (schema[i].value != "") {
-			if (schema[i].title != "body") {
-				html += "<div class='col-lg-5 col-md-5 col-sm-5 col-xs-12 object-label' style='padding-left:0px;'><span>"+schema[i].title+"</span></div><div class='col-lg-7 col-md-7 col-sm-7 col-xs-12 object-value'><p>"+schema[i].value+"</p></div>";
-			} else {
-				body = schema[i].value;
+		if (schema[i].fields.length > 0) {
+			html += "<h3 class='fieldset-header'>"+schema[i].name+"</h3>";
+			for (var j = 0; j < schema[i].fields.length; j++) {
+				if (schema[i].fields[j].title != "body") {
+					html += "<div class='col-lg-5 col-md-5 col-sm-5 col-xs-12 object-label' style='padding-left:0px;'><span>"+schema[i].fields[j].title+"</span></div><div class='col-lg-7 col-md-7 col-sm-7 col-xs-12 object-value'><p>"+schema[i].fields[j].value+"</p></div>";
+				} else {
+					body = schema[i].fields[j].value;
+				}
 			}
 		}
 	}
+
 	
 	var no_lt = html.replace(/&lt;/g, "<");
 	var res = no_lt.replace(/&gt;/g, ">");

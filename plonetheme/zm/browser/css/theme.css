@@ -9688,6 +9688,12 @@ body.template-edit form fieldset .page-header:first-child {
 }
 
 
+.object-fieldset h3.fieldset-header:not(:first-child) {
+    padding-top: 40px;
+}
 
+.object-fieldset h3.fieldset-header {
+    clear: both;
+}
 
 

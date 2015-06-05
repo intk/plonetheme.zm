@@ -61,11 +61,9 @@
 
                     <ul tal:define="last_class string:;
                                     level python:level+1;"
-                        tal:condition="python:show_lower and children"
+                        tal:condition="python:(show_lower and children) and item.id in ['collectie']"
                         class="nav navmenu-nav submenu">
-
                         <metal:recurse use-macro="context/homepage_sections/macros/nav_main"/>
-
                     </ul>
 
                     </tal:level>

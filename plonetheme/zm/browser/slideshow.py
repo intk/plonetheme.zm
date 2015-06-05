@@ -456,7 +456,7 @@ class get_nav_objects(BrowserView):
                                 new_val.append(val[choice])
 
             if len(new_val) > 0:
-                if name in ["exhibitions_exhibition", "productionDating_production"]:
+                if name in ["exhibitions_exhibition", "productionDating_production", "labels"]:
                     return '<p>'.join(new_val)
                 else:
                     for index, single_value in enumerate(new_val):
@@ -469,13 +469,13 @@ class get_nav_objects(BrowserView):
             return field_value
 
 
-    def generate_identification_tab(self, identification_tab, object_schema, fields, object):
+    def generate_identification_tab(self, identification_tab, object_schema, fields, object, field_schema):
         for field, choice in identification_tab:
             # Title field
             if field in ['title']:
                 value = getattr(object, field, "")
                 if value != "" and value != None:
-                    object_schema.append({"title": self.context.translate(MessageFactory('Title')), "value": value})
+                    object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Title')), "value": value})
             
             # Regular fields
             elif field not in ['identification_taxonomy']:
@@ -487,7 +487,7 @@ class get_nav_objects(BrowserView):
                     schema_value = self.transform_schema_field(field, value, choice)
 
                     if schema_value != "":
-                        object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
+                        object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
 
             # Taxonomy special case
             else:
@@ -498,9 +498,9 @@ class get_nav_objects(BrowserView):
                     common_name = taxonomy_elem['common_name']
 
                     if scientific_name != "":
-                        object_schema.append({"title": self.context.translate(MessageFactory('Scient. name')), "value": scientific_name})
+                        object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Scient. name')), "value": scientific_name})
                     if common_name != "":
-                        object_schema.append({"title": self.context.translate(MessageFactory('Common name')), "value": common_name})
+                        object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Common name')), "value": common_name})
 
 
     def create_maker(self, name):
@@ -528,7 +528,7 @@ class get_nav_objects(BrowserView):
         production = self.create_maker(maker)
 
         if qualifier != "" and qualifier != None:
-            production = "%s %s" %(qualifier, production)
+            production = "%s, %s" %(qualifier, production)
 
         if role != "" and role != None:
             production = "(%s) %s" %(role, production)
@@ -547,23 +547,24 @@ class get_nav_objects(BrowserView):
 
         result = ""
 
-        if start_date != "" and end_date != "":
-            if start_date != end_date:
-                result = "%s - %s" %(start_date, end_date)
-            else:
-                result = "%s" %(start_date)
-        elif start_date != "":
-            if start_date_precision != "":
-                result = "%s %s" %(start_date_precision, start_date)
-            else:
-                result = "%s" %(start_date)
-
         if period != "" and period != None:
-            result = "%s %s" %(period, result)
+            result = "%s" %(period)
+
+        if start_date != "":
+            if start_date_precision != "":
+                result = "%s, %s %s" %(result, start_date_precision, start_date)
+            else:
+                result = "%s, %s" %(result, start_date)
+
+        if end_date != "":
+            if end_date_precision != "":
+                result = "%s - %s %s" %(result, end_date_precision, start_date)
+            else:
+                result = "%s - %s" %(result, end_date)
 
         return result
 
-    def generate_production_dating_tab(self, production_dating_tab, object_schema, fields, object):
+    def generate_production_dating_tab(self, production_dating_tab, object_schema, fields, object, field_schema):
 
         ## Generate Author
         production_field = self.get_field_from_object('productionDating_production', object)
@@ -575,7 +576,7 @@ class get_nav_objects(BrowserView):
 
         if len(production) > 0:
             production_value = '<p>'.join(production)
-            object_schema.append({"title": self.context.translate(MessageFactory('Maker')), "value": production_value})
+            object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Maker')), "value": production_value})
 
         ## Generate Period
         period_field = self.get_field_from_object('productionDating_dating_period', object)
@@ -588,7 +589,7 @@ class get_nav_objects(BrowserView):
 
         if len(period) > 0:
             period_value = ', '.join(period)
-            object_schema.append({"title": self.context.translate(MessageFactory('Period')), "value": period_value})
+            object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Period')), "value": period_value})
 
     def create_dimension_field(self, field):
         new_dimension_val = []
@@ -609,7 +610,7 @@ class get_nav_objects(BrowserView):
         
         return dimension_result
 
-    def generate_physical_characteristics_tab(self, physical_characteristics_tab, object_schema, fields, object):
+    def generate_physical_characteristics_tab(self, physical_characteristics_tab, object_schema, fields, object, field_schema):
         
         for field, choice, restriction in physical_characteristics_tab:
             if field == 'physicalCharacteristics_dimensions':
@@ -618,7 +619,7 @@ class get_nav_objects(BrowserView):
                     dimension = self.create_dimension_field(dimension_field)
                     ## add to schema
                     if dimension != "" and dimension != None:
-                        object_schema.append({"title": self.context.translate(MessageFactory('Dimensions')), "value": dimension})
+                        object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Dimensions')), "value": dimension})
             else:
                 fieldvalue = self.get_field_from_schema(field, fields)
                 if fieldvalue != None:
@@ -628,10 +629,10 @@ class get_nav_objects(BrowserView):
                     schema_value = self.transform_schema_field(field, value, choice)
 
                     if schema_value != "":
-                        object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
+                        object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
 
 
-    def generate_associations_tab(self, associations_tab, object_schema, fields, object):
+    def generate_associations_tab(self, associations_tab, object_schema, fields, object, field_schema):
         for field, choice, restriction in associations_tab:
             fieldvalue = self.get_field_from_schema(field, fields)
             if fieldvalue != None:
@@ -641,9 +642,9 @@ class get_nav_objects(BrowserView):
                 schema_value = self.transform_schema_field(field, value, choice)
 
                 if schema_value != "":
-                    object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
+                    object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
     
-    def generate_reproductions_tab(self, reproductions_tab, object_schema, fields, object):
+    def generate_reproductions_tab(self, reproductions_tab, object_schema, fields, object, field_schema):
         for field, choice, restriction in reproductions_tab:
             fieldvalue = self.get_field_from_schema(field, fields)
             if fieldvalue != None:
@@ -655,9 +656,9 @@ class get_nav_objects(BrowserView):
                 if schema_value != "":
                     if field == "reproductions_reproduction":
                         title = "Reference"
-                    object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value}) 
+                    object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})    
 
-    def generate_recommendations_tab(self, recommendations_tab, object_schema, fields, object):
+    def generate_recommendations_tab(self, recommendations_tab, object_schema, fields, object, field_schema):
         for field, choice, restriction in recommendations_tab:
             fieldvalue = self.get_field_from_schema(field, fields)
             if fieldvalue != None:
@@ -667,9 +668,9 @@ class get_nav_objects(BrowserView):
                 schema_value = self.transform_schema_field(field, value, choice)
 
                 if schema_value != "":
-                    object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})     
+                    object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})     
 
-    def generate_location_tab(self, location_tab, object_schema, fields, object):
+    def generate_location_tab(self, location_tab, object_schema, fields, object, field_schema):
         for field, choice, restriction in location_tab:
             fieldvalue = self.get_field_from_schema(field, fields)
             if fieldvalue != None:
@@ -679,10 +680,10 @@ class get_nav_objects(BrowserView):
                 schema_value = self.transform_schema_field(field, value, choice)
 
                 if schema_value != "":
-                    object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
+                    object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
 
 
-    def generate_fieldcollection_tab(self, fieldcollection_tab, object_schema, fields, object):
+    def generate_fieldcollection_tab(self, fieldcollection_tab, object_schema, fields, object, field_schema):
         for field, choice, restriction in fieldcollection_tab:
             fieldvalue = self.get_field_from_schema(field, fields)
             if fieldvalue != None:
@@ -693,12 +694,12 @@ class get_nav_objects(BrowserView):
 
                 if schema_value != "":
                     if field == 'fieldCollection_habitatStratigraphy_stratigraphy':
-                        object_schema.append({"title": self.context.translate(MessageFactory('Geologisch tijdvak')), "value": schema_value})
+                        object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Geologisch tijdvak')), "value": schema_value})
                     else:
-                        object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
+                        object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
 
 
-    def generate_exhibitions_tab(self, exhibitions_tab, object_schema, fields, object):
+    def generate_exhibitions_tab(self, exhibitions_tab, object_schema, fields, object, field_schema):
         for field, choice, restriction in exhibitions_tab:
             fieldvalue = self.get_field_from_schema(field, fields)
             if fieldvalue != None:
@@ -708,9 +709,9 @@ class get_nav_objects(BrowserView):
                 schema_value = self.transform_schema_field(field, value, choice, restriction)
 
                 if schema_value != "":
-                    object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
+                    object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
 
-    def generate_labels_tab(self, labels_tab, object_schema, fields, object):
+    def generate_labels_tab(self, labels_tab, object_schema, fields, object, field_schema):
         for field, choice, restriction in labels_tab:
             fieldvalue = self.get_field_from_schema(field, fields)
             if fieldvalue != None:
@@ -720,11 +721,63 @@ class get_nav_objects(BrowserView):
                 schema_value = self.transform_schema_field(field, value, choice, restriction)
 
                 if schema_value != "":
-                    object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
+                    object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
 
     def get_all_fields_object(self, object):
 
-        object_schema = []
+        object_schema = {}
+
+        object_schema["identification"] = {
+            "fields": [],
+            "name": self.context.translate(MessageFactory("Identification"))
+        }
+
+        object_schema["production_dating"] = {
+            "fields": [],
+            "name": self.context.translate(MessageFactory("Production & Dating"))
+        }
+
+        object_schema["physical_characteristics"] = {
+            "fields": [],
+            "name": self.context.translate(MessageFactory("Physical Characteristics"))
+        }
+
+        object_schema["associations"] = {
+            "fields": [],
+            "name": self.context.translate(MessageFactory("Associations"))
+        }
+
+        object_schema["reproductions"] = {
+            "fields": [],
+            "name": self.context.translate(MessageFactory("Reproductions"))
+        }
+
+        object_schema["recommendations_requirements"] = {
+            "fields": [],
+            "name": self.context.translate(MessageFactory("Recommendations/requirements"))
+        }
+
+        object_schema["location"] = {
+            "fields": [],
+            "name": self.context.translate(MessageFactory("Location"))
+        }
+
+        object_schema["field_collection"] = {
+            "fields": [],
+            "name": self.context.translate(MessageFactory("Field Collection"))
+        }
+
+        object_schema["exhibitions"] = {
+            "fields": [],
+            "name": self.context.translate(MessageFactory("Exhibitions"))
+        }
+
+        object_schema["labels"] = {
+            "fields": [],
+            "name": self.context.translate(MessageFactory("Labels"))
+        }
+
+
         schema = getUtility(IDexterityFTI, name='Object').lookupSchema()
         fields = getFieldsInOrder(schema)
 
@@ -752,37 +805,48 @@ class get_nav_objects(BrowserView):
         labels_tab = [('labels', 'text', None)]
 
         ## Identification tab
-        self.generate_identification_tab(identification_tab, object_schema, fields, object)
+        self.generate_identification_tab(identification_tab, object_schema, fields, object, "identification")
 
         ## Vervaardiging & Datering tab
-        self.generate_production_dating_tab(production_dating_tab, object_schema, fields, object)
+        self.generate_production_dating_tab(production_dating_tab, object_schema, fields, object, "production_dating")
 
         ## Physical Characteristics
-        self.generate_physical_characteristics_tab(physical_characteristics_tab, object_schema, fields, object)
+        self.generate_physical_characteristics_tab(physical_characteristics_tab, object_schema, fields, object, "physical_characteristics")
 
         ## Associations
-        self.generate_associations_tab(associations_tab, object_schema, fields, object)
+        self.generate_associations_tab(associations_tab, object_schema, fields, object, "associations")
 
         ## Reproductions
-        self.generate_reproductions_tab(reproductions_tab, object_schema, fields, object)
+        self.generate_reproductions_tab(reproductions_tab, object_schema, fields, object, "reproductions")
 
         ## Recommendations
-        self.generate_recommendations_tab(recommendations_tab, object_schema, fields, object)
+        self.generate_recommendations_tab(recommendations_tab, object_schema, fields, object, "recommendations_requirements")
 
         ## Location
-        self.generate_location_tab(location_tab, object_schema, fields, object)
+        self.generate_location_tab(location_tab, object_schema, fields, object, "location")
 
         ## Field collection
-        self.generate_fieldcollection_tab(fieldcollection_tab, object_schema, fields, object)
+        self.generate_fieldcollection_tab(fieldcollection_tab, object_schema, fields, object, "field_collection")
 
         ## Exhibtions
-        self.generate_exhibitions_tab(exhibitions_tab, object_schema, fields, object)
+        self.generate_exhibitions_tab(exhibitions_tab, object_schema, fields, object, "exhibitions")
 
         ## Labels
-        self.generate_labels_tab(labels_tab, object_schema, fields, object)
+        self.generate_labels_tab(labels_tab, object_schema, fields, object, "labels")
 
-        return object_schema
+        new_object_schema = []
+        new_object_schema.append(object_schema['identification'])
+        new_object_schema.append(object_schema['production_dating'])
+        new_object_schema.append(object_schema['physical_characteristics'])
+        new_object_schema.append(object_schema['associations'])
+        new_object_schema.append(object_schema['reproductions'])
+        new_object_schema.append(object_schema['recommendations_requirements'])
+        new_object_schema.append(object_schema['location'])
+        new_object_schema.append(object_schema['field_collection'])
+        new_object_schema.append(object_schema['exhibitions'])
+        new_object_schema.append(object_schema['labels'])
 
+        return new_object_schema
 
 
 
@@ -1301,7 +1365,7 @@ class get_fields(BrowserView):
                                 new_val.append(val[choice])
 
             if len(new_val) > 0:
-                if name in ["exhibitions_exhibition", "productionDating_production"]:
+                if name in ["exhibitions_exhibition", "productionDating_production", "labels"]:
                     return '<p>'.join(new_val)
                 else:
                     for index, single_value in enumerate(new_val):
@@ -1314,13 +1378,13 @@ class get_fields(BrowserView):
             return field_value
 
 
-    def generate_identification_tab(self, identification_tab, object_schema, fields, object):
+    def generate_identification_tab(self, identification_tab, object_schema, fields, object, field_schema):
         for field, choice in identification_tab:
             # Title field
             if field in ['title']:
                 value = getattr(object, field, "")
                 if value != "" and value != None:
-                    object_schema.append({"title": self.context.translate(MessageFactory('Title')), "value": value})
+                    object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Title')), "value": value})
             
             # Regular fields
             elif field not in ['identification_taxonomy']:
@@ -1332,7 +1396,7 @@ class get_fields(BrowserView):
                     schema_value = self.transform_schema_field(field, value, choice)
 
                     if schema_value != "":
-                        object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
+                        object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
 
             # Taxonomy special case
             else:
@@ -1343,9 +1407,9 @@ class get_fields(BrowserView):
                     common_name = taxonomy_elem['common_name']
 
                     if scientific_name != "":
-                        object_schema.append({"title": self.context.translate(MessageFactory('Scient. name')), "value": scientific_name})
+                        object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Scient. name')), "value": scientific_name})
                     if common_name != "":
-                        object_schema.append({"title": self.context.translate(MessageFactory('Common name')), "value": common_name})
+                        object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Common name')), "value": common_name})
 
 
     def create_maker(self, name):
@@ -1373,7 +1437,7 @@ class get_fields(BrowserView):
         production = self.create_maker(maker)
 
         if qualifier != "" and qualifier != None:
-            production = "%s %s" %(qualifier, production)
+            production = "%s, %s" %(qualifier, production)
 
         if role != "" and role != None:
             production = "(%s) %s" %(role, production)
@@ -1392,23 +1456,24 @@ class get_fields(BrowserView):
 
         result = ""
 
-        if start_date != "" and end_date != "":
-            if start_date != end_date:
-                result = "%s - %s" %(start_date, end_date)
-            else:
-                result = "%s" %(start_date)
-        elif start_date != "":
-            if start_date_precision != "":
-                result = "%s %s" %(start_date_precision, start_date)
-            else:
-                result = "%s" %(start_date)
-
         if period != "" and period != None:
-            result = "%s %s" %(period, result)
+            result = "%s" %(period)
+
+        if start_date != "":
+            if start_date_precision != "":
+                result = "%s, %s %s" %(result, start_date_precision, start_date)
+            else:
+                result = "%s, %s" %(result, start_date)
+
+        if end_date != "":
+            if end_date_precision != "":
+                result = "%s - %s %s" %(result, end_date_precision, start_date)
+            else:
+                result = "%s - %s" %(result, end_date)
 
         return result
 
-    def generate_production_dating_tab(self, production_dating_tab, object_schema, fields, object):
+    def generate_production_dating_tab(self, production_dating_tab, object_schema, fields, object, field_schema):
 
         ## Generate Author
         production_field = self.get_field_from_object('productionDating_production', object)
@@ -1420,7 +1485,7 @@ class get_fields(BrowserView):
 
         if len(production) > 0:
             production_value = '<p>'.join(production)
-            object_schema.append({"title": self.context.translate(MessageFactory('Maker')), "value": production_value})
+            object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Maker')), "value": production_value})
 
         ## Generate Period
         period_field = self.get_field_from_object('productionDating_dating_period', object)
@@ -1433,7 +1498,7 @@ class get_fields(BrowserView):
 
         if len(period) > 0:
             period_value = ', '.join(period)
-            object_schema.append({"title": self.context.translate(MessageFactory('Period')), "value": period_value})
+            object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Period')), "value": period_value})
 
     def create_dimension_field(self, field):
         new_dimension_val = []
@@ -1454,7 +1519,7 @@ class get_fields(BrowserView):
         
         return dimension_result
 
-    def generate_physical_characteristics_tab(self, physical_characteristics_tab, object_schema, fields, object):
+    def generate_physical_characteristics_tab(self, physical_characteristics_tab, object_schema, fields, object, field_schema):
         
         for field, choice, restriction in physical_characteristics_tab:
             if field == 'physicalCharacteristics_dimensions':
@@ -1463,7 +1528,7 @@ class get_fields(BrowserView):
                     dimension = self.create_dimension_field(dimension_field)
                     ## add to schema
                     if dimension != "" and dimension != None:
-                        object_schema.append({"title": self.context.translate(MessageFactory('Dimensions')), "value": dimension})
+                        object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Dimensions')), "value": dimension})
             else:
                 fieldvalue = self.get_field_from_schema(field, fields)
                 if fieldvalue != None:
@@ -1473,10 +1538,10 @@ class get_fields(BrowserView):
                     schema_value = self.transform_schema_field(field, value, choice)
 
                     if schema_value != "":
-                        object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
+                        object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
 
 
-    def generate_associations_tab(self, associations_tab, object_schema, fields, object):
+    def generate_associations_tab(self, associations_tab, object_schema, fields, object, field_schema):
         for field, choice, restriction in associations_tab:
             fieldvalue = self.get_field_from_schema(field, fields)
             if fieldvalue != None:
@@ -1486,9 +1551,9 @@ class get_fields(BrowserView):
                 schema_value = self.transform_schema_field(field, value, choice)
 
                 if schema_value != "":
-                    object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
+                    object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
     
-    def generate_reproductions_tab(self, reproductions_tab, object_schema, fields, object):
+    def generate_reproductions_tab(self, reproductions_tab, object_schema, fields, object, field_schema):
         for field, choice, restriction in reproductions_tab:
             fieldvalue = self.get_field_from_schema(field, fields)
             if fieldvalue != None:
@@ -1500,9 +1565,9 @@ class get_fields(BrowserView):
                 if schema_value != "":
                     if field == "reproductions_reproduction":
                         title = "Reference"
-                    object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})    
+                    object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})    
 
-    def generate_recommendations_tab(self, recommendations_tab, object_schema, fields, object):
+    def generate_recommendations_tab(self, recommendations_tab, object_schema, fields, object, field_schema):
         for field, choice, restriction in recommendations_tab:
             fieldvalue = self.get_field_from_schema(field, fields)
             if fieldvalue != None:
@@ -1512,9 +1577,9 @@ class get_fields(BrowserView):
                 schema_value = self.transform_schema_field(field, value, choice)
 
                 if schema_value != "":
-                    object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})     
+                    object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})     
 
-    def generate_location_tab(self, location_tab, object_schema, fields, object):
+    def generate_location_tab(self, location_tab, object_schema, fields, object, field_schema):
         for field, choice, restriction in location_tab:
             fieldvalue = self.get_field_from_schema(field, fields)
             if fieldvalue != None:
@@ -1524,10 +1589,10 @@ class get_fields(BrowserView):
                 schema_value = self.transform_schema_field(field, value, choice)
 
                 if schema_value != "":
-                    object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
+                    object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
 
 
-    def generate_fieldcollection_tab(self, fieldcollection_tab, object_schema, fields, object):
+    def generate_fieldcollection_tab(self, fieldcollection_tab, object_schema, fields, object, field_schema):
         for field, choice, restriction in fieldcollection_tab:
             fieldvalue = self.get_field_from_schema(field, fields)
             if fieldvalue != None:
@@ -1538,12 +1603,12 @@ class get_fields(BrowserView):
 
                 if schema_value != "":
                     if field == 'fieldCollection_habitatStratigraphy_stratigraphy':
-                        object_schema.append({"title": self.context.translate(MessageFactory('Geologisch tijdvak')), "value": schema_value})
+                        object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Geologisch tijdvak')), "value": schema_value})
                     else:
-                        object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
+                        object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
 
 
-    def generate_exhibitions_tab(self, exhibitions_tab, object_schema, fields, object):
+    def generate_exhibitions_tab(self, exhibitions_tab, object_schema, fields, object, field_schema):
         for field, choice, restriction in exhibitions_tab:
             fieldvalue = self.get_field_from_schema(field, fields)
             if fieldvalue != None:
@@ -1553,9 +1618,9 @@ class get_fields(BrowserView):
                 schema_value = self.transform_schema_field(field, value, choice, restriction)
 
                 if schema_value != "":
-                    object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
+                    object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
 
-    def generate_labels_tab(self, labels_tab, object_schema, fields, object):
+    def generate_labels_tab(self, labels_tab, object_schema, fields, object, field_schema):
         for field, choice, restriction in labels_tab:
             fieldvalue = self.get_field_from_schema(field, fields)
             if fieldvalue != None:
@@ -1565,11 +1630,63 @@ class get_fields(BrowserView):
                 schema_value = self.transform_schema_field(field, value, choice, restriction)
 
                 if schema_value != "":
-                    object_schema.append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
+                    object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
 
     def get_all_fields_object(self, object):
 
-        object_schema = []
+        object_schema = {}
+
+        object_schema["identification"] = {
+            "fields": [],
+            "name": self.context.translate(MessageFactory("Identification"))
+        }
+
+        object_schema["production_dating"] = {
+            "fields": [],
+            "name": self.context.translate(MessageFactory("Production & Dating"))
+        }
+
+        object_schema["physical_characteristics"] = {
+            "fields": [],
+            "name": self.context.translate(MessageFactory("Physical Characteristics"))
+        }
+
+        object_schema["associations"] = {
+            "fields": [],
+            "name": self.context.translate(MessageFactory("Associations"))
+        }
+
+        object_schema["reproductions"] = {
+            "fields": [],
+            "name": self.context.translate(MessageFactory("Reproductions"))
+        }
+
+        object_schema["recommendations_requirements"] = {
+            "fields": [],
+            "name": self.context.translate(MessageFactory("Recommendations/requirements"))
+        }
+
+        object_schema["location"] = {
+            "fields": [],
+            "name": self.context.translate(MessageFactory("Location"))
+        }
+
+        object_schema["field_collection"] = {
+            "fields": [],
+            "name": self.context.translate(MessageFactory("Field Collection"))
+        }
+
+        object_schema["exhibitions"] = {
+            "fields": [],
+            "name": self.context.translate(MessageFactory("Exhibitions"))
+        }
+
+        object_schema["labels"] = {
+            "fields": [],
+            "name": self.context.translate(MessageFactory("Labels"))
+        }
+
+
         schema = getUtility(IDexterityFTI, name='Object').lookupSchema()
         fields = getFieldsInOrder(schema)
 
@@ -1597,36 +1714,48 @@ class get_fields(BrowserView):
         labels_tab = [('labels', 'text', None)]
 
         ## Identification tab
-        self.generate_identification_tab(identification_tab, object_schema, fields, object)
+        self.generate_identification_tab(identification_tab, object_schema, fields, object, "identification")
 
         ## Vervaardiging & Datering tab
-        self.generate_production_dating_tab(production_dating_tab, object_schema, fields, object)
+        self.generate_production_dating_tab(production_dating_tab, object_schema, fields, object, "production_dating")
 
         ## Physical Characteristics
-        self.generate_physical_characteristics_tab(physical_characteristics_tab, object_schema, fields, object)
+        self.generate_physical_characteristics_tab(physical_characteristics_tab, object_schema, fields, object, "physical_characteristics")
 
         ## Associations
-        self.generate_associations_tab(associations_tab, object_schema, fields, object)
+        self.generate_associations_tab(associations_tab, object_schema, fields, object, "associations")
 
         ## Reproductions
-        self.generate_reproductions_tab(reproductions_tab, object_schema, fields, object)
+        self.generate_reproductions_tab(reproductions_tab, object_schema, fields, object, "reproductions")
 
         ## Recommendations
-        self.generate_recommendations_tab(recommendations_tab, object_schema, fields, object)
+        self.generate_recommendations_tab(recommendations_tab, object_schema, fields, object, "recommendations_requirements")
 
         ## Location
-        self.generate_location_tab(location_tab, object_schema, fields, object)
+        self.generate_location_tab(location_tab, object_schema, fields, object, "location")
 
         ## Field collection
-        self.generate_fieldcollection_tab(fieldcollection_tab, object_schema, fields, object)
+        self.generate_fieldcollection_tab(fieldcollection_tab, object_schema, fields, object, "field_collection")
 
         ## Exhibtions
-        self.generate_exhibitions_tab(exhibitions_tab, object_schema, fields, object)
+        self.generate_exhibitions_tab(exhibitions_tab, object_schema, fields, object, "exhibitions")
 
         ## Labels
-        self.generate_labels_tab(labels_tab, object_schema, fields, object)
+        self.generate_labels_tab(labels_tab, object_schema, fields, object, "labels")
 
-        return object_schema
+        new_object_schema = []
+        new_object_schema.append(object_schema['identification'])
+        new_object_schema.append(object_schema['production_dating'])
+        new_object_schema.append(object_schema['physical_characteristics'])
+        new_object_schema.append(object_schema['associations'])
+        new_object_schema.append(object_schema['reproductions'])
+        new_object_schema.append(object_schema['recommendations_requirements'])
+        new_object_schema.append(object_schema['location'])
+        new_object_schema.append(object_schema['field_collection'])
+        new_object_schema.append(object_schema['exhibitions'])
+        new_object_schema.append(object_schema['labels'])
+
+        return new_object_schema
 
 
 

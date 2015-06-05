@@ -423,22 +423,23 @@ class get_nav_objects(BrowserView):
 
         return None
 
-    def transform_schema_field(self, name, field_value, choice=None, restriction=None):
+    def transform_schema_field(self, name, field_value, choice=None, restriction=None, not_show=[]):
         if type(field_value) is list:
             new_val = []
             if choice == None:
                 for val in field_value:
                     for key, value in val.iteritems():
-                        if value != "" and value != None:
-                            if restriction != None:
-                                if value != restriction:
+                        if key not in not_show:
+                            if value != "" and value != None:
+                                if restriction != None:
+                                    if value != restriction:
+                                        if key == "name" and name != 'exhibitions_exhibition':
+                                            value = self.create_maker(value)
+                                        new_val.append(value)
+                                else:
                                     if key == "name" and name != 'exhibitions_exhibition':
                                         value = self.create_maker(value)
                                     new_val.append(value)
-                            else:
-                                if key == "name" and name != 'exhibitions_exhibition':
-                                    value = self.create_maker(value)
-                                new_val.append(value)
             else:
                 for val in field_value:
                     if val[choice] != "" and val[choice] != None:
@@ -699,13 +700,13 @@ class get_nav_objects(BrowserView):
 
 
     def generate_exhibitions_tab(self, exhibitions_tab, object_schema, fields, object, field_schema):
-        for field, choice, restriction in exhibitions_tab:
+        for field, choice, restriction, not_show in exhibitions_tab:
             fieldvalue = self.get_field_from_schema(field, fields)
             if fieldvalue != None:
                 title = fieldvalue.title
                 value = self.get_field_from_object(field, object)
 
-                schema_value = self.transform_schema_field(field, value, choice, restriction)
+                schema_value = self.transform_schema_field(field, value, choice, restriction, not_show)
 
                 if schema_value != "":
                     object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
@@ -799,7 +800,7 @@ class get_nav_objects(BrowserView):
 
         fieldcollection_tab = [('fieldCollection_fieldCollection_place', None, None), ('fieldCollection_habitatStratigraphy_stratigraphy', 'unit', None)]
 
-        exhibitions_tab = [('exhibitions_exhibition', None, 'Zeeuws Museum')]
+        exhibitions_tab = [('exhibitions_exhibition', None, 'Zeeuws Museum', ['catObject'])]
 
         labels_tab = [('labels', 'text', None)]
 
@@ -1331,22 +1332,23 @@ class get_fields(BrowserView):
 
         return None
 
-    def transform_schema_field(self, name, field_value, choice=None, restriction=None):
+    def transform_schema_field(self, name, field_value, choice=None, restriction=None, not_show=[]):
         if type(field_value) is list:
             new_val = []
             if choice == None:
                 for val in field_value:
                     for key, value in val.iteritems():
-                        if value != "" and value != None:
-                            if restriction != None:
-                                if value != restriction:
+                        if key not in not_show:
+                            if value != "" and value != None:
+                                if restriction != None:
+                                    if value != restriction:
+                                        if key == "name" and name != 'exhibitions_exhibition':
+                                            value = self.create_maker(value)
+                                        new_val.append(value)
+                                else:
                                     if key == "name" and name != 'exhibitions_exhibition':
                                         value = self.create_maker(value)
                                     new_val.append(value)
-                            else:
-                                if key == "name" and name != 'exhibitions_exhibition':
-                                    value = self.create_maker(value)
-                                new_val.append(value)
             else:
                 for val in field_value:
                     if val[choice] != "" and val[choice] != None:
@@ -1606,13 +1608,13 @@ class get_fields(BrowserView):
 
 
     def generate_exhibitions_tab(self, exhibitions_tab, object_schema, fields, object, field_schema):
-        for field, choice, restriction in exhibitions_tab:
+        for field, choice, restriction, not_show in exhibitions_tab:
             fieldvalue = self.get_field_from_schema(field, fields)
             if fieldvalue != None:
                 title = fieldvalue.title
                 value = self.get_field_from_object(field, object)
 
-                schema_value = self.transform_schema_field(field, value, choice, restriction)
+                schema_value = self.transform_schema_field(field, value, choice, restriction, not_show)
 
                 if schema_value != "":
                     object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
@@ -1706,7 +1708,7 @@ class get_fields(BrowserView):
 
         fieldcollection_tab = [('fieldCollection_fieldCollection_place', None, None), ('fieldCollection_habitatStratigraphy_stratigraphy', 'unit', None)]
 
-        exhibitions_tab = [('exhibitions_exhibition', None, 'Zeeuws Museum')]
+        exhibitions_tab = [('exhibitions_exhibition', None, 'Zeeuws Museum', ['catObject'])]
 
         labels_tab = [('labels', 'text', None)]
 

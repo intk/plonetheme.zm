@@ -9696,4 +9696,12 @@ body.template-edit form fieldset .page-header:first-child {
     clear: both;
 }
 
+#formfield-form-widgets-priref {
+    display: none;
+}
+
+#formfield-form-widgets-exhibitionsDetails_organizingInstitutions .datagridwidget-widget-country {
+    clear: both;
+}
+
 

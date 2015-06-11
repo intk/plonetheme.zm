@@ -4743,19 +4743,23 @@ body:not(.template-folder_contents):not(.template-sharing):not(.template-usergro
 
 /* STORYTELLING */
 
-.portaltype-object #portal-footer-wrapper {
+.portaltype-object #portal-footer-wrapper,
+.portaltype-book  #portal-footer-wrapper {
     display: none;
 }
 
-.portaltype-object .documentFirstHeading {
+.portaltype-object .documentFirstHeading,
+.portaltype-book .documentFirstHeading {
     display: none;
 }
 
-.portaltype-object .documentDescription {
+.portaltype-object .documentDescription,
+.portaltype-book .documentDescription {
     display: none;
 }
 
-.portaltype-object header {
+.portaltype-object header,
+.portaltype-book header {
     background-color: #2B2B2B;
 }
 
@@ -4788,6 +4792,7 @@ body.template-double_view #portal-logo img {
 }
 
 .portaltype-object #slickslideshow,
+.portaltype-book #slickslideshow,
 body.template-collection_view #slickslideshow,
 .portletSlideshow #slickslideshow,
 body.template-content_view #slickslideshow {
@@ -4796,6 +4801,7 @@ body.template-content_view #slickslideshow {
 }
 
 .portaltype-object .slideshowWrapper,
+.portaltype-book .slideshowWrapper,
 body.template-collection_view .slideshowWrapper,
 .portletSlideshow .slideshowWrapper,
 body.template-content_view .slideshowWrapper {
@@ -4803,13 +4809,14 @@ body.template-content_view .slideshowWrapper {
 }
 
 .portaltype-object #slickslideshow .slick-slide,
+.portaltype-book #slickslideshow .slick-slide,
 body.template-collection_view #slickslideshow .slick-slide,
 .portletSlideshow #slickslideshow .slick-slide,
 body.template-content_view #slickslideshow .slick-slide {
     max-width: 100%;
 }
 
-.portaltype-object #slickslideshow .slick-slide img, .slideshowContent .slick-slide iframe,
+.portaltype-object #slickslideshow .slick-slide img, .portaltype-book #slickslideshow .slick-slide img, .slideshowContent .slick-slide iframe,
 body.template-collection_view #slickslideshow .slick-slide img,
 .portletSlideshow #slickslideshow .slick-slide img,
 body.template-content_view #slickslideshow .slick-slide img {
@@ -4820,12 +4827,18 @@ body.template-content_view #slickslideshow .slick-slide img {
     background-color: #2b2b2b;
 }
 
-html.portaltype-object {
+.portaltype-book #slickslideshow {
+    background-color: #2b2b2b;
+}
+
+html.portaltype-object,
+html.portaltype-book {
     height: 100%;
     background-color: #2B2B2B !important; 
 }
 
-body.portaltype-object {
+body.portaltype-object,
+body.portaltype-book {
     height: 100%;
     background-color: #2B2B2B !important;
 }
@@ -4837,11 +4850,13 @@ body.template-content_view #portal-logo img {
     
 }
 
-.portaltype-object #parent-fieldname-text {
+.portaltype-object #parent-fieldname-text,
+.portaltype-book #parent-fieldname-text {
     display: none;
 }
 
 .portaltype-object #slickslideshow,
+.portaltype-book #slickslideshow,
 body.template-collection_view #slickslideshow,
 .portletSlideshow #slickslideshow {
     width: 100%;
@@ -4849,6 +4864,7 @@ body.template-collection_view #slickslideshow,
 }
 
 .portaltype-object #slideshow-controls,
+.portaltype-book #slideshow-controls,
 body.portaltype-portlet-page #slideshow-controls,
 body.template-content_view #slideshow-controls {
     position: absolute;
@@ -4866,12 +4882,14 @@ body.template-content_view #slideshow-controls {
 }
 
 .portaltype-object #slideshow-controls > div,
+.portaltype-book #slideshow-controls > div,
 body.portaltype-portlet-page #slideshow-controls > div,
 body.template-content_view #slideshow-controls > div {
     height: 100%;
 }
 
 .portaltype-object #slideshow-controls > div p,
+.portaltype-book #slideshow-controls > div p,
 body.portaltype-portlet-page #slideshow-controls > div p,
 body.template-content_view #slideshow-controls > div p {
     line-height: 33px;
@@ -4880,24 +4898,28 @@ body.template-content_view #slideshow-controls > div p {
 } 
 
 .portaltype-object #slideshow-controls .slide-description,
+.portaltype-book #slideshow-controls .slide-description,
 body.portaltype-portlet-page #slideshow-controls .slide-description,
 body.template-content_view #slideshow-controls .slide-description {
     color: #ffffff !important;
 }
 
 .portaltype-object #slideshow-controls .slide-description span,
+.portaltype-book #slideshow-controls .slide-description span,
 body.portaltype-portlet-page #slideshow-controls .slide-description span,
 body.template-content_view #slideshow-controls .slide-description span {
     padding-right: 20px;
 }
 
 .portaltype-object #slideshow-controls .actions-div,
+.portaltype-book #slideshow-controls .actions-div,
 body.portaltype-portlet-page #slideshow-controls .actions-dev {
     padding-right: 0px;
     padding-left: 0px;
 }
 
 .portaltype-object #slideshow-controls .actions-div,
+.portaltype-book #slideshow-controls .actions-div,
 body.portaltype-portlet-page #slideshow-controls .actions-div,
 body.template-content_view #slideshow-controls .actions-div {
     padding-right: 0px;
@@ -4937,7 +4959,15 @@ body.template-content_view #slideshow-controls .btn.share-btn .fa.fa-share-alt {
 .portaltype-object #slideshow-controls .btn.play-btn .fa.fa-play,
 .portaltype-object #slideshow-controls .btn.play-btn .fa.fa-pause,
 .portaltype-object #slideshow-controls .btn.share-btn .fa.fa-share-alt,
-.portaltype-object #slideshow-controls .btn.shop-btn .fa.fa-shopping-cart {
+.portaltype-object #slideshow-controls .btn.shop-btn .fa.fa-shopping-cart,
+.portaltype-book #slideshow-controls .actions-div a .fa.fa-info-circle, 
+.portaltype-book #slideshow-controls .actions-div a .fa.fa-times,
+.portaltype-book #slideshow-controls .btn.expand-btn .fa.fa-expand, 
+.portaltype-book #slideshow-controls .btn.expand-btn .fa.fa-compress, 
+.portaltype-book #slideshow-controls .btn.play-btn .fa.fa-play,
+.portaltype-book #slideshow-controls .btn.play-btn .fa.fa-pause,
+.portaltype-book #slideshow-controls .btn.share-btn .fa.fa-share-alt,
+.portaltype-book #slideshow-controls .btn.shop-btn .fa.fa-shopping-cart {
     line-height: 60px;
     color: #ffffff;
     font-size: 1.250em;
@@ -4956,7 +4986,12 @@ body.template-book_view #slideshow-controls .btn.zoom-btn .fa.fa-search-minus {
     display: none;
 }
 
+.portaltype-book #slideshow-controls {
+    display: none;
+}
+
 .portaltype-object #slideshow-controls .btn,
+.portaltype-book #slideshow-controls .btn,
 body.portaltype-portlet-page #slideshow-controls .btn,
 body.template-content_view #slideshow-controls .btn {
     display: none;
@@ -4973,7 +5008,8 @@ body.template-book_view #slideshow-controls .btn {
     width: 20% !important;
 }
 
-.portaltype-object #slideshow-controls .btn {
+.portaltype-object #slideshow-controls .btn,
+.portaltype-book #slideshow-controls .btn {
     width: 25%;
 }
 
@@ -4990,9 +5026,11 @@ body.template-instruments_view #slideshow-controls .btn {
 }
 
 .portaltype-object #slideshow-controls .btn.info-btn,
+.portaltype-book #slideshow-controls .btn.info-btn,
 body.portaltype-portlet-page #slideshow-controls .btn.info-btn,
 body.portaltype-portlet-page #slideshow-controls .btn.share-btn,
-.portaltype-object #slideshow-controls .btn.shop-btn {
+.portaltype-object #slideshow-controls .btn.shop-btn,
+.portaltype-book #slideshow-controls .btn.shop-btn {
     display: block;
 }
 
@@ -5009,19 +5047,23 @@ body.template-instruments_view #slideshow-controls .btn.pause-btn, {
     display: block;
 }
 
-.portaltype-object #slideshow-controls .btn.share-btn {
+.portaltype-object #slideshow-controls .btn.share-btn,
+.portaltype-book #slideshow-controls .btn.share-btn {
     display: block;
 }
 
 .portaltype-object #slideshow-controls .btn.expand-btn,
+.portaltype-book #slideshow-controls .btn.expand-btn,
 body.portaltype-portlet-page #slideshow-controls .btn.expand-btn,
 body.template-content_view #slideshow-controls .btn.expand-btn,
 body.template-content_view #slideshow-controls .btn.share-btn 
-.portaltype-object #slideshow-controls .btn.info-btn {
+.portaltype-object #slideshow-controls .btn.info-btn,
+.portaltype-book #slideshow-controls .btn.info-btn {
     display: block;
 }
 
 .portaltype-object header,
+.portaltype-book header,
 body.template-collection_view header,
 body.portaltype-portlet-page header,
 body.template-content_view header {
@@ -5038,7 +5080,13 @@ body.template-content_view header {
 .portaltype-object #slideshow-controls .btn.play-btn:hover .fa,
 .portaltype-object #slideshow-controls .btn.share-btn:hover .fa,
 .portaltype-object #slideshow-controls .btn.shop-btn:hover .fa,
-.portaltype-object #slideshow-controls .btn.zoom-btn:hover .fa {
+.portaltype-object #slideshow-controls .btn.zoom-btn:hover .fa,
+.portaltype-book #slideshow-controls .btn.info-btn:hover .fa, 
+.portaltype-book #slideshow-controls .btn.expand-btn:hover .fa,
+.portaltype-book #slideshow-controls .btn.play-btn:hover .fa,
+.portaltype-book #slideshow-controls .btn.share-btn:hover .fa,
+.portaltype-book #slideshow-controls .btn.shop-btn:hover .fa,
+.portaltype-book #slideshow-controls .btn.zoom-btn:hover .fa {
     opacity: 1;
 }
 
@@ -5062,13 +5110,18 @@ body.template-content_view  #slideshow-controls .btn.share-btn:hover .fa {
 body.template-multiple_view.portaltype-object #slideshow-controls .btn.play-btn,
 body.template-multiple_view.portaltype-object #slideshow-controls .btn.pause-btn,
 body.template-instruments_view.portaltype-object #slideshow-controls .btn.play-btn,
-body.template-instruments_view.portaltype-object #slideshow-controls .btn.pause-btn
+body.template-instruments_view.portaltype-object #slideshow-controls .btn.pause-btn,
+body.template-multiple_view.portaltype-book #slideshow-controls .btn.play-btn,
+body.template-multiple_view.portaltype-book #slideshow-controls .btn.pause-btn,
+body.template-instruments_view.portaltype-book #slideshow-controls .btn.play-btn,
+body.template-instruments_view.portaltype-book #slideshow-controls .btn.pause-btn
 {
     display: block;
 }
 
 @media (max-width: 480px) {
-    .portaltype-object #slideshow-controls .slide-description {
+    .portaltype-object #slideshow-controls .slide-description,
+    .portaltype-book #slideshow-controls .slide-description {
         padding-left: 0px;
     }
 
@@ -5081,7 +5134,9 @@ body.template-instruments_view.portaltype-object #slideshow-controls .btn.pause-
     }
 
     .portaltype-object .slide-description #slide-description, 
-    .portaltype-object .slide-description #slide-count {
+    .portaltype-object .slide-description #slide-count,
+    .portaltype-book .slide-description #slide-description, 
+    .portaltype-book .slide-description #slide-count {
         font-size: 1.000em !important;
     }
 
@@ -5097,6 +5152,7 @@ body.template-instruments_view.portaltype-object #slideshow-controls .btn.pause-
 }
 
 .portaltype-object .slick-list, .portaltype-object .slick-track,
+.portaltype-book .slick-list, .portaltype-book .slick-track,
 body.template-collection_view .slick-list,
 body.template-collection_view .slick-track,
 .portletSlideshow .slick-list,
@@ -5108,18 +5164,21 @@ body.template-content_view .slick-track
 } 
 
 .portaltype-object .slick-slideshow,
+.portaltype-book .slick-slideshow,
 body.template-collection_view .slick-slideshow,
 .portletSlideshow .slick-slideshow,
 body.template-content_view .slick-slideshow {
     width: 100% !important;
 }
 
-.portaltype-object #slickslideshow .slideshowWrapper {
+.portaltype-object #slickslideshow .slideshowWrapper,
+.portaltype-book #slickslideshow .slideshowWrapper {
     padding-top: 80px;
     padding-bottom: 80px;
 }
 
 .portaltype-object .slick-slide img,
+.portaltype-book .slick-slide img,
 body.template-collection_view .slick-slide img,
 .portletSlideshow .slick-slide img,
 body.template-content_view .slick-slide img {
@@ -5134,7 +5193,8 @@ body.template-content_view .slick-slide img {
     resize: both;
 }
 
-.portaltype-object #portal-footer-wrapper {
+.portaltype-object #portal-footer-wrapper,
+.portaltype-book #portal-footer-wrapper {
     margin-top: -5px;
 }
 
@@ -5144,11 +5204,13 @@ body.template-content_view .slick-slide img {
 
 /* STORYTELLING */
 
-.portaltype-object .slide-description #slide-description, .portaltype-object .slide-description #slide-count {
+.portaltype-object .slide-description #slide-description, .portaltype-object .slide-description #slide-count,
+.portaltype-book .slide-description #slide-description, .portaltype-book .slide-description #slide-count {
     font-size: 1.125em;
 }
 
-.portaltype-object .slide-description #slide-description {
+.portaltype-object .slide-description #slide-description,
+.portaltype-book .slide-description #slide-description {
     max-width: 100%;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -5158,17 +5220,20 @@ body.template-content_view .slick-slide img {
     word-wrap: break-word;      /* IE */
 }
 
-.portaltype-object .slide-description {
+.portaltype-object .slide-description,
+.portaltype-book .slide-description {
     overflow: hidden;
 }
 
 .portaltype-object #slideshow-controls,
+.portaltype-book #slideshow-controls,
 body.portaltype-portlet-page #slideshow-controls,
 body.template-content_view #slideshow-controls {
     padding-left: 0px;
 }
 
 .portaltype-object #slideshow-controls > div p,
+.portaltype-book #slideshow-controls > div p,
 body.portaltype-portlet-page #slideshow-controls > div p,
 body.template-content_view #slideshow-controls > div p {
     padding-left: 13.5px;
@@ -5177,6 +5242,7 @@ body.template-content_view #slideshow-controls > div p {
 /* Fullscreen solution */
 
 .portaltype-object .inner-bg,
+.portaltype-book .inner-bg,
 body.template-collection_view .inner-bg,
 .portletSlideshow .inner-bg,
 body.template-content_view .inner-bg
@@ -5234,7 +5300,8 @@ header.fullscreen {
         margin: auto !important;
     }
 
-    .portaltype-object #slideshow-controls .btn {
+    .portaltype-object #slideshow-controls .btn, 
+    .portaltype-book #slideshow-controls .btn{
         width: 100%;
         opacity: 1 !important;
     }
@@ -5298,30 +5365,35 @@ header.fullscreen {
     margin-top: -1px;
 }
 
-.portaltype-object .double-container {
+.portaltype-object .double-container,
+.portaltype-book .double-container {
     width: 50%;
     height: 100%;
     float: left;
     overflow: hidden;
 }
 
-.portaltype-object .slick-slide .double-container:first-child img {
+.portaltype-object .slick-slide .double-container:first-child img,
+.portaltype-book .slick-slide .double-container:first-child img {
     float: right;
     max-width: none !important;
 }
 
-.portaltype-object .slick-slide .double-container:last-child img {
+.portaltype-object .slick-slide .double-container:last-child img,
+.portaltype-book .slick-slide .double-container:last-child img{
     float: left;
     max-width: none !important;
 }
 
 .portaltype-object .slide-description, .portaltype-object .slide-count,
-body.portaltype-portlet-page .slide-description, .portaltype-object .slide-count,
-body.template-content_view .slide-description, .portaltype-object .slide-count {
+.portaltype-book .slide-description, .portaltype-book .slide-count,
+body.portaltype-portlet-page .slide-description, .portaltype-object .slide-count, .portaltype-book .slide-count
+body.template-content_view .slide-description, .portaltype-object .slide-count, .portaltype-book .slide-count {
     opacity: 0.6;
 }
 
 .portaltype-object #slickslideshow.fullscreen #slideshow-controls,
+.portaltype-book #slickslideshow.fullscreen #slideshow-controls,
 body.portaltype-portlet-page #slickslideshow.fullscreen #slideshow-controls,
 body.template-content_view #slickslideshow.fullscreen #slideshow-controls
 {
@@ -5587,11 +5659,13 @@ body.template-content_view .slick-slideshow {
     z-index: -1;
 }
 
-.portaltype-object .slideshow-loader {
+.portaltype-object .slideshow-loader,
+.portaltype-book .slideshow-loader {
     display: block;
 }
 
-.portaltype-object .slick-init + .slideshow-loader {
+.portaltype-object .slick-init + .slideshow-loader,
+.portaltype-book .slick-init + .slideshow-loader {
     display: block;
 }
 
@@ -7235,7 +7309,7 @@ body.template-collective-treatment-treatment textarea.form-control {
     margin-bottom: 0px;
 }
 
-body:not(.portaltype-portlet-page):not(.portaltype-object):not(.portaltype-product) .slideshowWrapper:before {
+body:not(.portaltype-portlet-page):not(.portaltype-object):not(.portaltype-product):not(.portaltype-book) .slideshowWrapper:before {
     content: '';
     position: absolute;
     top: 0;
@@ -7249,7 +7323,8 @@ body:not(.portaltype-portlet-page):not(.portaltype-object):not(.portaltype-produ
     transition: opacity 0.3s linear;
 }
 
-body:not(.portaltype-portlet-page):not(.portaltype-object) .slideshowWrapper.moved:before {
+
+body:not(.portaltype-portlet-page):not(.portaltype-object):not(.portaltype-book) .slideshowWrapper.moved:before {
     opacity: 0 !important;
 }
 
@@ -7296,19 +7371,26 @@ body.mobile .overlay-image {
     text-align: left;
 }
 
-body.template-edit.portaltype-object .kssattr-fieldname-form.widgets.text textarea.form-control {
+body.template-edit.portaltype-object .kssattr-fieldname-form.widgets.text textarea.form-control,
+body.template-edit.portaltype-book .kssattr-fieldname-form.widgets.text textarea.form-control {
     height: 800px !important;
 }
 
-body.template-edit.portaltype-object #portal-header {
+body.template-edit.portaltype-object #portal-header,
+body.template-edit.portaltype-book #portal-header {
     background-color: #ffffff;
 }
 
-body.template-edit.portaltype-object #content-core {
+body.template-edit.portaltype-object #content-core,
+body.template-edit.portaltype-book #content-core {
     padding-top: 150px;
 }
 
 body.template-edit.portaltype-object #portal-logo img {
+    content: url('++resource++plonetheme.zm.css/logo-preto.png');
+}
+
+body.template-edit.portaltype-book #portal-logo img {
     content: url('++resource++plonetheme.zm.css/logo-preto.png');
 }
 
@@ -8025,10 +8107,16 @@ body.template-edit.portaltype-object header {
     background: #ffffff;
 }
 
+body.template-edit.portaltype-book header {
+    background: #ffffff;
+}
+
 body.template-edit div.formControls,
 body.template-edit.portaltype-object div.formControls,
+body.template-edit.portaltype-book div.formControls,
 body.template-collective-object-object div.formControls,
 body.template-collective-object-object.portaltype-object div.formControls,
+body.template-collective-object-object.portaltype-book div.formControls,
 body.template-collective-exhibition-exhibition div.formControls,
 body.template-collective-exhibition-exhibition.portaltype-exhibition div.formControls,
 body.template-collective-personorinstitution-personorinstitution div.formControls,
@@ -8872,6 +8960,7 @@ body.template-collective-treatment-treatment .datagridwidget-body select.select-
 }
 
 body.portaltype-object.template-edit #content-core #editing-bar,
+body.portaltype-book.template-edit #content-core #editing-bar,
 body.template-collective-object-object #content-core #editing-bar,
 body.template-collective-exhibition-exhibition #content-core #editing-bar,
 body.template-collective-personorinstitution-personorinstitution #content-core #editing-bar,
@@ -8880,6 +8969,7 @@ body.template-collective-treatment-treatment #content-core #editing-bar {
 }
 
 body.portaltype-object.template-edit #content-core #editing-bar,
+body.portaltype-book.template-edit #content-core #editing-bar,
 body.template-collective-object-object #content-core #editing-bar,
 body.template-collective-exhibition-exhibition #content-core #editing-bar,
 body.template-collective-personorinstitution-personorinstitution #content-core #editing-bar,
@@ -8892,7 +8982,9 @@ body.template-collective-treatment-treatment #content-core #editing-bar {
 
 @media (max-width: 991px) {
     body.portaltype-object.template-edit #content-core #editing-bar,
+    body.portaltype-book.template-edit #content-core #editing-bar,
     body.portaltype-object.template-collective-object-object #content-core #editing-bar,
+    body.portaltype-book.template-collective-object-object #content-core #editing-bar,
     body.portaltype-exhibition.template-collective-exhibition-exhibition #content-core #editing-bar,
     body.portaltype-exhibition.template-collective-personorinstitution-personorinstitution #content-core #editing-bar,
     body.portaltype-treatment.template-collective-treatment-treatment #content-core #editing-bar {
@@ -8906,6 +8998,8 @@ body.template-collective-treatment-treatment #content-core #editing-bar {
 
 body.portaltype-object.template-edit #content-core,
 body.portaltype-object.template-collective-object-object,
+body.portaltype-book.template-edit #content-core,
+body.portaltype-book.template-collective-object-object,
 body.portaltype-exhibition.template-collective-exhibition-exhibition,
 body.portaltype-exhibition.template-collective-personorinstitution-personorinstitution,
 body.portaltype-treatment.template-collective-treatment-treatment {
@@ -8914,6 +9008,7 @@ body.portaltype-treatment.template-collective-treatment-treatment {
 
 
 body.portaltype-object.template-edit #content-core #editing-bar ul#edit-content-views,
+body.portaltype-book.template-edit #content-core #editing-bar ul#edit-content-views,
 body.template-collective-object-object #content-core #editing-bar ul#edit-content-views,
 body.template-collective-exhibition-exhibition #content-core #editing-bar ul#edit-content-views,
 body.template-collective-personorinstitution-personorinstitution #content-core #editing-bar ul#edit-content-views,
@@ -8926,6 +9021,8 @@ body.template-collective-treatment-treatment #content-core #editing-bar ul#edit-
 
 body.template-edit.portaltype-object #portal-header,
 body.template-edit.portaltype-object header,
+body.template-edit.portaltype-book #portal-header,
+body.template-edit.portaltype-book header,
 body.template-collective-object-object #portal-header,
 body.template-collective-object-object header,
 body.template-collective-exhibition-exhibition #portal-header,
@@ -8937,7 +9034,7 @@ body.template-collective-treatment-treatment header {
     background-color: #f5f5f5 !important;
 }
 
-body.template-edit.portaltype-object .documentFirstHeading {
+body.template-edit.portaltype-book .documentFirstHeading {
     display: block;
 }
 
@@ -8950,6 +9047,10 @@ body.template-collective-treatment-treatment .documentFirstHeading {
 }
 
 body.template-edit.portaltype-object #editing-bar {
+    display: none !important;
+}
+
+body.template-edit.portaltype-book #editing-bar {
     display: none !important;
 }
 
@@ -9705,3 +9806,18 @@ body.template-edit form fieldset .page-header:first-child {
 }
 
 
+body.template-book #content-core {
+    height: 100% !important;
+}
+
+body, html {
+    height: 100%;
+}
+
+body.portaltype-book.template-edit #content {
+    background-color: #ffffff !important;
+}
+
+body.portaltype-book.template-edit #visual-portal-wrapper {
+    background-color: #ffffff !important;
+}

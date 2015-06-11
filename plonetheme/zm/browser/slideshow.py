@@ -12,17 +12,112 @@ from zope.schema import getFieldsInOrder
 from plone.dexterity.interfaces import IDexterityFTI
 from zope.component import getUtility
 from Products.CMFCore.utils import getToolByName
-from zope.i18nmessageid import MessageFactory
+from zope.i18nmessageid import MessageFactory as msgfactory
 from zope.intid.interfaces import IIntIds
 from zc.relation.interfaces import ICatalog
 
-MessageFactory = MessageFactory('collective.object')
+MessageFactory = msgfactory('collective.object')
+_book = msgfactory('collective.bibliotheek')
 
 
 class get_nav_objects(BrowserView):
     """
     Utils
     """
+
+    def generate_title_author_tab(self, identification_tab, object_schema, fields, object, field_schema):
+        for field, choice in identification_tab:
+            # Title field
+            if field in ['title']:
+                value = getattr(object, field, "")
+                if value != "" and value != None:
+                    object_schema[field_schema]['fields'].append({"title": self.context.translate(_book('Title')), "value": value})
+            
+            # Regular fields
+            else:
+                fieldvalue = self.get_field_from_schema(field, fields)
+                if fieldvalue != None:
+                    title = fieldvalue.title
+                    value = self.get_field_from_object(field, object)
+
+                    schema_value = self.transform_schema_field(field, value, choice)
+
+                    if schema_value != "":
+                        object_schema[field_schema]['fields'].append({"title": self.context.translate(_book(title)), "value": schema_value})
+
+    def get_all_fields_book(self, object):
+
+        object_schema = {}
+
+        object_schema["title_author"] = {
+            "fields": [],
+            "name": self.context.translate(_book("Title, author, imprint, collation"))
+        }
+
+        object_schema["series_notes_isbn"] = {
+            "fields": [],
+            "name": self.context.translate(_book("Series, notes, ISBN"))
+        }
+
+        object_schema["abstract_subject_terms"] = {
+            "fields": [],
+            "name": self.context.translate(_book("Abstract and subject terms"))
+        }
+
+        object_schema["reproductions"] = {
+            "fields": [],
+            "name": self.context.translate(_book("Reproductions"))
+        }
+
+        object_schema["exhibitions_auctions_collections"] = {
+            "fields": [],
+            "name": self.context.translate(_book("Exhibitions, auctions, collections"))
+        }
+
+        object_schema["relations"] = {
+            "fields": [],
+            "name": self.context.translate(_book("Relations"))
+        }
+
+        object_schema["free_fields_numbers"] = {
+            "fields": [],
+            "name": self.context.translate(_book("Free fields and numbers"))
+        }
+
+        object_schema["copies_and_shelf_marks"] = {
+            "fields": [],
+            "name": self.context.translate(_book("Copies and shelf marks"))
+        }
+
+
+        schema = getUtility(IDexterityFTI, name='Book').lookupSchema()
+        fields = getFieldsInOrder(schema)
+
+        title_author_tab = [('title', None), ('titleAuthorImprintCollation_titleAuthor_author', 'author'), 
+                            ('titleAuthorImprintCollation_titleAuthor_illustrator', 'illustrator'),
+                            ('titleAuthorImprintCollation_titleAuthor_corpAuthor', None),
+                            ('titleAuthorImprintCollation_edition_edition', None)]
+                            
+        reproductions_tab = [('reproductions_reproduction', 'reference', None)]
+
+        ## Identification tab
+        self.generate_title_author_tab(title_author_tab, object_schema, fields, object, "title_author")
+
+        ## Reproductions
+        self.generate_reproductions_tab(reproductions_tab, object_schema, fields, object, "reproductions")
+
+        new_object_schema = []
+        new_object_schema.append(object_schema['title_author'])
+        new_object_schema.append(object_schema['series_notes_isbn'])
+        new_object_schema.append(object_schema['abstract_subject_terms'])
+        new_object_schema.append(object_schema['reproductions'])
+        new_object_schema.append(object_schema['exhibitions_auctions_collections'])
+        new_object_schema.append(object_schema['relations'])
+        new_object_schema.append(object_schema['free_fields_numbers'])
+        new_object_schema.append(object_schema['copies_and_shelf_marks'])
+
+        return new_object_schema
+
     def get_slideshow_items(self):
         item = self.context
         order = self.request.get('sort_on')
@@ -877,20 +972,30 @@ class get_nav_objects(BrowserView):
             for obj in list_items:
                 obj_media = ICanContainMedia(obj.getObject()).getLeadMedia()
                 if obj_media != None:
-                    schema = self.get_all_fields_object(obj.getObject())
+                    if obj.portal_type == "Book":
+                        schema = self.get_all_fields_book(obj.getObject())
+                    else:
+                        schema = self.get_all_fields_object(obj.getObject())
+                        
                     if not items['has_list_images']:
                         items['list'].append({'schema':schema, 'url':obj.getURL(),'image_url': obj_media.absolute_url()+'/@@images/image/large', 'object_id': obj.getId, 'title':obj.Title, 'description': obj.Description, 'body': self.get_object_body(obj.getObject())})
                     else:
                         items['list'].append({'schema':schema, 'images':self.get_multiple_images(obj.getObject(), view_type), 'url':obj.getURL(),'image_url': obj_media.absolute_url()+'/@@images/image/large', 'object_id': obj.getId, 'title':obj.Title, 'description': obj.Description, 'body': self.get_object_body(obj.getObject())})    
                 else:
-                    schema = self.get_all_fields_object(obj.getObject())
+                    if obj.portal_type == "Book":
+                        schema = self.get_all_fields_book(obj.getObject())
+                    else:
+                        schema = self.get_all_fields_object(obj.getObject())
                     items['list'].append({'schema':schema, 'url':obj.getURL(),'image_url': '', 'object_id': obj.getId, 'title':obj.Title, 'description': obj.Description, 'body': self.get_object_body(obj.getObject())})
 
         else:
             for obj in list_items:
                 obj_media = ICanContainMedia(obj.getObject()).getLeadMedia()
                 if obj_media != None:
-                    schema = self.get_all_fields_object(obj.getObject())
+                    if obj.portal_type == "Book":
+                        schema = self.get_all_fields_book(obj.getObject())
+                    else:
+                        schema = self.get_all_fields_object(obj.getObject())
                     if not items['has_list_images']:
                         items['list'].append({'schema':schema, 'url':obj.getURL(),'image_url': obj_media.absolute_url()+'/@@images/image/large', 'object_id': obj.getId(), 'title':obj.Title(), 'description': obj.Description(), 'body': self.get_object_body(obj)})
                     else:
@@ -1309,6 +1414,9 @@ class get_fields(BrowserView):
         if self.context.portal_type == "Object":
             obj = self.context
             schema = self.get_all_fields_object(obj)
+        elif self.context.portal_type == "Book":
+            obj = self.context
+            schema = self.get_all_fields_book(obj)
 
         return json.dumps({'schema':schema})
 
@@ -1753,6 +1861,99 @@ class get_fields(BrowserView):
         new_object_schema.append(object_schema['field_collection'])
         new_object_schema.append(object_schema['exhibitions'])
         new_object_schema.append(object_schema['labels'])
+
+        return new_object_schema
+
+    def generate_title_author_tab(self, identification_tab, object_schema, fields, object, field_schema):
+        for field, choice in identification_tab:
+            # Title field
+            if field in ['title']:
+                value = getattr(object, field, "")
+                if value != "" and value != None:
+                    object_schema[field_schema]['fields'].append({"title": self.context.translate(_book('Title')), "value": value})
+            
+            # Regular fields
+            else:
+                fieldvalue = self.get_field_from_schema(field, fields)
+                if fieldvalue != None:
+                    title = fieldvalue.title
+                    value = self.get_field_from_object(field, object)
+
+                    schema_value = self.transform_schema_field(field, value, choice)
+
+                    if schema_value != "":
+                        object_schema[field_schema]['fields'].append({"title": self.context.translate(_book(title)), "value": schema_value})
+
+    def get_all_fields_book(self, object):
+
+        object_schema = {}
+
+        object_schema["title_author"] = {
+            "fields": [],
+            "name": self.context.translate(_book("Title, author, imprint, collation"))
+        }
+
+        object_schema["series_notes_isbn"] = {
+            "fields": [],
+            "name": self.context.translate(_book("Series, notes, ISBN"))
+        }
+
+        object_schema["abstract_subject_terms"] = {
+            "fields": [],
+            "name": self.context.translate(_book("Abstract and subject terms"))
+        }
+
+        object_schema["reproductions"] = {
+            "fields": [],
+            "name": self.context.translate(_book("Reproductions"))
+        }
+
+        object_schema["exhibitions_auctions_collections"] = {
+            "fields": [],
+            "name": self.context.translate(_book("Exhibitions, auctions, collections"))
+        }
+
+        object_schema["relations"] = {
+            "fields": [],
+            "name": self.context.translate(_book("Relations"))
+        }
+
+        object_schema["free_fields_numbers"] = {
+            "fields": [],
+            "name": self.context.translate(_book("Free fields and numbers"))
+        }
+
+        object_schema["copies_and_shelf_marks"] = {
+            "fields": [],
+            "name": self.context.translate(_book("Copies and shelf marks"))
+        }
+
+
+        schema = getUtility(IDexterityFTI, name='Book').lookupSchema()
+        fields = getFieldsInOrder(schema)
+
+        title_author_tab = [('title', None), ('titleAuthorImprintCollation_titleAuthor_author', 'author'), 
+                            ('titleAuthorImprintCollation_titleAuthor_illustrator', 'illustrator'),
+                            ('titleAuthorImprintCollation_titleAuthor_corpAuthor', None),
+                            ('titleAuthorImprintCollation_edition_edition', None)]
+
+        reproductions_tab = [('reproductions_reproduction', 'reference', None)]
+
+        ## Identification tab
+        self.generate_title_author_tab(title_author_tab, object_schema, fields, object, "title_author")
+
+        ## Reproductions
+        self.generate_reproductions_tab(reproductions_tab, object_schema, fields, object, "reproductions")
+
+        new_object_schema = []
+        new_object_schema.append(object_schema['title_author'])
+        new_object_schema.append(object_schema['series_notes_isbn'])
+        new_object_schema.append(object_schema['abstract_subject_terms'])
+        new_object_schema.append(object_schema['reproductions'])
+        new_object_schema.append(object_schema['exhibitions_auctions_collections'])
+        new_object_schema.append(object_schema['relations'])
+        new_object_schema.append(object_schema['free_fields_numbers'])
+        new_object_schema.append(object_schema['copies_and_shelf_marks'])
 
         return new_object_schema
 

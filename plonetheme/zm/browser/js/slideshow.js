@@ -1180,6 +1180,7 @@ slickSlideshow.init = function() {
 	}
 
 	/* Storytelling slideshow */
+
 	if (query != "" || query == "") {
 		_logger.log("==== INIT Loading feature ====");
 		slickSlideshow.$obj = $($('.slick-slideshow')[0]);

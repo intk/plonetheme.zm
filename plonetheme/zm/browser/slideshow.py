@@ -25,6 +25,65 @@ class get_nav_objects(BrowserView):
     Utils
     """
 
+    def generate_related_exhibitions_objects(self, tab, object_schema, fields, object, field_schema):
+        for field, choice in tab:
+            fieldvalue = self.get_field_from_schema(field, fields)
+            if fieldvalue != None:
+                related_objects = self.get_field_from_object(field, object)
+                if len(related_objects) > 0:
+                    temp_schema = []
+
+                    for rel in related_objects:
+                        rel_object = rel.to_object
+                        temp_schema.append("<a href='%s'>%s</a>" %(rel_object.absolute_url(), rel_object.title))
+
+                    if len(temp_schema) > 0:
+                        title = fieldvalue.title
+                        new_schema = {"title": self.context.translate(_book(title)), "value": "<p>".join(temp_schema)}
+                        object_schema[field_schema]['fields'].append(new_schema)
+
+    def generate_related_museum_objects(self, tab, object_schema, fields, object, field_schema):
+        for field, choice in tab:
+            fieldvalue = self.get_field_from_schema(field, fields)
+            if fieldvalue != None:
+                related_objects = self.get_field_from_object(field, object)
+                if len(related_objects) > 0:
+                    temp_schema = []
+
+                    for rel in related_objects:
+                        rel_object = rel.to_object
+                        temp_schema.append("<a href='%s'>%s</a>" %(rel_object.absolute_url(), rel_object.title))
+
+                    if len(temp_schema) > 0:
+                        title = fieldvalue.title
+                        new_schema = {"title": self.context.translate(_book(title)), "value": "<p>".join(temp_schema)}
+                        object_schema[field_schema]['fields'].append(new_schema)
+                     
+
+    def generate_regular_tab(self, tab, object_schema, fields, object, field_schema):
+        for field, choice in tab:
+            fieldvalue = self.get_field_from_schema(field, fields)
+            if fieldvalue != None:
+                title = fieldvalue.title
+                value = self.get_field_from_object(field, object)
+
+                schema_value = self.transform_schema_field(field, value, choice)
+
+                if schema_value != "":
+                    object_schema[field_schema]['fields'].append({"title": self.context.translate(_book(title)), "value": schema_value})
+
+    def generate_series_isbn_tab(self, identification_tab, object_schema, fields, object, field_schema):
+        for field, choice in identification_tab:
+            fieldvalue = self.get_field_from_schema(field, fields)
+            if fieldvalue != None:
+                title = fieldvalue.title
+                value = self.get_field_from_object(field, object)
+
+                schema_value = self.transform_schema_field(field, value, choice)
+
+                if schema_value != "":
+                    object_schema[field_schema]['fields'].append({"title": self.context.translate(_book(title)), "value": schema_value})
+
     def generate_title_author_tab(self, identification_tab, object_schema, fields, object, field_schema):
         for field, choice in identification_tab:
             # Title field
@@ -95,16 +154,86 @@ class get_nav_objects(BrowserView):
 
         title_author_tab = [('title', None), ('titleAuthorImprintCollation_titleAuthor_author', 'author'), 
                             ('titleAuthorImprintCollation_titleAuthor_illustrator', 'illustrator'),
+                            ('titleAuthorImprintCollation_titleAuthor_statementOfRespsib', None),
                             ('titleAuthorImprintCollation_titleAuthor_corpAuthor', None),
-                            ('titleAuthorImprintCollation_edition_edition', None)]
-                            
+                            ('titleAuthorImprintCollation_edition_edition', None),
+                            ('titleAuthorImprintCollation_imprint_place', None),
+                            ('titleAuthorImprintCollation_imprint_publisher', None),
+                            ('titleAuthorImprintCollation_imprint_year', None),
+                            ('titleAuthorImprintCollation_imprint_placePrinted', None),
+                            ('titleAuthorImprintCollation_sortYear_sortYear', None),
+                            ('titleAuthorImprintCollation_collation_pagination', None),
+                            ('titleAuthorImprintCollation_collation_illustrations', None),
+                            ('titleAuthorImprintCollation_collation_dimensions', None),
+                            ('titleAuthorImprintCollation_collation_accompanyingMaterial', None)
+                            ]
+
+        series_notes_isbn_tab = [('seriesNotesISBN_series_series', 'series'),
+                                ('seriesNotesISBN_series_subseries', 'subseries'),
+                                ('seriesNotesISBN_notes_bibliographicalNotes', None),
+                                ('seriesNotesISBN_ISBN_ISBN', 'ISBN'),
+                                ('seriesNotesISBN_ISBN_ISSN', None)]
+
+        abstract_subject_terms_tab = [('abstractAndSubjectTerms_materialType', None),
+                                     ('abstractAndSubjectTerms_language', None),
+                                     ('abstractAndSubjectTerms_level', None),
+                                     ('abstractAndSubjectTerms_notes', None),
+                                     ('abstractAndSubjectTerms_classNumber', None),
+                                     ('abstractAndSubjectTerms_subjectTerm', 'subjectType'),
+                                     ('abstractAndSubjectTerms_personKeywordType', 'name'),
+                                     ('abstractAndSubjectTerms_geographicalKeyword', None),
+                                     ('abstractAndSubjectTerms_period', None),
+                                     ('abstractAndSubjectTerms_startDate', None),
+                                     ('abstractAndSubjectTerms_endDate', None),
+                                     ('abstractAndSubjectTerms_digitalReferences_reference', None),
+                                     ('abstractAndSubjectTerms_abstract_abstract', None)]
+
         reproductions_tab = [('reproductions_reproduction', 'reference', None)]
+
+        exhibitions_tab = [#('exhibitionsAuctionsCollections_exhibition', 'exhibitionName'),
+                            ('exhibitionsAuctionsCollections_auction', 'auctionName'),
+                            ('exhibitionsAuctionsCollections_collection', 'collectionName')]
+
+        free_fields_tab = [('freeFieldsAndNumbers_freeFields', None),
+                            ('freeFieldsAndNumbers_otherNumber', None),
+                            ('freeFieldsAndNumbers_PPN', None)]
+
+        copies_tab = [('copiesAndShelfMarks_defaultShelfMark', None),
+                    ('copiesAndShelfMarks_copyDetails', None)]
+
+        museum_objects_tab = [('relations_relatedMuseumObjects', None)]
+
+        related_exhibitions = [('exhibitionsAuctionsCollections_relatedExhibitions', None)]
 
         ## Identification tab
         self.generate_title_author_tab(title_author_tab, object_schema, fields, object, "title_author")
 
+        ## Series
+        self.generate_series_isbn_tab(series_notes_isbn_tab, object_schema, fields, object, "series_notes_isbn")
+
+        ## Abstract
+        self.generate_regular_tab(abstract_subject_terms_tab, object_schema, fields, object, "abstract_subject_terms")
+
         ## Reproductions
         self.generate_reproductions_tab(reproductions_tab, object_schema, fields, object, "reproductions")
+
+        ## Related exhibitions
+        self.generate_related_exhibitions_objects(related_exhibitions, object_schema, fields, object, "exhibitions_auctions_collections")
+
+        ## Exhibition
+        self.generate_regular_tab(exhibitions_tab, object_schema, fields, object, "exhibitions_auctions_collections")
+
+        ## Free fields
+        self.generate_regular_tab(free_fields_tab, object_schema, fields, object, "free_fields_numbers")
+
+        ## Copies and shelf marks
+        self.generate_regular_tab(copies_tab, object_schema, fields, object, "copies_and_shelf_marks")
+        
+        ## Museum objects
+        self.generate_related_museum_objects(museum_objects_tab, object_schema, fields, object, "relations")
+
+        
+
 
         new_object_schema = []
         new_object_schema.append(object_schema['title_author'])
@@ -519,6 +648,7 @@ class get_nav_objects(BrowserView):
         return None
 
     def transform_schema_field(self, name, field_value, choice=None, restriction=None, not_show=[]):
+
         if type(field_value) is list:
             new_val = []
             if choice == None:
@@ -551,7 +681,10 @@ class get_nav_objects(BrowserView):
                                 new_val.append(val[choice])
 
             if len(new_val) > 0:
-                if name in ["exhibitions_exhibition", "productionDating_production", "labels"]:
+                if name in ["exhibitions_exhibition", "productionDating_production", "labels", "seriesNotesISBN_notes_bibliographicalNotes",
+                            "abstractAndSubjectTerms_notes", "abstractAndSubjectTerms_abstract_abstract",
+                            "exhibitionsAuctionsCollections_exhibition", "exhibitionsAuctionsCollections_auction",
+                            "exhibitionsAuctionsCollections_collection"]:
                     return '<p>'.join(new_val)
                 else:
                     for index, single_value in enumerate(new_val):
@@ -818,6 +951,22 @@ class get_nav_objects(BrowserView):
                 if schema_value != "":
                     object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
 
+    def generate_related_books_tab(self, object_schema, fields, object, field_schema):
+        intids = getUtility(IIntIds)
+        catalog = getUtility(ICatalog)
+
+        relations = sorted(catalog.findRelations({'to_id': intids.getId(object), 'from_attribute':'relations_relatedMuseumObjects'}))
+        related_exhibitions = []
+        for rel in relations:
+            rel_obj = rel.from_object
+            rel_url = rel_obj.absolute_url()
+            rel_title = rel_obj.title
+            related_exhibitions.append("<a href='%s'>%s</a>"%(rel_url, rel_title))
+        
+        if len(related_exhibitions) > 0:
+            related_exhibitions_value = '<p>'.join(related_exhibitions)
+            object_schema[field_schema]['fields'].append({'title': self.context.translate(MessageFactory('Books')), 'value': related_exhibitions_value})
+
     def get_all_fields_object(self, object):
 
         object_schema = {}
@@ -870,6 +1019,11 @@ class get_nav_objects(BrowserView):
         object_schema["labels"] = {
             "fields": [],
             "name": self.context.translate(MessageFactory("Labels"))
+        }
+
+        object_schema["books"] = {
+            "fields": [],
+            "name": self.context.translate(MessageFactory("Books"))
         }
 
 
@@ -929,6 +1083,9 @@ class get_nav_objects(BrowserView):
         ## Labels
         self.generate_labels_tab(labels_tab, object_schema, fields, object, "labels")
 
+        ## Books
+        self.generate_related_books_tab(object_schema, fields, object, "books")
+
         new_object_schema = []
         new_object_schema.append(object_schema['identification'])
         new_object_schema.append(object_schema['production_dating'])
@@ -940,6 +1097,7 @@ class get_nav_objects(BrowserView):
         new_object_schema.append(object_schema['field_collection'])
         new_object_schema.append(object_schema['exhibitions'])
         new_object_schema.append(object_schema['labels'])
+        new_object_schema.append(object_schema['books'])
 
         return new_object_schema
 
@@ -1473,7 +1631,10 @@ class get_fields(BrowserView):
                                 new_val.append(val[choice])
 
             if len(new_val) > 0:
-                if name in ["exhibitions_exhibition", "productionDating_production", "labels"]:
+                if name in ["exhibitions_exhibition", "productionDating_production", "labels", "seriesNotesISBN_notes_bibliographicalNotes",
+                            "abstractAndSubjectTerms_notes", "abstractAndSubjectTerms_abstract_abstract",
+                            "exhibitionsAuctionsCollections_exhibition", "exhibitionsAuctionsCollections_auction",
+                            "exhibitionsAuctionsCollections_collection"]:
                     return '<p>'.join(new_val)
                 else:
                     for index, single_value in enumerate(new_val):
@@ -1739,6 +1900,25 @@ class get_fields(BrowserView):
                 if schema_value != "":
                     object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
 
+    
+
+    def generate_related_books_tab(self, object_schema, fields, object, field_schema):
+        intids = getUtility(IIntIds)
+        catalog = getUtility(ICatalog)
+
+        relations = sorted(catalog.findRelations({'to_id': intids.getId(object), 'from_attribute':'relations_relatedMuseumObjects'}))
+        related_exhibitions = []
+
+        for rel in relations:
+            rel_obj = rel.from_object
+            rel_url = rel_obj.absolute_url()
+            rel_title = rel_obj.title
+            related_exhibitions.append("<a href='%s'>%s</a>"%(rel_url, rel_title))
+        
+        if len(related_exhibitions) > 0:
+            related_exhibitions_value = '<p>'.join(related_exhibitions)
+            object_schema[field_schema]['fields'].append({'title': self.context.translate('Books'), 'value': related_exhibitions_value})
+
     def get_all_fields_object(self, object):
 
         object_schema = {}
@@ -1791,6 +1971,11 @@ class get_fields(BrowserView):
         object_schema["labels"] = {
             "fields": [],
             "name": self.context.translate(MessageFactory("Labels"))
+        }
+
+        object_schema["books"] = {
+            "fields": [],
+            "name": self.context.translate(MessageFactory("Books"))
         }
 
 
@@ -1850,6 +2035,9 @@ class get_fields(BrowserView):
         ## Labels
         self.generate_labels_tab(labels_tab, object_schema, fields, object, "labels")
 
+        ## Books
+        self.generate_related_books_tab(object_schema, fields, object, "books")
+
         new_object_schema = []
         new_object_schema.append(object_schema['identification'])
         new_object_schema.append(object_schema['production_dating'])
@@ -1861,8 +2049,69 @@ class get_fields(BrowserView):
         new_object_schema.append(object_schema['field_collection'])
         new_object_schema.append(object_schema['exhibitions'])
         new_object_schema.append(object_schema['labels'])
+        new_object_schema.append(object_schema['books'])
 
         return new_object_schema
+
+    # Get related exhibtions objects
+    def generate_related_exhibitions_objects(self, tab, object_schema, fields, object, field_schema):
+        for field, choice in tab:
+            fieldvalue = self.get_field_from_schema(field, fields)
+            if fieldvalue != None:
+                related_objects = self.get_field_from_object(field, object)
+                if len(related_objects) > 0:
+                    temp_schema = []
+
+                    for rel in related_objects:
+                        rel_object = rel.to_object
+                        temp_schema.append("<a href='%s'>%s</a>" %(rel_object.absolute_url(), rel_object.title))
+
+                    if len(temp_schema) > 0:
+                        title = fieldvalue.title
+                        new_schema = {"title": self.context.translate(_book(title)), "value": "<p>".join(temp_schema)}
+                        object_schema[field_schema]['fields'].append(new_schema)
+
+    def generate_related_museum_objects(self, tab, object_schema, fields, object, field_schema):
+        for field, choice in tab:
+            fieldvalue = self.get_field_from_schema(field, fields)
+            if fieldvalue != None:
+                related_objects = self.get_field_from_object(field, object)
+                if len(related_objects) > 0:
+                    temp_schema = []
+
+                    for rel in related_objects:
+                        rel_object = rel.to_object
+                        temp_schema.append("<a href='%s'>%s</a>" %(rel_object.absolute_url(), rel_object.title))
+
+                    if len(temp_schema) > 0:
+                        title = fieldvalue.title
+                        new_schema = {"title": self.context.translate(_book(title)), "value": "<p>".join(temp_schema)}
+                        object_schema[field_schema]['fields'].append(new_schema)
+                     
+
+    def generate_regular_tab(self, tab, object_schema, fields, object, field_schema):
+        for field, choice in tab:
+            fieldvalue = self.get_field_from_schema(field, fields)
+            if fieldvalue != None:
+                title = fieldvalue.title
+                value = self.get_field_from_object(field, object)
+
+                schema_value = self.transform_schema_field(field, value, choice)
+
+                if schema_value != "":
+                    object_schema[field_schema]['fields'].append({"title": self.context.translate(_book(title)), "value": schema_value})
+
+    def generate_series_isbn_tab(self, identification_tab, object_schema, fields, object, field_schema):
+        for field, choice in identification_tab:
+            fieldvalue = self.get_field_from_schema(field, fields)
+            if fieldvalue != None:
+                title = fieldvalue.title
+                value = self.get_field_from_object(field, object)
+
+                schema_value = self.transform_schema_field(field, value, choice)
+
+                if schema_value != "":
+                    object_schema[field_schema]['fields'].append({"title": self.context.translate(_book(title)), "value": schema_value})
 
     def generate_title_author_tab(self, identification_tab, object_schema, fields, object, field_schema):
         for field, choice in identification_tab:
@@ -1934,16 +2183,84 @@ class get_fields(BrowserView):
 
         title_author_tab = [('title', None), ('titleAuthorImprintCollation_titleAuthor_author', 'author'), 
                             ('titleAuthorImprintCollation_titleAuthor_illustrator', 'illustrator'),
+                            ('titleAuthorImprintCollation_titleAuthor_statementOfRespsib', None),
                             ('titleAuthorImprintCollation_titleAuthor_corpAuthor', None),
-                            ('titleAuthorImprintCollation_edition_edition', None)]
+                            ('titleAuthorImprintCollation_edition_edition', None),
+                            ('titleAuthorImprintCollation_imprint_place', None),
+                            ('titleAuthorImprintCollation_imprint_publisher', None),
+                            ('titleAuthorImprintCollation_imprint_year', None),
+                            ('titleAuthorImprintCollation_imprint_placePrinted', None),
+                            ('titleAuthorImprintCollation_sortYear_sortYear', None),
+                            ('titleAuthorImprintCollation_collation_pagination', None),
+                            ('titleAuthorImprintCollation_collation_illustrations', None),
+                            ('titleAuthorImprintCollation_collation_dimensions', None),
+                            ('titleAuthorImprintCollation_collation_accompanyingMaterial', None)
+                            ]
+
+        series_notes_isbn_tab = [('seriesNotesISBN_series_series', 'series'),
+                                ('seriesNotesISBN_series_subseries', 'subseries'),
+                                ('seriesNotesISBN_notes_bibliographicalNotes', None),
+                                ('seriesNotesISBN_ISBN_ISBN', 'ISBN'),
+                                ('seriesNotesISBN_ISBN_ISSN', None)]
+
+        abstract_subject_terms_tab = [('abstractAndSubjectTerms_materialType', None),
+                                     ('abstractAndSubjectTerms_language', None),
+                                     ('abstractAndSubjectTerms_level', None),
+                                     ('abstractAndSubjectTerms_notes', None),
+                                     ('abstractAndSubjectTerms_classNumber', None),
+                                     ('abstractAndSubjectTerms_subjectTerm', 'subjectType'),
+                                     ('abstractAndSubjectTerms_personKeywordType', 'name'),
+                                     ('abstractAndSubjectTerms_geographicalKeyword', None),
+                                     ('abstractAndSubjectTerms_period', None),
+                                     ('abstractAndSubjectTerms_startDate', None),
+                                     ('abstractAndSubjectTerms_endDate', None),
+                                     ('abstractAndSubjectTerms_digitalReferences_reference', None),
+                                     ('abstractAndSubjectTerms_abstract_abstract', None)]
 
         reproductions_tab = [('reproductions_reproduction', 'reference', None)]
+
+        exhibitions_tab = [#('exhibitionsAuctionsCollections_exhibition', 'exhibitionName'),
+                            ('exhibitionsAuctionsCollections_auction', 'auctionName'),
+                            ('exhibitionsAuctionsCollections_collection', 'collectionName')]
+
+        free_fields_tab = [('freeFieldsAndNumbers_freeFields', None),
+                            ('freeFieldsAndNumbers_otherNumber', None),
+                            ('freeFieldsAndNumbers_PPN', None)]
+
+        copies_tab = [('copiesAndShelfMarks_defaultShelfMark', None),
+                    ('copiesAndShelfMarks_copyDetails', None)]
+
+        museum_objects_tab = [('relations_relatedMuseumObjects', None)]
+
+        related_exhibitions = [('exhibitionsAuctionsCollections_relatedExhibitions', None)]
 
         ## Identification tab
         self.generate_title_author_tab(title_author_tab, object_schema, fields, object, "title_author")
 
+        ## Series
+        self.generate_series_isbn_tab(series_notes_isbn_tab, object_schema, fields, object, "series_notes_isbn")
+
+        ## Abstract
+        self.generate_regular_tab(abstract_subject_terms_tab, object_schema, fields, object, "abstract_subject_terms")
+
         ## Reproductions
         self.generate_reproductions_tab(reproductions_tab, object_schema, fields, object, "reproductions")
+
+        ## !Related exhibitions
+        self.generate_related_exhibitions_objects(related_exhibitions, object_schema, fields, object, "exhibitions_auctions_collections")
+        
+        ## Exhibition
+        self.generate_regular_tab(exhibitions_tab, object_schema, fields, object, "exhibitions_auctions_collections")
+
+        ## Free fields
+        self.generate_regular_tab(free_fields_tab, object_schema, fields, object, "free_fields_numbers")
+
+        ## Copies and shelf marks
+        self.generate_regular_tab(copies_tab, object_schema, fields, object, "copies_and_shelf_marks")
+        
+        ## Museum objects
+        self.generate_related_museum_objects(museum_objects_tab, object_schema, fields, object, "relations")
+
 
         new_object_schema = []
         new_object_schema.append(object_schema['title_author'])
@@ -1956,7 +2273,6 @@ class get_fields(BrowserView):
         new_object_schema.append(object_schema['copies_and_shelf_marks'])
 
         return new_object_schema
-
 
 
 class CollectionSlideshow(BrowserView):

@@ -4753,6 +4753,10 @@ body:not(.template-folder_contents):not(.template-sharing):not(.template-usergro
     display: none;
 }
 
+.portaltype-object.template-edit .documentFirstHeading {
+    display: block !important;
+}
+
 .portaltype-object .documentDescription,
 .portaltype-book .documentDescription {
     display: none;
@@ -9034,6 +9038,11 @@ body.template-collective-treatment-treatment header {
     background-color: #f5f5f5 !important;
 }
 
+
+body.template-edit.portaltype-object .documentFirstHeading {
+    display: block;
+}
+
 body.template-edit.portaltype-book .documentFirstHeading {
     display: block;
 }
@@ -9818,6 +9827,15 @@ body.portaltype-book.template-edit #content {
     background-color: #ffffff !important;
 }
 
+
+body.portaltype-object.template-edit #content {
+    background-color: #ffffff !important;
+}
+
 body.portaltype-book.template-edit #visual-portal-wrapper {
+    background-color: #ffffff !important;
+}
+
+body.portaltype-object.template-edit #visual-portal-wrapper {
     background-color: #ffffff !important;
 }

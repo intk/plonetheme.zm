@@ -15,6 +15,7 @@ from Products.CMFCore.utils import getToolByName
 from zope.i18nmessageid import MessageFactory as msgfactory
 from zope.intid.interfaces import IIntIds
 from zc.relation.interfaces import ICatalog
+from zope.security import checkPermission
 
 MessageFactory = msgfactory('collective.object')
 _book = msgfactory('collective.bibliotheek')
@@ -160,12 +161,7 @@ class get_nav_objects(BrowserView):
                             ('titleAuthorImprintCollation_imprint_place', None),
                             ('titleAuthorImprintCollation_imprint_publisher', None),
                             ('titleAuthorImprintCollation_imprint_year', None),
-                            ('titleAuthorImprintCollation_imprint_placePrinted', None),
-                            ('titleAuthorImprintCollation_sortYear_sortYear', None),
-                            ('titleAuthorImprintCollation_collation_pagination', None),
-                            ('titleAuthorImprintCollation_collation_illustrations', None),
-                            ('titleAuthorImprintCollation_collation_dimensions', None),
-                            ('titleAuthorImprintCollation_collation_accompanyingMaterial', None)
+                            ('titleAuthorImprintCollation_imprint_placePrinted', None)
                             ]
 
         series_notes_isbn_tab = [('seriesNotesISBN_series_series', 'series'),
@@ -175,9 +171,6 @@ class get_nav_objects(BrowserView):
                                 ('seriesNotesISBN_ISBN_ISSN', None)]
 
         abstract_subject_terms_tab = [('abstractAndSubjectTerms_materialType', None),
-                                     ('abstractAndSubjectTerms_language', None),
-                                     ('abstractAndSubjectTerms_level', None),
-                                     ('abstractAndSubjectTerms_notes', None),
                                      ('abstractAndSubjectTerms_classNumber', None),
                                      ('abstractAndSubjectTerms_subjectTerm', 'subjectType'),
                                      ('abstractAndSubjectTerms_personKeywordType', 'name'),
@@ -190,16 +183,11 @@ class get_nav_objects(BrowserView):
 
         reproductions_tab = [('reproductions_reproduction', 'reference', None)]
 
-        exhibitions_tab = [#('exhibitionsAuctionsCollections_exhibition', 'exhibitionName'),
-                            ('exhibitionsAuctionsCollections_auction', 'auctionName'),
-                            ('exhibitionsAuctionsCollections_collection', 'collectionName')]
+        exhibitions_tab = []
 
-        free_fields_tab = [('freeFieldsAndNumbers_freeFields', None),
-                            ('freeFieldsAndNumbers_otherNumber', None),
-                            ('freeFieldsAndNumbers_PPN', None)]
+        free_fields_tab = []
 
-        copies_tab = [('copiesAndShelfMarks_defaultShelfMark', None),
-                    ('copiesAndShelfMarks_copyDetails', None)]
+        copies_tab = [('copiesAndShelfMarks_copyDetails', None)]
 
         museum_objects_tab = [('relations_relatedMuseumObjects', None)]
 
@@ -927,7 +915,7 @@ class get_nav_objects(BrowserView):
                         object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
 
 
-    def generate_exhibitions_tab(self, exhibitions_tab, object_schema, fields, object, field_schema):
+    def generate_exhibitions_tab_temp(self, exhibitions_tab, object_schema, fields, object, field_schema):
         for field, choice, restriction, not_show in exhibitions_tab:
             fieldvalue = self.get_field_from_schema(field, fields)
             if fieldvalue != None:
@@ -938,6 +926,44 @@ class get_nav_objects(BrowserView):
 
                 if schema_value != "":
                     object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
+
+    def generate_exhibitions_tab(self, exhibitions_tab, object_schema, fields, object, field_schema):
+        intids = getUtility(IIntIds)
+        catalog = getUtility(ICatalog)
+
+        relations = sorted(catalog.findRelations({'to_id': intids.getId(object), 'from_attribute':'linkedObjects_relatedItems'}))
+
+        related_exhibitions = []
+        for rel in relations:
+            rel_obj = rel.from_object
+            rel_url = rel_obj.absolute_url()
+            rel_title = rel_obj.title
+            related_exhibitions.append("<a href='%s'>%s</a>"%(rel_url, rel_title))
+
+            rel_date_start = ""
+            rel_date_end = ""
+            if hasattr(rel_obj, 'start_date'):
+                rel_date_start = rel_obj.start_date
+
+            if hasattr(rel_obj, 'end_date'):
+                rel_date_end = rel_obj.end_date
+
+            if rel_date_start != "":
+                date_start = rel_date_start.strftime('%Y-%m-%d')
+
+            if rel_date_end != "":
+                date_end = rel_date_start.strftime('%Y-%m-%d')
+
+            final_date = ""
+            if rel_date_start != "" and rel_date_end != "":
+                final_date = "%s t/m %s" %(date_start, date_end)
+
+            if final_date != "":
+                related_exhibitions.append(final_date)
+
+        if len(related_exhibitions) > 0:
+            related_exhibitions_value = '<p>'.join(related_exhibitions)
+            object_schema[field_schema]['fields'].append({'title': self.context.translate(MessageFactory('Exhibitions')), 'value': related_exhibitions_value})
 
     def generate_labels_tab(self, labels_tab, object_schema, fields, object, field_schema):
         for field, choice, restriction in labels_tab:
@@ -952,20 +978,21 @@ class get_nav_objects(BrowserView):
                     object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
 
     def generate_related_books_tab(self, object_schema, fields, object, field_schema):
-        intids = getUtility(IIntIds)
-        catalog = getUtility(ICatalog)
+        if checkPermission('cmf.ManagePortal', self.context):
+            intids = getUtility(IIntIds)
+            catalog = getUtility(ICatalog)
 
-        relations = sorted(catalog.findRelations({'to_id': intids.getId(object), 'from_attribute':'relations_relatedMuseumObjects'}))
-        related_exhibitions = []
-        for rel in relations:
-            rel_obj = rel.from_object
-            rel_url = rel_obj.absolute_url()
-            rel_title = rel_obj.title
-            related_exhibitions.append("<a href='%s'>%s</a>"%(rel_url, rel_title))
-        
-        if len(related_exhibitions) > 0:
-            related_exhibitions_value = '<p>'.join(related_exhibitions)
-            object_schema[field_schema]['fields'].append({'title': self.context.translate(MessageFactory('Books')), 'value': related_exhibitions_value})
+            relations = sorted(catalog.findRelations({'to_id': intids.getId(object), 'from_attribute':'relations_relatedMuseumObjects'}))
+            related_exhibitions = []
+            for rel in relations:
+                rel_obj = rel.from_object
+                rel_url = rel_obj.absolute_url()
+                rel_title = rel_obj.title
+                related_exhibitions.append("<a href='%s'>%s</a>"%(rel_url, rel_title))
+            
+            if len(related_exhibitions) > 0:
+                related_exhibitions_value = '<p>'.join(related_exhibitions)
+                object_schema[field_schema]['fields'].append({'title': self.context.translate(MessageFactory('Books')), 'value': related_exhibitions_value})
 
     def get_all_fields_object(self, object):
 
@@ -1877,7 +1904,7 @@ class get_fields(BrowserView):
                         object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
 
 
-    def generate_exhibitions_tab(self, exhibitions_tab, object_schema, fields, object, field_schema):
+    def generate_exhibitions_tab_temp(self, exhibitions_tab, object_schema, fields, object, field_schema):
         for field, choice, restriction, not_show in exhibitions_tab:
             fieldvalue = self.get_field_from_schema(field, fields)
             if fieldvalue != None:
@@ -1888,6 +1915,50 @@ class get_fields(BrowserView):
 
                 if schema_value != "":
                     object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
+
+    def generate_exhibitions_tab(self, exhibitions_tab, object_schema, fields, object, field_schema):
+        intids = getUtility(IIntIds)
+        catalog = getUtility(ICatalog)
+
+        relations = sorted(catalog.findRelations({'to_id': intids.getId(object), 'from_attribute':'linkedObjects_relatedItems'}))
+
+        related_exhibitions = []
+        for rel in relations:
+            rel_obj = rel.from_object
+            rel_url = rel_obj.absolute_url()
+            rel_title = rel_obj.title
+            related_exhibitions.append("<a href='%s'>%s</a>"%(rel_url, rel_title))
+
+            rel_date_start = ""
+            rel_date_end = ""
+            if hasattr(rel_obj, 'start_date'):
+                rel_date_start = rel_obj.start_date
+
+            if hasattr(rel_obj, 'end_date'):
+                rel_date_end = rel_obj.end_date
+
+            if rel_date_start != "":
+                date_start = rel_date_start.strftime('%Y-%m-%d')
+
+            if rel_date_end != "":
+                date_end = rel_date_start.strftime('%Y-%m-%d')
+
+            final_date = ""
+            if rel_date_start != "" and rel_date_end != "":
+                final_date = "%s t/m %s" %(date_start, date_end)
+
+            if rel_date_start != "" and rel_date_end == "":
+                final_date = "%s" %(date_start)
+
+            if rel_date_end != "" and rel_date_start == "":
+                final_date = "%s" %(date_end)
+
+            if final_date != "":
+                related_exhibitions.append(final_date)
+
+        if len(related_exhibitions) > 0:
+            related_exhibitions_value = '<p>'.join(related_exhibitions)
+            object_schema[field_schema]['fields'].append({'title': self.context.translate(MessageFactory('Exhibitions')), 'value': related_exhibitions_value})
 
     def generate_labels_tab(self, labels_tab, object_schema, fields, object, field_schema):
         for field, choice, restriction in labels_tab:
@@ -1904,21 +1975,21 @@ class get_fields(BrowserView):
     
 
     def generate_related_books_tab(self, object_schema, fields, object, field_schema):
-        intids = getUtility(IIntIds)
-        catalog = getUtility(ICatalog)
+        if checkPermission('cmf.ManagePortal', self.context):
+            intids = getUtility(IIntIds)
+            catalog = getUtility(ICatalog)
 
-        relations = sorted(catalog.findRelations({'to_id': intids.getId(object), 'from_attribute':'relations_relatedMuseumObjects'}))
-        related_exhibitions = []
-
-        for rel in relations:
-            rel_obj = rel.from_object
-            rel_url = rel_obj.absolute_url()
-            rel_title = rel_obj.title
-            related_exhibitions.append("<a href='%s'>%s</a>"%(rel_url, rel_title))
-        
-        if len(related_exhibitions) > 0:
-            related_exhibitions_value = '<p>'.join(related_exhibitions)
-            object_schema[field_schema]['fields'].append({'title': self.context.translate('Books'), 'value': related_exhibitions_value})
+            relations = sorted(catalog.findRelations({'to_id': intids.getId(object), 'from_attribute':'relations_relatedMuseumObjects'}))
+            related_exhibitions = []
+            for rel in relations:
+                rel_obj = rel.from_object
+                rel_url = rel_obj.absolute_url()
+                rel_title = rel_obj.title
+                related_exhibitions.append("<a href='%s'>%s</a>"%(rel_url, rel_title))
+            
+            if len(related_exhibitions) > 0:
+                related_exhibitions_value = '<p>'.join(related_exhibitions)
+                object_schema[field_schema]['fields'].append({'title': self.context.translate(MessageFactory('Books')), 'value': related_exhibitions_value})
 
     def get_all_fields_object(self, object):
 
@@ -2190,12 +2261,7 @@ class get_fields(BrowserView):
                             ('titleAuthorImprintCollation_imprint_place', None),
                             ('titleAuthorImprintCollation_imprint_publisher', None),
                             ('titleAuthorImprintCollation_imprint_year', None),
-                            ('titleAuthorImprintCollation_imprint_placePrinted', None),
-                            ('titleAuthorImprintCollation_sortYear_sortYear', None),
-                            ('titleAuthorImprintCollation_collation_pagination', None),
-                            ('titleAuthorImprintCollation_collation_illustrations', None),
-                            ('titleAuthorImprintCollation_collation_dimensions', None),
-                            ('titleAuthorImprintCollation_collation_accompanyingMaterial', None)
+                            ('titleAuthorImprintCollation_imprint_placePrinted', None)
                             ]
 
         series_notes_isbn_tab = [('seriesNotesISBN_series_series', 'series'),
@@ -2205,9 +2271,6 @@ class get_fields(BrowserView):
                                 ('seriesNotesISBN_ISBN_ISSN', None)]
 
         abstract_subject_terms_tab = [('abstractAndSubjectTerms_materialType', None),
-                                     ('abstractAndSubjectTerms_language', None),
-                                     ('abstractAndSubjectTerms_level', None),
-                                     ('abstractAndSubjectTerms_notes', None),
                                      ('abstractAndSubjectTerms_classNumber', None),
                                      ('abstractAndSubjectTerms_subjectTerm', 'subjectType'),
                                      ('abstractAndSubjectTerms_personKeywordType', 'name'),
@@ -2220,16 +2283,11 @@ class get_fields(BrowserView):
 
         reproductions_tab = [('reproductions_reproduction', 'reference', None)]
 
-        exhibitions_tab = [#('exhibitionsAuctionsCollections_exhibition', 'exhibitionName'),
-                            ('exhibitionsAuctionsCollections_auction', 'auctionName'),
-                            ('exhibitionsAuctionsCollections_collection', 'collectionName')]
+        exhibitions_tab = []
 
-        free_fields_tab = [('freeFieldsAndNumbers_freeFields', None),
-                            ('freeFieldsAndNumbers_otherNumber', None),
-                            ('freeFieldsAndNumbers_PPN', None)]
+        free_fields_tab = []
 
-        copies_tab = [('copiesAndShelfMarks_defaultShelfMark', None),
-                    ('copiesAndShelfMarks_copyDetails', None)]
+        copies_tab = [('copiesAndShelfMarks_copyDetails', None)]
 
         museum_objects_tab = [('relations_relatedMuseumObjects', None)]
 
@@ -2251,7 +2309,7 @@ class get_fields(BrowserView):
         self.generate_related_exhibitions_objects(related_exhibitions, object_schema, fields, object, "exhibitions_auctions_collections")
         
         ## Exhibition
-        self.generate_regular_tab(exhibitions_tab, object_schema, fields, object, "exhibitions_auctions_collections")
+        #self.generate_regular_tab(exhibitions_tab, object_schema, fields, object, "exhibitions_auctions_collections")
 
         ## Free fields
         self.generate_regular_tab(free_fields_tab, object_schema, fields, object, "free_fields_numbers")

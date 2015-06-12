@@ -658,7 +658,7 @@ class get_nav_objects(BrowserView):
                             if value != "" and value != None:
                                 if restriction != None:
                                     if value != restriction:
-                                        if key == "name" and name != 'exhibitions_exhibition':
+                                        if key in "name" and name != 'exhibitions_exhibition':
                                             value = self.create_maker(value)
                                         new_val.append(value)
                                 else:
@@ -675,7 +675,7 @@ class get_nav_objects(BrowserView):
                                 else:
                                     new_val.append(val[choice])
                         else:
-                            if choice == "name" and name != 'exhibitions_exhibition':
+                            if choice in ["name", "author"] and name != 'exhibitions_exhibition':
                                 new_val.append(self.create_maker(val[choice]))
                             else:
                                 new_val.append(val[choice])
@@ -1599,6 +1599,7 @@ class get_fields(BrowserView):
         return None
 
     def transform_schema_field(self, name, field_value, choice=None, restriction=None, not_show=[]):
+
         if type(field_value) is list:
             new_val = []
             if choice == None:
@@ -1608,7 +1609,7 @@ class get_fields(BrowserView):
                             if value != "" and value != None:
                                 if restriction != None:
                                     if value != restriction:
-                                        if key == "name" and name != 'exhibitions_exhibition':
+                                        if key in "name" and name != 'exhibitions_exhibition':
                                             value = self.create_maker(value)
                                         new_val.append(value)
                                 else:
@@ -1625,7 +1626,7 @@ class get_fields(BrowserView):
                                 else:
                                     new_val.append(val[choice])
                         else:
-                            if choice == "name" and name != 'exhibitions_exhibition':
+                            if choice in ["name", "author"] and name != 'exhibitions_exhibition':
                                 new_val.append(self.create_maker(val[choice]))
                             else:
                                 new_val.append(val[choice])

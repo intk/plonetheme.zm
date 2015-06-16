@@ -994,6 +994,29 @@ class get_nav_objects(BrowserView):
                 related_exhibitions_value = '<p>'.join(related_exhibitions)
                 object_schema[field_schema]['fields'].append({'title': self.context.translate(MessageFactory('Books')), 'value': related_exhibitions_value})
 
+
+    def generate_documentation_tab(self, object_schema, fields, object, field_schema):
+        if hasattr(object, 'documentation_documentation'):
+            documentation = object.documentation_documentation
+            docs = []
+
+            for doc in documentation:
+                if doc['title'] != "":
+                    new_doc = "%s" %(doc['title'])
+
+                    if doc['pageMark'] != "":
+                        new_doc = "%s, %s" %(new_doc, doc['pageMark'])
+
+                    if doc['notes'] != "":
+                        new_doc = "%s, %s" %(new_doc, doc['notes'])
+
+                    docs.append(new_doc)
+
+            if len(docs) > 0:
+                schema_value = '<p>'.join(docs)
+                object_schema[field_schema]['fields'].append({'title': self.context.translate(MessageFactory('Documentation')), 'value': schema_value})
+
+
     def get_all_fields_object(self, object):
 
         object_schema = {}
@@ -1053,6 +1076,11 @@ class get_nav_objects(BrowserView):
             "name": self.context.translate(MessageFactory("Books"))
         }
 
+        object_schema["documentation"] = {
+            "fields": [],
+            "name": self.context.translate(MessageFactory("Documentation"))
+        }
+
 
         schema = getUtility(IDexterityFTI, name='Object').lookupSchema()
         fields = getFieldsInOrder(schema)
@@ -1079,6 +1107,7 @@ class get_nav_objects(BrowserView):
         exhibitions_tab = [('exhibitions_exhibition', None, 'Zeeuws Museum', ['catObject'])]
 
         labels_tab = [('labels', 'text', None)]
+
 
         ## Identification tab
         self.generate_identification_tab(identification_tab, object_schema, fields, object, "identification")
@@ -1113,6 +1142,9 @@ class get_nav_objects(BrowserView):
         ## Books
         self.generate_related_books_tab(object_schema, fields, object, "books")
 
+        ## Documentation
+        self.generate_documentation_tab(object_schema, fields, object, "documentation")
+
         new_object_schema = []
         new_object_schema.append(object_schema['identification'])
         new_object_schema.append(object_schema['production_dating'])
@@ -1125,6 +1157,7 @@ class get_nav_objects(BrowserView):
         new_object_schema.append(object_schema['exhibitions'])
         new_object_schema.append(object_schema['labels'])
         new_object_schema.append(object_schema['books'])
+        new_object_schema.append(object_schema['documentation'])
 
         return new_object_schema
 
@@ -1991,6 +2024,28 @@ class get_fields(BrowserView):
                 related_exhibitions_value = '<p>'.join(related_exhibitions)
                 object_schema[field_schema]['fields'].append({'title': self.context.translate(MessageFactory('Books')), 'value': related_exhibitions_value})
 
+    def generate_documentation_tab(self, object_schema, fields, object, field_schema):
+        if hasattr(object, 'documentation_documentation'):
+            documentation = object.documentation_documentation
+            docs = []
+
+            for doc in documentation:
+                if doc['title'] != "":
+                    new_doc = "%s" %(doc['title'])
+
+                    if doc['pageMark'] != "":
+                        new_doc = "%s, %s" %(new_doc, doc['pageMark'])
+
+                    if doc['notes'] != "":
+                        new_doc = "%s, %s" %(new_doc, doc['notes'])
+
+                    docs.append(new_doc)
+
+            if len(docs) > 0:
+                schema_value = '<p>'.join(docs)
+                object_schema[field_schema]['fields'].append({'title': self.context.translate(MessageFactory('Documentation')), 'value': schema_value})
+
+
     def get_all_fields_object(self, object):
 
         object_schema = {}
@@ -2050,6 +2105,11 @@ class get_fields(BrowserView):
             "name": self.context.translate(MessageFactory("Books"))
         }
 
+        object_schema["documentation"] = {
+            "fields": [],
+            "name": self.context.translate(MessageFactory("Documentation"))
+        }
+
 
         schema = getUtility(IDexterityFTI, name='Object').lookupSchema()
         fields = getFieldsInOrder(schema)
@@ -2076,6 +2136,7 @@ class get_fields(BrowserView):
         exhibitions_tab = [('exhibitions_exhibition', None, 'Zeeuws Museum', ['catObject'])]
 
         labels_tab = [('labels', 'text', None)]
+
 
         ## Identification tab
         self.generate_identification_tab(identification_tab, object_schema, fields, object, "identification")
@@ -2110,6 +2171,9 @@ class get_fields(BrowserView):
         ## Books
         self.generate_related_books_tab(object_schema, fields, object, "books")
 
+        ## Documentation
+        self.generate_documentation_tab(object_schema, fields, object, "documentation")
+
         new_object_schema = []
         new_object_schema.append(object_schema['identification'])
         new_object_schema.append(object_schema['production_dating'])
@@ -2122,6 +2186,7 @@ class get_fields(BrowserView):
         new_object_schema.append(object_schema['exhibitions'])
         new_object_schema.append(object_schema['labels'])
         new_object_schema.append(object_schema['books'])
+        new_object_schema.append(object_schema['documentation'])
 
         return new_object_schema
 

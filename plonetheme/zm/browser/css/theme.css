@@ -9840,3 +9840,30 @@ body.portaltype-object.template-edit #visual-portal-wrapper {
     background-color: #ffffff !important;
 }
 
+body.template-folder_contents .link-parent {
+    display: block !important;
+    background-color: #ffffff;
+}
+
+body.template-folder_contents #content-core {
+    background-color: #ffffff !important;
+}
+
+body.template-edit.portaltype-object #edit-header-wrapper {
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    background-position: center; 
+    width: 100%;
+}
+
+body.template-edit.portaltype-object #content h1.documentFirstHeading {
+    background: transparent !important;
+}
+
+body.template-edit.portaltype-object header,
+body.template-edit.portaltype-object #portal-header-wrapper,
+body.template-edit.portaltype-object #portal-header {
+    height: 0;
+}
+

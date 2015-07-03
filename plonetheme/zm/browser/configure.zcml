@@ -35,7 +35,7 @@
     <include package="plone.app.portlets" />
     
 
-    <browser:page
+    <!--<browser:page
         name="search"
         class=".views.SearchView"
         permission="zope2.View"
@@ -51,11 +51,11 @@
         for="Products.CMFCore.interfaces.IFolderish"
         layer=".interfaces.IThemeSpecific"
         template="templates/updated_search.pt"
-    />
+    />-->
 
     <!-- Viewlets -->
 
-    <browser:viewlet
+    <!--<browser:viewlet
       name="plone.footer"
       manager="plone.app.layout.viewlets.interfaces.IPortalFooter"
       layer=".interfaces.IThemeSpecific"
@@ -108,10 +108,10 @@
       permission="zope2.View"
       layer="bda.plone.shop.interfaces.IShopExtensionLayer" 
       zcml:condition="installed bda.plone.shop"
-    />
+    />-->
 
     <!-- Pages -->
-    <browser:page
+    <!--<browser:page
         name="collection_view"
         menu="plone_displayviews"
         title="Media  View"
@@ -159,11 +159,11 @@
       template="templates/get_image_resolution.pt"
       layer=".interfaces.IThemeSpecific"
       permission="zope2.View"
-    />
+    />-->
 
 
     <!-- Navigation feature -->
-    <browser:page
+    <!--<browser:page
       name="get_nav_objects"
       for="*"
       class=".slideshow.get_nav_objects"
@@ -215,24 +215,24 @@
       template="templates/get_slideshow_items.pt"
       layer=".interfaces.IThemeSpecific"
       permission="zope2.View"
-    />
+    />-->
 
     <!-- Slideshow options -->
 
-    <browser:page
+    <!--<browser:page
       name="get_slideshow_options"
       for="collective.leadmedia.behaviors.slideshow.ISlideshow"
       class=".slideshow.get_slideshow_options"
       template="templates/get_slideshow_options.pt"
       layer=".interfaces.IThemeSpecific"
       permission="zope2.View"
-    />
+    />-->
     
     <!-- Portlets --> 
     <!-- Portlet manager interface -->
     <include package="plone.app.portlets" />
     
-    <browser:page
+    <!--<browser:page
       for="plone.portlets.interfaces.ILocalPortletAssignable"
       class="plone.app.portlets.browser.manage.ManageContextualPortlets"
       name="manage-site-footer"
@@ -262,12 +262,12 @@
       name="manage-search-portlets"
       template="templates/managesearchportlets.pt"
       permission="plone.app.portlets.ManagePortlets"
-    />
+    />-->
     
     <include package="plone.portlet.collection"  />
     <include package="collective.mailchimp"  />
 
-    <plone:portletRenderer
+    <!--<plone:portletRenderer
       portlet="plone.portlet.collection.collection.ICollectionPortlet"
       class=".views.CollectionPortlet"
       layer=".interfaces.IThemeSpecific"
@@ -277,7 +277,7 @@
       portlet="collective.mailchimp.browser.portlet.IMailChimpPortlet"
       template="alternative_templates/portlet_mailchimp.pt"
       layer=".interfaces.IThemeSpecific"
-     />
+     />-->
 
      <plone:portlet
         name="plonetheme.zm.extendedMailchimp"
